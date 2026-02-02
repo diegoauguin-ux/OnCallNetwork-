@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -60,6 +61,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning>
         <style dangerouslySetInnerHTML={{ __html: `[data-hydration-error] { display: none !important; }` }} />
         {children}
+        <Toaster position="top-center" richColors closeButton />
       </body>
     </html>
   );

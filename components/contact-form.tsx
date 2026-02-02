@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Send, Building2, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle, Clock, Loader2 } from "lucide-react";
+import { Send, Building2, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle, Clock, Loader2, MapPin } from "lucide-react";
 
 type FormData = {
   venueName: string;
@@ -11,6 +11,7 @@ type FormData = {
   email: string;
   phone: string;
   venueType: string;
+  location: string;
   immediateNeed: string;
   message: string;
 };
@@ -23,6 +24,7 @@ export default function ContactForm() {
     email: "",
     phone: "",
     venueType: "",
+    location: "",
     immediateNeed: "no",
     message: "",
   });
@@ -68,6 +70,7 @@ export default function ContactForm() {
           email: "",
           phone: "",
           venueType: "",
+          location: "",
           immediateNeed: "no",
           message: "",
         });
@@ -265,8 +268,28 @@ export default function ContactForm() {
                     </select>
                   </div>
 
-                  {/* Immediate Need */}
+                  {/* Location */}
                   <div>
+                    <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                      Location
+                    </label>
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <input
+                        type="text"
+                        name="location"
+                        value={formData?.location ?? ""}
+                        onChange={handleChange}
+                        placeholder="E.g., Inner West Sydney"
+                        className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  {/* Immediate Need */}
+                  <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
                       Immediate Need?
                     </label>

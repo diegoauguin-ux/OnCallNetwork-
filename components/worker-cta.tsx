@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { ArrowRight, CheckCircle, Award } from "lucide-react";
@@ -77,20 +78,13 @@ export default function WorkerCTA() {
             </div>
 
             {/* CTA - Worker Application */}
-            <a
-              href="#worker-apply"
-              onClick={(e) => {
-                e?.preventDefault?.();
-                const email = "apply@oncallnetwork.com.au";
-                const subject = encodeURIComponent("Worker Application - On Call Network");
-                const body = encodeURIComponent("Hi Diego,\n\nI'd like to join On Call Network as a hospitality professional.\n\nName:\nPhone:\nRoles interested in:\nYears of experience:\nRSA Certificate: Yes/No\nAvailability:\n\nThanks!");
-                window?.open?.(`mailto:${email}?subject=${subject}&body=${body}`, "_blank");
-              }}
+            <Link
+              href="/register/worker"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
             >
-              Apply Now via Email
+              Register as a Worker
               <ArrowRight className="w-5 h-5" />
-            </a>
+            </Link>
             <p className="text-white/60 text-sm mt-4">
               Screening process takes 7-10 days. Only serious professionals need apply.
             </p>
