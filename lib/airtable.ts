@@ -30,6 +30,8 @@ export async function createVenueRecord(
 
   const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`;
 
+  console.log("[createVenueRecord] Airtable URL:", url);
+
   const fields: Record<string, string> = {
     "Venue Name": data.venueName,
     "Contact Person": data.contactPerson,
@@ -49,23 +51,29 @@ export async function createVenueRecord(
     fields.Notes = data.additionalNotes;
   }
 
+  const requestBody = { records: [{ fields }] };
+  console.log("[createVenueRecord] Request body to Airtable:", JSON.stringify(requestBody, null, 2));
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      records: [{ fields }],
-    }),
+    body: JSON.stringify(requestBody),
   });
+
+  console.log("[createVenueRecord] Airtable response status:", response.status, response.statusText);
 
   if (!response.ok) {
     const errorBody = await response.text();
+    console.log("[createVenueRecord] Airtable error response (raw):", errorBody);
+    console.log("[createVenueRecord] Airtable error status code:", response.status);
     let errorMessage = `Airtable API error: ${response.status} ${response.statusText}`;
     try {
       const parsed = JSON.parse(errorBody);
       errorMessage = parsed.error?.message ?? errorMessage;
+      console.log("[createVenueRecord] Airtable error (parsed):", JSON.stringify(parsed, null, 2));
     } catch {
       if (errorBody) errorMessage += ` - ${errorBody}`;
     }

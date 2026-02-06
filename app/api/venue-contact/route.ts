@@ -53,6 +53,9 @@ export async function POST(request: NextRequest) {
       immediateNeed: parsed.data.immediateNeed || undefined,
       additionalNotes: parsed.data.additionalNotes || undefined,
     };
+
+    console.log("[venue-contact] Record to send to Airtable:", JSON.stringify(record, null, 2));
+
     const { id } = await createVenueRecord(record);
 
     return NextResponse.json({
