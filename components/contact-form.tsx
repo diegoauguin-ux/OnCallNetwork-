@@ -10,10 +10,10 @@ type FormData = {
   contactName: string;
   email: string;
   phone: string;
-  venueType: string;
-  location: string;
+  suburb: string;
+  positionsNeeded: string;
   immediateNeed: string;
-  message: string;
+  additionalNotes: string;
 };
 
 export default function ContactForm() {
@@ -23,28 +23,18 @@ export default function ContactForm() {
     contactName: "",
     email: "",
     phone: "",
-    venueType: "",
-    location: "",
+    suburb: "",
+    positionsNeeded: "",
     immediateNeed: "no",
-    message: "",
+    additionalNotes: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const venueTypes = [
-    "Restaurant",
-    "Bar/Pub",
-    "Café",
-    "Hotel",
-    "Catering",
-    "Events/Functions",
-    "Other",
-  ];
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e?.target ?? {};
     if (name) {
-      setFormData((prev) => ({ ...(prev ?? {}), [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value } as FormData));
     }
   };
 
@@ -60,27 +50,36 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
-      const result = await response?.json?.();
+      const result = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+      };
 
-      if (result?.success) {
+      if (response.ok && result?.success) {
         setStatus("success");
         setFormData({
           venueName: "",
           contactName: "",
           email: "",
           phone: "",
-          venueType: "",
-          location: "",
+          suburb: "",
+          positionsNeeded: "",
           immediateNeed: "no",
-          message: "",
+          additionalNotes: "",
         });
       } else {
-        throw new Error(result?.message ?? "Something went wrong");
+        const msg =
+          result?.message ||
+          (response.ok ? "Something went wrong" : `Error ${response.status}`);
+        setStatus("error");
+        setErrorMessage(msg);
       }
     } catch (error) {
       console.error("Form submission error:", error);
       setStatus("error");
-      setErrorMessage(error instanceof Error ? error?.message : "Failed to submit form");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to submit form"
+      );
     }
   };
 
@@ -249,41 +248,37 @@ export default function ContactForm() {
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  {/* Venue Type */}
+                  {/* Suburb */}
                   <div>
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
-                      Venue Type *
-                    </label>
-                    <select
-                      name="venueType"
-                      value={formData?.venueType ?? ""}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
-                    >
-                      <option value="">Select type...</option>
-                      {venueTypes?.map((type) => (
-                        <option key={type} value={type}>{type}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Location */}
-                  <div>
-                    <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
-                      Location
+                      Suburb
                     </label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <input
                         type="text"
-                        name="location"
-                        value={formData?.location ?? ""}
+                        name="suburb"
+                        value={formData?.suburb ?? ""}
                         onChange={handleChange}
                         placeholder="E.g., Inner West Sydney"
                         className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
                       />
                     </div>
+                  </div>
+
+                  {/* Positions Usually Needed */}
+                  <div>
+                    <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                      Positions Usually Needed
+                    </label>
+                    <input
+                      type="text"
+                      name="positionsNeeded"
+                      value={formData?.positionsNeeded ?? ""}
+                      onChange={handleChange}
+                      placeholder="E.g., 2 bartenders, 1 waiter"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
+                    />
                   </div>
                 </div>
 
@@ -305,16 +300,16 @@ export default function ContactForm() {
                   </div>
                 </div>
 
-                {/* Message */}
+                {/* Notes */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
-                    Tell us about your staffing needs
+                    Notes
                   </label>
                   <div className="relative">
                     <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                     <textarea
-                      name="message"
-                      value={formData?.message ?? ""}
+                      name="additionalNotes"
+                      value={formData?.additionalNotes ?? ""}
                       onChange={handleChange}
                       rows={4}
                       placeholder="E.g., Need 2 bartenders for Friday nights, ongoing..."

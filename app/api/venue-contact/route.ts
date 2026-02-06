@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createVenueRecord } from "@/lib/airtable";
+import { createVenueRecord, type VenueRecord } from "@/lib/airtable";
 import { z } from "zod";
 
 const venueSchema = z.object({
-  businessName: z.string().min(1, "Business name is required"),
+  venueName: z.string().min(1, "Venue name is required"),
   contactPerson: z.string().min(1, "Contact person is required"),
   email: z.string().email("Please enter a valid email address"),
   phone: z
@@ -13,10 +13,10 @@ const venueSchema = z.object({
       /^04\d{2}\s?\d{3}\s?\d{3}$/,
       "Phone must be Australian mobile format (04XX XXX XXX)"
     ),
-  venueType: z.string().min(1, "Venue type is required"),
-  location: z.string().optional().default(""),
+  suburb: z.string().optional().default(""),
+  positionsNeeded: z.string().optional().default(""),
   immediateNeed: z.string().optional().default("no"),
-  message: z.string().optional().default(""),
+  additionalNotes: z.string().optional().default(""),
 });
 
 export async function POST(request: NextRequest) {
@@ -24,14 +24,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     const parsed = venueSchema.safeParse({
-      businessName: body.businessName ?? body.venueName,
+      venueName: body.venueName,
       contactPerson: body.contactPerson ?? body.contactName,
       email: body.email,
       phone: body.phone,
-      venueType: body.venueType,
-      location: body.location ?? "",
+      suburb: body.suburb ?? body.location ?? "",
+      positionsNeeded: body.positionsNeeded ?? "",
       immediateNeed: body.immediateNeed ?? "no",
-      message: body.message ?? "",
+      additionalNotes: body.additionalNotes ?? body.message ?? "",
     });
 
     if (!parsed.success) {
@@ -43,7 +43,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { id } = await createVenueRecord(parsed.data);
+    const record: VenueRecord = {
+      venueName: parsed.data.venueName,
+      contactPerson: parsed.data.contactPerson,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      suburb: parsed.data.suburb || undefined,
+      positionsNeeded: parsed.data.positionsNeeded || undefined,
+      immediateNeed: parsed.data.immediateNeed || undefined,
+      additionalNotes: parsed.data.additionalNotes || undefined,
+    };
+    const { id } = await createVenueRecord(record);
 
     return NextResponse.json({
       success: true,
@@ -62,3 +72,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

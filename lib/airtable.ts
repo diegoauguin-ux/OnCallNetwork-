@@ -4,14 +4,14 @@
  */
 
 export interface VenueRecord {
-  businessName: string;
+  venueName: string;
   contactPerson: string;
   email: string;
   phone: string;
-  venueType: string;
-  location?: string;
+  suburb?: string;
+  positionsNeeded?: string;
   immediateNeed?: string;
-  message?: string;
+  additionalNotes?: string;
 }
 
 export async function createVenueRecord(
@@ -19,6 +19,8 @@ export async function createVenueRecord(
 ): Promise<{ id: string }> {
   const apiKey = process.env.AIRTABLE_API_KEY;
   const baseId = process.env.AIRTABLE_BASE_ID;
+  const tableName =
+    process.env.AIRTABLE_VENUES_TABLE_NAME || "Venues";
 
   if (!apiKey || !baseId) {
     throw new Error(
@@ -26,7 +28,26 @@ export async function createVenueRecord(
     );
   }
 
-  const url = `https://api.airtable.com/v0/${baseId}/Venues`;
+  const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`;
+
+  const fields: Record<string, string> = {
+    "Venue Name": data.venueName,
+    "Contact Person": data.contactPerson,
+    Email: data.email,
+    Phone: data.phone,
+  };
+  if (data.suburb != null && data.suburb !== "") {
+    fields.Suburb = data.suburb;
+  }
+  if (data.positionsNeeded != null && data.positionsNeeded !== "") {
+    fields["Positions Usually Needed"] = data.positionsNeeded;
+  }
+  if (data.immediateNeed != null && data.immediateNeed !== "") {
+    fields["Immediate Need"] = data.immediateNeed;
+  }
+  if (data.additionalNotes != null && data.additionalNotes !== "") {
+    fields.Notes = data.additionalNotes;
+  }
 
   const response = await fetch(url, {
     method: "POST",
@@ -35,20 +56,7 @@ export async function createVenueRecord(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      records: [
-        {
-          fields: {
-            "Business Name": data.businessName,
-            "Contact Person": data.contactPerson,
-            Email: data.email,
-            Phone: data.phone,
-            "Venue Type": data.venueType,
-            Location: data.location ?? "",
-            "Immediate Need": data.immediateNeed ?? "no",
-            Message: data.message ?? "",
-          },
-        },
-      ],
+      records: [{ fields }],
     }),
   });
 
