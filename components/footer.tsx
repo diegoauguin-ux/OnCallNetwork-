@@ -79,7 +79,7 @@ export default function Footer() {
               © {currentYear} On Call Network. All rights reserved.
             </p>
             <p className="text-white/50 text-sm">
-              ABN: XX XXX XXX XXX | Sydney, Australia
+              Sydney, Australia
             </p>
           </div>
         </div>
