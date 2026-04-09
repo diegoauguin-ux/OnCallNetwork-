@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createWorkerRecord } from "@/lib/airtable";
+import { createWorkerRecord, type WorkerRecord } from "@/lib/airtable";
 import { z } from "zod";
 
 const workerSchema = z.object({
@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { id } = await createWorkerRecord(parsed.data);
+    const workerData = parsed.data as WorkerRecord;
+    const { id } = await createWorkerRecord(workerData);
 
     return NextResponse.json({
       success: true,
