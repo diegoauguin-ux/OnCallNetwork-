@@ -1,11 +1,9 @@
 "use client";
-
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Mail } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
   const currentYear = 2026;
-
   return (
     <footer className="bg-[#0f1e32] text-white py-12">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
@@ -19,11 +17,10 @@ export default function Footer() {
               <span className="font-semibold text-lg">On Call Network</span>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
-              Sydney's most reliable hospitality staffing agency. 
-              97% show-up rate. Premium professionals. Emergency response.
+              {"Sydney's hospitality staffing marketplace. Pre-screened professionals with a verified Reliability Score. Inner West, Eastern Suburbs, CBD, North Shore."}
             </p>
-            <p className="text-[#d4a853] font-semibold">
-              Your first call in every emergency.
+            <p className="text-[#d4a853] font-semibold text-sm">
+              Connecting venues with reliable staff.
             </p>
           </div>
 
@@ -31,19 +28,12 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Contact</h3>
             <div className="space-y-3">
-              <a 
-                href="tel:+61400000000" 
-                className="flex items-center gap-3 text-white/70 hover:text-[#d4a853] transition-colors"
-              >
-                <Phone className="w-5 h-5" />
-                <span>0400 000 000</span>
-              </a>
-              <a 
-                href="mailto:diego@oncallnetwork.com.au" 
+              <a
+                href="mailto:hello@oncallnetwork.com.au"
                 className="flex items-center gap-3 text-white/70 hover:text-[#d4a853] transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                <span>diego@oncallnetwork.com.au</span>
+                <span>hello@oncallnetwork.com.au</span>
               </a>
               <div className="flex items-start gap-3 text-white/70">
                 <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -56,17 +46,20 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
             <div className="space-y-2">
-              <Link href="#venues" className="block text-white/70 hover:text-[#d4a853] transition-colors">
+              <Link href="#venues" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
                 For Venues
               </Link>
-              <Link href="#workers" className="block text-white/70 hover:text-[#d4a853] transition-colors">
+              <Link href="#workers" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
                 For Workers
               </Link>
-              <Link href="#pricing" className="block text-white/70 hover:text-[#d4a853] transition-colors">
+              <Link href="#pricing" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
                 Pricing
               </Link>
-              <Link href="#contact" className="block text-white/70 hover:text-[#d4a853] transition-colors">
+              <Link href="#contact" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
                 Contact
+              </Link>
+              <Link href="/terms-and-conditions" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
+                Terms & Conditions
               </Link>
             </div>
           </div>
@@ -76,10 +69,10 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/50 text-sm">
-              © {currentYear} On Call Network. All rights reserved.
+              &copy; {currentYear} On Call Network. All rights reserved.
             </p>
             <p className="text-white/50 text-sm">
-              Sydney, Australia
+              On Call Network is a marketplace platform. All employment is directly between venue and candidate. OCN does not employ candidates.
             </p>
           </div>
         </div>

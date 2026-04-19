@@ -18,15 +18,29 @@ export default function Home() {
       <Header />
       <Hero />
       <TrustSignals />
-      <BenefitsVenues />
+
+      {/* Desktop only — too long for mobile */}
+      <div className="hidden md:block">
+        <BenefitsVenues />
+      </div>
+
       <HowItWorksVenues />
       <Pricing />
-      <Testimonials />
+
+      {/* Desktop only */}
+      <div className="hidden md:block">
+        <Testimonials />
+      </div>
+
       <section id="workers" className="scroll-mt-20">
-        <BenefitsWorkers />
-        <HowItWorksWorkers />
+        {/* Desktop only */}
+        <div className="hidden md:block">
+          <BenefitsWorkers />
+          <HowItWorksWorkers />
+        </div>
         <WorkerCTA />
       </section>
+
       <FAQ />
       <ContactForm />
       <Footer />

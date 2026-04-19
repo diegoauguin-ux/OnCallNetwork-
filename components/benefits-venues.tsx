@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Clock, Shield, DollarSign, Phone, Users, CheckCircle, Zap, Award } from "lucide-react";
+import { Shield, DollarSign, Phone, Users, CheckCircle, Award } from "lucide-react";
 import Image from "next/image";
 
 export default function BenefitsVenues() {
@@ -10,34 +10,34 @@ export default function BenefitsVenues() {
 
   const benefits = [
     {
-      icon: Zap,
-      title: "Emergency Response <2hrs",
-      description: "Staff delivered fast when you need them most. Workers arrive 15 minutes early, uniformed and briefed.",
-    },
-    {
       icon: Shield,
-      title: "97% Reliability Guarantee",
-      description: "If we don't deliver or the worker doesn't meet standards, you don't pay. Simple.",
+      title: "97% Show-up Rate",
+      description: "Only candidates scoring 75+ on the Reliability Score join OCN. The average is 84/100. You always see the top 8%.",
     },
     {
       icon: Award,
-      title: "PhD Behavioral Screening",
-      description: "Only 8% of applicants accepted. Psychology-based screening predicts reliability & professionalism.",
+      title: "Master's in Psychology Screening",
+      description: "Our founder has a Master's in Psychology. Every candidate is assessed on dependability, stress response, and professionalism.",
     },
     {
       icon: DollarSign,
-      title: "Competitive Pricing",
-      description: "$42-55/hr vs $60-80/hr traditional agencies. Premium service without premium pain.",
+      title: "No Hourly Markup",
+      description: "OCN is a marketplace. You pay the candidate directly at the rate you agree. No 25-35% markup like labour hire agencies.",
     },
     {
       icon: Phone,
       title: "Founder Direct Line",
-      description: "Call or text Diego directly 24/7. Real accountability, not a faceless call center.",
+      description: "Priority Access members get Diego's direct WhatsApp. Real accountability, not a call centre.",
     },
     {
       icon: Users,
-      title: "Vetted Professionals Only",
-      description: "RSA certified, experienced hospitality workers. Bartenders, waiters, chefs, kitchen hands.",
+      title: "Pre-Screened Professionals",
+      description: "RSA certified, experienced hospitality workers. Bartenders, waitstaff, baristas, kitchen hands, chefs.",
+    },
+    {
+      icon: CheckCircle,
+      title: "Inner West Specialist",
+      description: "We focus on Sydney Inner West, Eastern Suburbs, CBD and North Shore. Local knowledge, local network.",
     },
   ];
 
@@ -56,15 +56,15 @@ export default function BenefitsVenues() {
               For Venues
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-6">
-              Premium Emergency Insurance for Your Venue
+              Why Venues Choose OCN Over Sidekicker and Barcats
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Stop losing $4,500+ every time staff don't show. We're not another marketplace—we're 
-              your reliable partner for emergency and planned staffing.
+              Stop losing revenue to no-shows. Every candidate on OCN has been psychology-assessed and verified.
+              You hire directly — no markups, no middleman payroll.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              {benefits?.map((benefit, index) => (
+              {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -77,8 +77,8 @@ export default function BenefitsVenues() {
                       <benefit.icon className="w-5 h-5 text-[#1e3a5f] group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#1e3a5f] mb-1">{benefit?.title}</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">{benefit?.description}</p>
+                      <h3 className="font-semibold text-[#1e3a5f] mb-1">{benefit.title}</h3>
+                      <p className="text-sm text-gray-600 leading-relaxed">{benefit.description}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -108,22 +108,21 @@ export default function BenefitsVenues() {
                       <CheckCircle className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                      <p className="font-bold text-[#1e3a5f]">Emergency Staff Confirmed</p>
-                      <p className="text-sm text-gray-600">Bartender arriving in 45 minutes</p>
+                      <p className="font-bold text-[#1e3a5f]">Candidate Matched</p>
+                      <p className="text-sm text-gray-600">Reliability Score: 91/100</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Floating Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="absolute -top-4 -right-4 bg-[#d4a853] text-[#1e3a5f] px-4 py-2 rounded-full font-bold shadow-lg"
+              className="absolute -top-4 -right-4 bg-[#d4a853] text-[#1e3a5f] px-4 py-2 rounded-full font-bold shadow-lg text-sm"
             >
-              97% Success Rate
+              Top 8% Only
             </motion.div>
           </motion.div>
         </div>
