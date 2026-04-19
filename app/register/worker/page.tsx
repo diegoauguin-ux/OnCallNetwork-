@@ -103,7 +103,7 @@ export default function WorkerRegistrationPage() {
 
   return (
     <main className="min-h-screen bg-[#faf9f6]">
-      <div className="max-w-[640px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <div className="max-w-[640px] mx-auto px-4 sm:px-6 py-12 md:py-16 pb-28 md:pb-16">
         <Link
           href="/#workers"
           className="inline-flex items-center gap-2 text-[#1e3a5f] hover:text-[#d4a853] transition-colors mb-8"
@@ -122,6 +122,9 @@ export default function WorkerRegistrationPage() {
           <p className="text-gray-600 mb-4">
             Only the top 8% of applicants are accepted. We review every application personally and get in touch within 48 hours.
           </p>
+          <p className="text-sm text-gray-500 mb-4">
+            2-minute mobile form. Fields marked * are required.
+          </p>
           <div className="flex items-center gap-2 p-3 bg-[#1e3a5f]/5 rounded-lg">
             <Shield className="w-5 h-5 text-[#d4a853] flex-shrink-0" />
             <p className="text-sm text-[#1e3a5f]">
@@ -132,7 +135,7 @@ export default function WorkerRegistrationPage() {
 
         <div className="p-6 md:p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form id="worker-application-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
 
               {/* Full Name */}
               <FormField
@@ -144,7 +147,7 @@ export default function WorkerRegistrationPage() {
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} placeholder="John Smith" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                        <Input {...field} autoComplete="name" placeholder="John Smith" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -163,7 +166,7 @@ export default function WorkerRegistrationPage() {
                       <FormControl>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="email" placeholder="john@example.com" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                          <Input {...field} type="email" autoComplete="email" placeholder="john@example.com" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -179,7 +182,7 @@ export default function WorkerRegistrationPage() {
                       <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                          <Input {...field} type="tel" inputMode="tel" autoComplete="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -228,6 +231,7 @@ export default function WorkerRegistrationPage() {
                           <Input
                             {...field}
                             type="number"
+                            inputMode="numeric"
                             min={1}
                             placeholder="2"
                             className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]"
@@ -279,7 +283,7 @@ export default function WorkerRegistrationPage() {
                     <FormControl>
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                        <Input {...field} autoComplete="address-level2" placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -354,6 +358,26 @@ export default function WorkerRegistrationPage() {
             We review every application personally. Only the top 8% are accepted.
           </p>
         </div>
+      </div>
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-20 p-3 bg-[#faf9f6]/95 backdrop-blur border-t border-gray-200">
+        <Button
+          type="submit"
+          form="worker-application-form"
+          disabled={isSubmitting}
+          className="w-full h-12 bg-[#1e3a5f] hover:bg-[#2a4a6f] text-white font-bold text-base"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin mr-2" />
+              Submitting...
+            </>
+          ) : (
+            <>
+              <Send className="w-5 h-5 mr-2" />
+              Apply to Join OCN
+            </>
+          )}
+        </Button>
       </div>
     </main>
   );

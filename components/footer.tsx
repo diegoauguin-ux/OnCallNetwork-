@@ -69,10 +69,15 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/50 text-sm">
-              &copy; {currentYear} On Call Network. All rights reserved.
+              <span className="md:hidden">
+                OCN is a marketplace. Employment is directly between venue and candidate.
+              </span>
+              <span className="hidden md:inline">
+                On Call Network is a marketplace platform connecting hospitality venues with pre-screened candidates. All employment relationships are formed directly between the venue and the candidate. OCN does not employ, supervise, or pay candidates.
+              </span>
             </p>
             <p className="text-white/50 text-sm">
-              On Call Network is a marketplace platform. All employment is directly between venue and candidate. OCN does not employ candidates.
+              &copy; {currentYear} On Call Network. All rights reserved.
             </p>
           </div>
         </div>

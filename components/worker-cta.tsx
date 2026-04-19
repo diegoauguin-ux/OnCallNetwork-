@@ -82,11 +82,11 @@ export default function WorkerCTA() {
               href="/register/worker"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
             >
-              Register as a Worker
+              Apply in 2 Minutes
               <ArrowRight className="w-5 h-5" />
             </Link>
             <p className="text-white/60 text-sm mt-4">
-              Screening process takes 7-10 days. Only serious professionals need apply.
+              Mobile-friendly application. Screening process takes 7-10 days.
             </p>
           </motion.div>
 
