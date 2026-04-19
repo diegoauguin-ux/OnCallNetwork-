@@ -23,7 +23,6 @@ type FormData = {
 };
 
 export default function ContactForm() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [formData, setFormData] = useState<FormData>({
     serviceType: "casual",
     venueName: "",
