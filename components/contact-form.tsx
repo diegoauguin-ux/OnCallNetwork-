@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { a } from "react-intersection-observer";
 import {
   Send, Building2, User, Mail, Phone, MessageSquare,
   CheckCircle, AlertCircle, Loader2, MapPin, Briefcase, Users
