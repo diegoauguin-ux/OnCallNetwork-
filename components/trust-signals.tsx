@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Shield, Clock, Award, Users, CheckCircle, TrendingUp } from "lucide-react";
+import { Shield, Clock, Award, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -38,23 +38,23 @@ export default function TrustSignals() {
     {
       icon: Shield,
       title: "97% Show-Up Rate",
-      description: "vs 65% industry average. PhD behavioral screening ensures reliability.",
+      description: "vs 65% industry average. Master's in Psychology screening — we predict behaviour, not just interview well.",
       highlight: true,
     },
     {
       icon: Clock,
-      title: "<2 Hour Response",
-      description: "Emergency staff delivered fast. Workers arrive 15 min early, ready to work.",
+      title: "84/100 Avg. Score",
+      description: "The average Reliability Score across OCN candidates. Only those above 75 are accepted — you always see the top 8%.",
     },
     {
       icon: Award,
-      title: "Elite 8% Accepted",
-      description: "Only top hospitality professionals pass our rigorous screening process.",
+      title: "You Hire Directly",
+      description: "OCN is a marketplace, not a labour hire agency. No 25–35% markup. You agree the rate, you pay the worker.",
     },
     {
       icon: Users,
       title: "Founder Direct Line",
-      description: "Personal service from Diego. Not a call center. Real accountability.",
+      description: "Personal service from Diego. Not a call centre. Priority Access members get his WhatsApp.",
     },
   ];
 
@@ -70,52 +70,52 @@ export default function TrustSignals() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            The <span className="text-[#d4a853]">$4,500</span> Problem Every Venue Owner Knows
+            The <span className="text-[#d4a853]">$380</span> Problem Every Venue Owner Knows
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Staff call in sick at 5PM on a Friday. Revenue lost. Google reviews tank. 
-            Team morale suffers. <strong>We solve that.</strong>
+            A casual calls in sick at 5PM on a Friday. Revenue lost. Reviews tank.
+            Team morale suffers. <strong>We solve that — before it happens.</strong>
           </p>
         </motion.div>
 
         {/* Trust Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {signals?.map((signal, index) => (
+          {signals.map((signal, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className={`p-6 rounded-xl transition-all duration-300 hover:shadow-xl ${
-                signal?.highlight
+                signal.highlight
                   ? "bg-[#1e3a5f] text-white shadow-lg"
                   : "bg-[#faf9f6] hover:bg-white shadow-md"
               }`}
             >
               <div
                 className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
-                  signal?.highlight ? "bg-[#d4a853]" : "bg-[#1e3a5f]/10"
+                  signal.highlight ? "bg-[#d4a853]" : "bg-[#1e3a5f]/10"
                 }`}
               >
                 <signal.icon
                   className={`w-6 h-6 ${
-                    signal?.highlight ? "text-[#1e3a5f]" : "text-[#1e3a5f]"
+                    signal.highlight ? "text-[#1e3a5f]" : "text-[#1e3a5f]"
                   }`}
                 />
               </div>
               <h3
                 className={`text-lg font-bold mb-2 ${
-                  signal?.highlight ? "text-white" : "text-[#1e3a5f]"
+                  signal.highlight ? "text-white" : "text-[#1e3a5f]"
                 }`}
               >
-                {signal?.title}
+                {signal.title}
               </h3>
               <p
                 className={`text-sm leading-relaxed ${
-                  signal?.highlight ? "text-white/80" : "text-gray-600"
+                  signal.highlight ? "text-white/80" : "text-gray-600"
                 }`}
               >
-                {signal?.description}
+                {signal.description}
               </p>
             </motion.div>
           ))}
@@ -129,30 +129,31 @@ export default function TrustSignals() {
           className="mt-16 p-6 md:p-8 bg-gradient-to-r from-[#1e3a5f] to-[#2a4a6f] rounded-2xl"
         >
           <div className="text-center mb-6">
-            <h3 className="text-xl font-bold text-white">Why Venues Switch to OCN</h3>
+            <h3 className="text-xl font-bold text-white">Why Venues Choose OCN Over Alternatives</h3>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { label: "Platform Services (Supp)", rate: 65, color: "bg-red-400" },
-              { label: "Traditional Agencies", rate: 75, color: "bg-yellow-400" },
+              { label: "Barcats / Job Boards", rate: 65, color: "bg-red-400" },
+              { label: "Sidekicker (labour hire)", rate: 75, color: "bg-yellow-400" },
               { label: "On Call Network", rate: 97, color: "bg-[#d4a853]" },
-            ]?.map((item, index) => (
+            ].map((item, index) => (
               <div key={index}>
                 <div className="flex justify-between mb-2">
-                  <span className="text-white/80 text-sm">{item?.label}</span>
-                  <span className="text-white font-bold">{item?.rate}%</span>
+                  <span className="text-white/80 text-sm">{item.label}</span>
+                  <span className="text-white font-bold">{item.rate}%</span>
                 </div>
                 <div className="h-3 bg-white/20 rounded-full overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
-                    animate={inView ? { width: `${item?.rate}%` } : {}}
+                    animate={inView ? { width: `${item.rate}%` } : {}}
                     transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
-                    className={`h-full rounded-full ${item?.color}`}
+                    className={`h-full rounded-full ${item.color}`}
                   />
                 </div>
               </div>
             ))}
           </div>
+          <p className="text-white/50 text-xs text-center mt-4">Show-up rate comparison</p>
         </motion.div>
       </div>
     </section>
