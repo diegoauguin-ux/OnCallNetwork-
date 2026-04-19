@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createVenueRecord, type VenueRecord } from "@/lib/airtable";
 import { z } from "zod";
-
+ 
 const venueSchema = z.object({
+  serviceType: z.enum(["casual", "permanent"]).default("casual"),
   venueName: z.string().min(1, "Venue name is required"),
-  contactPerson: z.string().min(1, "Contact person is required"),
+  contactPerson: z.string().min(1, "Contact name is required"),
   email: z.string().email("Please enter a valid email address"),
   phone: z
     .string()
@@ -18,22 +19,23 @@ const venueSchema = z.object({
   immediateNeed: z.string().optional().default("no"),
   additionalNotes: z.string().optional().default(""),
 });
-
+ 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
+ 
     const parsed = venueSchema.safeParse({
+      serviceType: body.serviceType ?? "casual",
       venueName: body.venueName,
       contactPerson: body.contactPerson ?? body.contactName,
       email: body.email,
       phone: body.phone,
-      suburb: body.suburb ?? body.location ?? "",
+      suburb: body.suburb ?? "",
       positionsNeeded: body.positionsNeeded ?? "",
       immediateNeed: body.immediateNeed ?? "no",
       additionalNotes: body.additionalNotes ?? body.message ?? "",
     });
-
+ 
     if (!parsed.success) {
       const errors = parsed.error.flatten().fieldErrors;
       const firstError = Object.values(errors)[0]?.[0] ?? "Validation failed";
@@ -42,8 +44,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
+ 
     const record: VenueRecord = {
+      serviceType: parsed.data.serviceType,
       venueName: parsed.data.venueName,
       contactPerson: parsed.data.contactPerson,
       email: parsed.data.email,
@@ -53,11 +56,9 @@ export async function POST(request: NextRequest) {
       immediateNeed: parsed.data.immediateNeed || undefined,
       additionalNotes: parsed.data.additionalNotes || undefined,
     };
-
-    console.log("[venue-contact] Record to send to Airtable:", JSON.stringify(record, null, 2));
-
+ 
     const { id } = await createVenueRecord(record);
-
+ 
     return NextResponse.json({
       success: true,
       message: "Request received successfully",
@@ -65,14 +66,11 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Venue contact error:", error);
-
     const message =
       error instanceof Error ? error.message : "Failed to submit request";
-
     return NextResponse.json(
       { success: false, message },
       { status: 500 }
     );
   }
 }
-
