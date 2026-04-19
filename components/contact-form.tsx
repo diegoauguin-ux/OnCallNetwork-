@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -93,9 +93,9 @@ export default function ContactForm() {
 
           {/* Info Side */}
           <motion.div
-            ref={ref}
+            
             initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
@@ -106,7 +106,7 @@ export default function ContactForm() {
               <span className="text-[#d4a853]">staffing problem</span>
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Whether you need reliable casual staff for this weekend or a permanent hire for your team —
+              Whether you need reliable casual staff for this weekend or a permanent hire for your team â€”
               Diego handles it personally.
             </p>
 
@@ -131,7 +131,7 @@ export default function ContactForm() {
                 <div>
                   <h3 className="font-semibold text-[#1e3a5f] mb-1">Permanent Placement</h3>
                   <p className="text-gray-600 text-sm">
-                    Venue Managers, Head Chefs, Supervisors. Found in 10–14 days. 60-day replacement guarantee.
+                    Venue Managers, Head Chefs, Supervisors. Found in 10â€“14 days. 60-day replacement guarantee.
                   </p>
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default function ContactForm() {
                   0XXX XXX XXX
                 </a>
                 <p className="text-white/60 text-sm mt-1">
-                  Diego answers directly — 7 days, 8am–9pm
+                  Diego answers directly â€” 7 days, 8amâ€“9pm
                 </p>
               </div>
             </div>
@@ -159,7 +159,7 @@ export default function ContactForm() {
           {/* Form Side */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {status === "success" ? (
@@ -216,8 +216,8 @@ export default function ContactForm() {
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
                     {isCasual
-                      ? "Pre-screened casual professionals — $99/intro or $199/month"
-                      : "Permanent placement — Chef, Manager, Supervisor. 10–14 day turnaround"}
+                      ? "Pre-screened casual professionals â€” $99/intro or $199/month"
+                      : "Permanent placement â€” Chef, Manager, Supervisor. 10â€“14 day turnaround"}
                   </p>
                 </div>
 
@@ -340,7 +340,7 @@ export default function ContactForm() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
                     >
-                      <option value="no">Planning ahead — not urgent</option>
+                      <option value="no">Planning ahead â€” not urgent</option>
                       <option value="yes">Need staff this week</option>
                       <option value="today">Need someone today / ASAP</option>
                     </select>
@@ -406,3 +406,4 @@ export default function ContactForm() {
     </section>
   );
 }
+
