@@ -16,11 +16,11 @@ export default function FAQ() {
     },
     {
       question: "What if the worker doesn't show up?",
-      answer: "Our show-up rate is 97% (vs 65% industry average) thanks to our PhD behavioral screening. But if we ever fail to deliver, you don't pay. Period. We'll also attempt to find a replacement immediately at no additional charge.",
+      answer: "Our show-up rate is 97% (vs 65% industry average) thanks to our Master's-in-Psychology behavioural screening. But if we ever fail to deliver, you don't pay. Period. We'll also attempt to find a replacement immediately at no additional charge.",
     },
     {
       question: "How do you screen your workers?",
-      answer: "Every applicant goes through a rigorous screening process developed by our founder Diego, who holds a PhD in Psychology. We assess reliability, professionalism, and behavioral indicators. Only 8% of applicants make it into our network. All workers must have RSA certification and 2+ years experience.",
+      answer: "Every applicant goes through a rigorous screening process developed by our founder Diego, who holds a Master's in Psychology. We assess reliability, professionalism, and behavioural indicators. Only 8% of applicants make it into our network. All workers must have RSA certification and 2+ years experience.",
     },
     {
       question: "What areas do you cover?",

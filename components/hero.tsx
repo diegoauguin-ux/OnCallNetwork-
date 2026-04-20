@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle, Shield, ArrowRight, MapPin } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Hero() {
@@ -13,19 +12,33 @@ export default function Hero() {
   ];
 
   return (
-    <section id="venues" className="relative min-h-[90vh] flex items-center overflow-hidden scroll-mt-20">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="https://cdn.abacus.ai/images/b40508e8-bfd2-4e59-a866-a7d525fe51d0.png"
-          alt="Professional bartender serving in upscale Sydney venue"
-          fill
-          className="object-cover"
-          priority
-          quality={90}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0f1e32]/95 via-[#1e3a5f]/85 to-[#1e3a5f]/70" />
-      </div>
+    <section id="venues" className="relative min-h-[90vh] flex items-center overflow-hidden scroll-mt-20 bg-[#0f1e32]">
+      {/* Premium gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0f1e32] via-[#1e3a5f] to-[#2a4a6f]" />
+
+      {/* Subtle radial accent */}
+      <div
+        aria-hidden
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#d4a853]/10 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#d4a853]/5 blur-3xl"
+      />
+
+      {/* Fine grid pattern for texture */}
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage:
+            "linear-gradient(#d4a853 1px, transparent 1px), linear-gradient(90deg, #d4a853 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      {/* Left-side darkening for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0f1e32]/80 via-[#0f1e32]/40 to-transparent" />
 
       <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 py-24 md:py-32">
         <div className="max-w-2xl">

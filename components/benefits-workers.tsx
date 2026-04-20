@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { DollarSign, Calendar, Building2, Award, Clock, Heart } from "lucide-react";
-import Image from "next/image";
+import { DollarSign, Calendar, Building2, Award, Clock, Heart, TrendingUp } from "lucide-react";
 
 export default function BenefitsWorkers() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -45,33 +44,64 @@ export default function BenefitsWorkers() {
     <section className="py-16 md:py-24 bg-[#faf9f6]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Image */}
+          {/* Sample Earnings Preview — illustrative UI */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
             className="relative order-2 lg:order-1"
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="https://cdn.abacus.ai/images/63012801-9ec9-4ee5-bb6b-95504a378f72.png"
-                alt="Team of professional hospitality workers"
-                fill
-                className="object-cover"
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1e3a5f] via-[#2a4a6f] to-[#0f1e32] p-8 flex items-center justify-center">
+              <div
+                aria-hidden
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#d4a853 1px, transparent 1px), linear-gradient(90deg, #d4a853 1px, transparent 1px)",
+                  backgroundSize: "32px 32px",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/60 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-bold text-[#1e3a5f]">This Week's Earnings</p>
-                      <p className="text-sm text-gray-600">3 shifts completed</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-[#d4a853]">$780</p>
-                      <p className="text-xs text-green-600">+15% vs last week</p>
-                    </div>
+              <div
+                aria-hidden
+                className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#d4a853]/15 blur-3xl"
+              />
+
+              {/* Earnings card */}
+              <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                    Sample Weekly Summary
+                  </span>
+                  <div className="flex items-center gap-1 text-green-600 text-xs font-semibold">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                    <span>+15%</span>
                   </div>
+                </div>
+
+                <div className="mb-5">
+                  <p className="text-xs text-gray-500 mb-1">This week&rsquo;s earnings</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-4xl font-bold text-[#1e3a5f]">$780</span>
+                    <span className="text-sm text-gray-400">/ 3 shifts</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mb-4">
+                  {[
+                    { role: "Fri · Bar shift · Newtown", amount: "$312" },
+                    { role: "Sat · Service · Marrickville", amount: "$285" },
+                    { role: "Sun · Function · Balmain", amount: "$183" },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-center justify-between text-xs">
+                      <span className="text-gray-600">{s.role}</span>
+                      <span className="font-semibold text-[#1e3a5f]">{s.amount}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-xs text-gray-500">Base rate</span>
+                  <span className="text-sm font-bold text-[#d4a853]">$32&ndash;40/hr</span>
                 </div>
               </div>
             </div>
@@ -83,7 +113,7 @@ export default function BenefitsWorkers() {
               transition={{ duration: 0.5, delay: 0.6 }}
               className="absolute -top-4 -left-4 bg-[#d4a853] text-[#1e3a5f] px-4 py-2 rounded-full font-bold shadow-lg"
             >
-              $32-40/hr
+              $32&ndash;40/hr
             </motion.div>
           </motion.div>
 

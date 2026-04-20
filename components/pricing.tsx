@@ -39,7 +39,7 @@ export default function Pricing() {
         "Unlimited candidate introductions",
         "Priority same-day matching",
         "Build your preferred talent pool",
-        "Direct WhatsApp line to founder Diego",
+        "Direct email line to founder Diego",
         "Monthly Inner West talent report",
       ],
       highlight: true,

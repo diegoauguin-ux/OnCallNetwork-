@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ArrowRight, CheckCircle, Award } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, CheckCircle, Award, Sparkles, ShieldCheck } from "lucide-react";
 
 export default function WorkerCTA() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -90,38 +89,67 @@ export default function WorkerCTA() {
             </p>
           </motion.div>
 
-          {/* Image Card */}
+          {/* Illustrative acceptance preview */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="https://cdn.abacus.ai/images/17f7e900-b91c-42ec-a3cb-5269a19200be.png"
-                alt="Premium Sydney hospitality venue"
-                fill
-                className="object-cover"
+            <div className="relative aspect-square max-w-md mx-auto rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#d4a853] via-[#e8c77b] to-[#d4a853] p-8 flex items-center justify-center">
+              <div
+                aria-hidden
+                className="absolute inset-0 opacity-[0.12]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#1e3a5f 1px, transparent 1px), linear-gradient(90deg, #1e3a5f 1px, transparent 1px)",
+                  backgroundSize: "36px 36px",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f] via-transparent to-transparent" />
-              
-              {/* Overlay Card */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white rounded-xl p-5 shadow-lg">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-full bg-[#d4a853]/20 flex items-center justify-center">
-                      <span className="text-2xl">🎉</span>
-                    </div>
-                    <div>
-                      <p className="font-bold text-[#1e3a5f]">Congratulations!</p>
-                      <p className="text-sm text-gray-600">You're in the Elite 8%</p>
-                    </div>
+              <div
+                aria-hidden
+                className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/20 blur-3xl"
+              />
+
+              {/* Acceptance card */}
+              <div className="relative w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                    Acceptance Preview
+                  </span>
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-semibold rounded-full">
+                    APPROVED
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d4a853] to-[#e8c77b] flex items-center justify-center shadow-md">
+                    <Sparkles className="w-7 h-7 text-white" />
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-[#faf9f6] rounded-lg">
-                    <span className="text-gray-600">Weekly potential</span>
-                    <span className="text-xl font-bold text-[#d4a853]">$800-1,200</span>
+                  <div>
+                    <p className="font-bold text-[#1e3a5f] text-lg leading-tight">You&rsquo;re in.</p>
+                    <p className="text-sm text-gray-600">Welcome to the Elite 8%</p>
                   </div>
+                </div>
+
+                <div className="space-y-2 mb-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>Behavioural assessment passed</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>Reliability Score: 89/100</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-700">
+                    <ShieldCheck className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span>RSA + references verified</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center p-3 bg-[#faf9f6] rounded-lg">
+                  <span className="text-gray-600 text-sm">Weekly potential</span>
+                  <span className="text-xl font-bold text-[#1e3a5f]">$800&ndash;1,200</span>
                 </div>
               </div>
             </div>

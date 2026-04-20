@@ -2,33 +2,29 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Star, Quote, Shield, Users, MapPin } from "lucide-react";
-import Image from "next/image";
+import { Shield, Users, MapPin, Star, GraduationCap, FileCheck, HandshakeIcon, BadgeCheck } from "lucide-react";
 
 export default function Testimonials() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const testimonials = [
+  const commitments = [
     {
-      quote: "Had a bartender call in sick 2 hours before Friday night service. OCN had someone there in 45 minutes. Absolute lifesaver.",
-      author: "Sarah M.",
-      role: "Bar Manager, Inner West",
-      rating: 5,
-      image: "https://cdn.abacus.ai/images/771a4d7c-f653-4554-8920-b3a54524f208.png",
+      icon: GraduationCap,
+      eyebrow: "Evidence-based screening",
+      title: "Psychology-led, not gut-feel",
+      body: "Every candidate is assessed by Diego using a Master's in Psychology framework — dependability, stress response, emotional regulation. We predict behaviour, we don't just run a CV check.",
     },
     {
-      quote: "After dealing with unreliable platform workers, the quality difference is night and day. The Reliability Score actually means something.",
-      author: "Michael T.",
-      role: "Restaurant Owner, Newtown",
-      rating: 5,
-      image: "https://cdn.abacus.ai/images/9960a271-0d84-455c-9901-f19f17461c53.png",
+      icon: FileCheck,
+      eyebrow: "The Reliability Score",
+      title: "A single number you can trust",
+      body: "Each candidate earns a Reliability Score out of 100 based on behavioural assessment, reference checks and shift history. Only profiles above 75 enter the network — you always see the top 8%.",
     },
     {
-      quote: "The personal service from Diego makes all the difference. He knows our venue and sends people who fit our culture.",
-      author: "Lisa K.",
-      role: "Cafe Owner, Marrickville",
-      rating: 5,
-      image: null,
+      icon: HandshakeIcon,
+      eyebrow: "Our no-show guarantee",
+      title: "If they don't show up, you don't pay",
+      body: "We commit in writing: if a candidate we introduced fails to arrive, the $99 introduction fee is waived and Diego personally sources a replacement at no extra cost. Zero risk to try us.",
     },
   ];
 
@@ -50,72 +46,53 @@ export default function Testimonials() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
-            What Venues Say
+            <BadgeCheck className="w-4 h-4 inline mr-1" />
+            The OCN Standard
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Trusted by Sydney Venue Managers
+            Why venue managers take the first call
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            {"Here's what Inner West venue owners have to say about OCN."}
+            OCN is a new, founder-led Sydney marketplace. Instead of paid reviews, here&rsquo;s
+            what we put in writing for every venue that works with us.
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {testimonials.map((testimonial, index) => (
+          {commitments.map((item, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/15 transition-all duration-300"
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-7 hover:bg-white/15 transition-all duration-300 border border-white/10"
             >
-              <Quote className="w-10 h-10 text-[#d4a853] mb-4 opacity-50" />
-
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, idx) => (
-                  <Star key={idx} className="w-5 h-5 text-[#d4a853] fill-[#d4a853]" />
-                ))}
+              <div className="w-12 h-12 rounded-xl bg-[#d4a853]/20 flex items-center justify-center mb-5">
+                <item.icon className="w-6 h-6 text-[#d4a853]" />
               </div>
 
-              <p className="text-white/90 mb-6 leading-relaxed">
-                &ldquo;{testimonial.quote}&rdquo;
+              <p className="text-[#d4a853] text-xs font-semibold uppercase tracking-wider mb-2">
+                {item.eyebrow}
               </p>
-
-              <div className="flex items-center gap-3">
-                {testimonial.image ? (
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-300">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.author}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#d4a853]/20 flex items-center justify-center">
-                    <span className="text-[#d4a853] font-bold">
-                      {testimonial.author.charAt(0)}
-                    </span>
-                  </div>
-                )}
-                <div>
-                  <p className="text-white font-semibold">{testimonial.author}</p>
-                  <p className="text-white/60 text-sm">{testimonial.role}</p>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold text-white mb-3 leading-snug">
+                {item.title}
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                {item.body}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Pillars instead of fake stats */}
+        {/* Founder-led credibility strip */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {pillars.map((p, i) => (
-            <div key={i} className="text-center p-4 bg-white/5 rounded-xl">
+            <div key={i} className="text-center p-4 bg-white/5 rounded-xl border border-white/10">
               <div className="w-10 h-10 rounded-full bg-[#d4a853]/20 flex items-center justify-center mx-auto mb-3">
                 <p.icon className="w-5 h-5 text-[#d4a853]" />
               </div>

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Send, Building2, User, Mail, Phone, MessageSquare,
-  CheckCircle, AlertCircle, Loader2, MapPin, Briefcase, Users
+  Send, Building2, User, Mail, MessageSquare,
+  CheckCircle, AlertCircle, Loader2, MapPin, Briefcase, Users, Phone
 } from "lucide-react";
 
 type ServiceType = "casual" | "permanent";
@@ -93,7 +93,6 @@ export default function ContactForm() {
 
           {/* Info Side */}
           <motion.div
-            
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -106,7 +105,7 @@ export default function ContactForm() {
               <span className="text-[#d4a853]">staffing problem</span>
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Whether you need reliable casual staff for this weekend or a permanent hire for your team â€”
+              Whether you need reliable casual staff for this weekend or a permanent hire for your team &mdash;
               Diego handles it personally.
             </p>
 
@@ -131,28 +130,29 @@ export default function ContactForm() {
                 <div>
                   <h3 className="font-semibold text-[#1e3a5f] mb-1">Permanent Placement</h3>
                   <p className="text-gray-600 text-sm">
-                    Venue Managers, Head Chefs, Supervisors. Found in 10â€“14 days. 60-day replacement guarantee.
+                    Venue Managers, Head Chefs, Supervisors. Found in 10&ndash;14 days. 60-day replacement guarantee.
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 bg-[#1e3a5f] rounded-xl text-white">
-                <p className="font-semibold mb-1">Prefer a quick call?</p>
+              <div className="p-5 bg-[#1e3a5f] rounded-xl text-white">
+                <p className="font-semibold mb-2">Prefer email?</p>
                 <a
-                  href="tel:+61XXXXXXXXX"
-                  className="text-[#d4a853] text-xl font-bold hover:text-[#e8c77b] transition-colors"
+                  href="mailto:hello@oncallnetwork.com.au"
+                  className="inline-flex items-center gap-2 text-[#d4a853] text-lg font-bold hover:text-[#e8c77b] transition-colors break-all"
                 >
-                  0XXX XXX XXX
+                  <Mail className="w-5 h-5 flex-shrink-0" />
+                  <span>hello@oncallnetwork.com.au</span>
                 </a>
-                <p className="text-white/60 text-sm mt-1">
-                  Diego answers directly â€” 7 days, 8amâ€“9pm
+                <p className="text-white/60 text-sm mt-2">
+                  Diego replies personally within 2 hours on business days.
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-              Diego responds personally within 2 hours on business days.
+              Every enquiry is handled directly by the founder.
             </div>
           </motion.div>
 
@@ -216,8 +216,8 @@ export default function ContactForm() {
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
                     {isCasual
-                      ? "Pre-screened casual professionals â€” $99/intro or $199/month"
-                      : "Permanent placement â€” Chef, Manager, Supervisor. 10â€“14 day turnaround"}
+                      ? "Pre-screened casual professionals \u2014 $99/intro or $199/month"
+                      : "Permanent placement \u2014 Chef, Manager, Supervisor. 10\u201314 day turnaround"}
                   </p>
                 </div>
 
@@ -340,7 +340,7 @@ export default function ContactForm() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
                     >
-                      <option value="no">Planning ahead â€” not urgent</option>
+                      <option value="no">Planning ahead &mdash; not urgent</option>
                       <option value="yes">Need staff this week</option>
                       <option value="today">Need someone today / ASAP</option>
                     </select>
@@ -406,4 +406,3 @@ export default function ContactForm() {
     </section>
   );
 }
-

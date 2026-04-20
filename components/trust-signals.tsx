@@ -54,7 +54,7 @@ export default function TrustSignals() {
     {
       icon: Users,
       title: "Founder Direct Line",
-      description: "Personal service from Diego. Not a call centre. Priority Access members get his WhatsApp.",
+      description: "Personal service from Diego. Not a call centre. Priority Access members get direct email access to the founder.",
     },
   ];
 

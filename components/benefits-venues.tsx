@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Shield, DollarSign, Phone, Users, CheckCircle, Award } from "lucide-react";
-import Image from "next/image";
+import { Shield, DollarSign, Mail, Users, CheckCircle, Award, Star, Clock } from "lucide-react";
 
 export default function BenefitsVenues() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -25,9 +24,9 @@ export default function BenefitsVenues() {
       description: "OCN is a marketplace. You pay the candidate directly at the rate you agree. No 25-35% markup like labour hire agencies.",
     },
     {
-      icon: Phone,
+      icon: Mail,
       title: "Founder Direct Line",
-      description: "Priority Access members get Diego's direct WhatsApp. Real accountability, not a call centre.",
+      description: "Priority Access members reach Diego directly on email. Real accountability, not a call centre.",
     },
     {
       icon: Users,
@@ -86,32 +85,69 @@ export default function BenefitsVenues() {
             </div>
           </motion.div>
 
-          {/* Image */}
+          {/* Sample Profile Preview — illustrative UI */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative"
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="https://cdn.abacus.ai/images/50598485-24c1-46b6-8421-e25f8448802a.png"
-                alt="Professional kitchen team working together"
-                fill
-                className="object-cover"
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1e3a5f] via-[#2a4a6f] to-[#0f1e32] p-8 flex items-center justify-center">
+              {/* Decorative grid pattern */}
+              <div
+                aria-hidden
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#d4a853 1px, transparent 1px), linear-gradient(90deg, #d4a853 1px, transparent 1px)",
+                  backgroundSize: "32px 32px",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1e3a5f]/60 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                      <CheckCircle className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-[#1e3a5f]">Candidate Matched</p>
-                      <p className="text-sm text-gray-600">Reliability Score: 91/100</p>
-                    </div>
+              <div
+                aria-hidden
+                className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#d4a853]/15 blur-3xl"
+              />
+
+              {/* Sample candidate card */}
+              <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                    Sample Candidate Profile
+                  </span>
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-semibold rounded-full">
+                    AVAILABLE
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d4a853] to-[#e8c77b] flex items-center justify-center text-[#1e3a5f] font-bold text-xl shadow-md">
+                    JM
                   </div>
+                  <div>
+                    <p className="font-bold text-[#1e3a5f]">Bartender · 4 yrs exp</p>
+                    <p className="text-xs text-gray-500">Newtown · RSA verified</p>
+                  </div>
+                </div>
+
+                <div className="bg-[#faf9f6] rounded-xl p-4 mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-gray-500 font-medium">Reliability Score</span>
+                    <span className="text-2xl font-bold text-[#1e3a5f]">91<span className="text-sm text-gray-400">/100</span></span>
+                  </div>
+                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full w-[91%] bg-gradient-to-r from-[#d4a853] to-[#e8c77b] rounded-full" />
+                  </div>
+                  <div className="flex items-center gap-1 mt-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#d4a853] text-[#d4a853]" />
+                    ))}
+                    <span className="text-xs text-gray-500 ml-1">27 shifts · 100% show-up</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-xs text-gray-600">
+                  <Clock className="w-3.5 h-3.5 text-[#d4a853]" />
+                  <span>Matched in under 24 hours</span>
                 </div>
               </div>
             </div>
