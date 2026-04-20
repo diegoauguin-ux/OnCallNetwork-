@@ -17,10 +17,10 @@ export default function Footer() {
               <span className="font-semibold text-lg">On Call Network</span>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
-              {"Sydney's hospitality staffing marketplace. Pre-screened professionals with a verified Reliability Score. Inner West, Eastern Suburbs, CBD, North Shore."}
+              A founder-led hospitality staff introduction service for Sydney venues. Every candidate is personally interviewed and reference-checked before they&rsquo;re introduced to a venue.
             </p>
             <p className="text-[#d4a853] font-semibold text-sm">
-              Connecting venues with reliable staff.
+              Inner West &middot; Eastern Suburbs &middot; CBD &middot; North Shore
             </p>
           </div>
 

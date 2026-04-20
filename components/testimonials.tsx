@@ -2,37 +2,40 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Shield, Users, MapPin, Star, GraduationCap, FileCheck, HandshakeIcon, BadgeCheck } from "lucide-react";
+import {
+  ClipboardList, FileCheck, HandshakeIcon, BadgeCheck,
+  MapPin, User, Lock, Flag,
+} from "lucide-react";
 
 export default function Testimonials() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const commitments = [
     {
-      icon: GraduationCap,
-      eyebrow: "Evidence-based screening",
-      title: "Psychology-led, not gut-feel",
-      body: "Every candidate is assessed by Diego using a Master's in Psychology framework — dependability, stress response, emotional regulation. We predict behaviour, we don't just run a CV check.",
-    },
-    {
-      icon: FileCheck,
-      eyebrow: "The Reliability Score",
-      title: "A single number you can trust",
-      body: "Each candidate earns a Reliability Score out of 100 based on behavioural assessment, reference checks and shift history. Only profiles above 75 enter the network — you always see the top 8%.",
+      icon: ClipboardList,
+      eyebrow: "Documented process",
+      title: "The same rubric for every candidate",
+      body: "A 5-stage screening funnel with a written interview framework and scoring rubric. No gut-feel, no shortcuts. We&rsquo;ll share the framework with you on request &mdash; that&rsquo;s how confident we are in it.",
     },
     {
       icon: HandshakeIcon,
-      eyebrow: "Our no-show guarantee",
-      title: "If they don't show up, you don't pay",
-      body: "We commit in writing: if a candidate we introduced fails to arrive, the $99 introduction fee is waived and Diego personally sources a replacement at no extra cost. Zero risk to try us.",
+      eyebrow: "No-show guarantee",
+      title: "If they don&rsquo;t show up, you don&rsquo;t pay",
+      body: "Written into every agreement: if a candidate we introduced fails to arrive, the introduction fee is refunded in full and Diego personally sources a replacement at no extra cost. Zero risk to try us once.",
+    },
+    {
+      icon: FileCheck,
+      eyebrow: "Direct-hire marketplace",
+      title: "You pay the worker, not a markup",
+      body: "OCN is not a labour-hire agency. You agree the hourly rate directly with the candidate, pay them directly, and run your own shift. We charge an introduction fee. That&rsquo;s it &mdash; no hidden percentages.",
     },
   ];
 
   const pillars = [
-    { icon: Shield, label: "Psychology Screened", sub: "Master's in Psychology assessment" },
-    { icon: Users, label: "Founder Accountable", sub: "Diego handles every introduction personally" },
-    { icon: MapPin, label: "Inner West Specialist", sub: "Local network, local knowledge" },
-    { icon: Star, label: "Top 8% Only", sub: "75+ Reliability Score to join" },
+    { icon: User, label: "Founder accountable", sub: "Diego handles every introduction personally" },
+    { icon: Lock, label: "Written commitments", sub: "Every promise on this page is contractable" },
+    { icon: MapPin, label: "Sydney local", sub: "Inner West, East, CBD & North Shore only" },
+    { icon: Flag, label: "Founding 10 venues", sub: "Deliberately small first quarter" },
   ];
 
   return (
@@ -50,11 +53,12 @@ export default function Testimonials() {
             The OCN Standard
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Why venue managers take the first call
+            What we promise in writing
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            OCN is a new, founder-led Sydney marketplace. Instead of paid reviews, here&rsquo;s
-            what we put in writing for every venue that works with us.
+            OCN is a new, founder-led Sydney network. Instead of inventing
+            testimonials we haven&rsquo;t earned yet, here are the commitments
+            we put on every venue agreement from day one.
           </p>
         </motion.div>
 
@@ -77,14 +81,14 @@ export default function Testimonials() {
               <h3 className="text-xl font-bold text-white mb-3 leading-snug">
                 {item.title}
               </h3>
-              <p className="text-white/70 text-sm leading-relaxed">
-                {item.body}
-              </p>
+              <p
+                className="text-white/70 text-sm leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: item.body }}
+              />
             </motion.div>
           ))}
         </div>
 
-        {/* Founder-led credibility strip */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

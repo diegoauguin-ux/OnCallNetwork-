@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ArrowRight, CheckCircle, Award, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle, Award, UserCheck, ShieldCheck, Users } from "lucide-react";
 
 export default function WorkerCTA() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -18,10 +18,18 @@ export default function WorkerCTA() {
   ];
 
   const requirements = [
-    "RSA Certificate (mandatory)",
-    "2+ years hospitality experience",
-    "Reliable & professional",
-    "Inner West Sydney availability",
+    "RSA certificate (mandatory)",
+    "Prior hospitality experience in Australia",
+    "Legal right to work in Australia",
+    "Inner West / East / CBD / North Shore availability",
+  ];
+
+  const pipeline = [
+    { label: "Written application", sub: "5 minutes online" },
+    { label: "15-min phone screen", sub: "If your application fits" },
+    { label: "45-min founder interview", sub: "In person or video with Diego" },
+    { label: "Two reference calls", sub: "Last two venue managers" },
+    { label: "Welcome to the network", sub: "You receive shift offers" },
   ];
 
   return (
@@ -36,21 +44,22 @@ export default function WorkerCTA() {
           >
             <div className="flex items-center gap-2 mb-4">
               <Award className="w-6 h-6 text-[#d4a853]" />
-              <span className="text-[#d4a853] font-semibold">Now Accepting Applications</span>
+              <span className="text-[#d4a853] font-semibold">Accepting applications &mdash; Inner West Sydney</span>
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to Join the Elite 8%?
+              Work with venues that{" "}
+              <span className="text-[#d4a853]">respect you</span>
             </h2>
-            
+
             <p className="text-lg text-white/80 mb-8">
-              We're looking for Sydney's best hospitality professionals. 
-              Reliable workers who show up, deliver quality, and represent the industry well.
+              If you show up on time, do the job properly and treat the team well,
+              OCN will keep introducing you to venues that do the same. Your rate,
+              your hours, paid by the venue directly &mdash; no agency taking a cut.
             </p>
 
-            {/* Roles */}
             <div className="mb-8">
-              <h3 className="text-white font-semibold mb-3">Roles We're Hiring:</h3>
+              <h3 className="text-white font-semibold mb-3">Roles we match:</h3>
               <div className="flex flex-wrap gap-2">
                 {roles?.map((role, index) => (
                   <span
@@ -63,9 +72,8 @@ export default function WorkerCTA() {
               </div>
             </div>
 
-            {/* Requirements */}
             <div className="mb-8">
-              <h3 className="text-white font-semibold mb-3">Requirements:</h3>
+              <h3 className="text-white font-semibold mb-3">Minimum requirements:</h3>
               <ul className="space-y-2">
                 {requirements?.map((req, index) => (
                   <li key={index} className="flex items-center gap-2 text-white/80">
@@ -76,20 +84,19 @@ export default function WorkerCTA() {
               </ul>
             </div>
 
-            {/* CTA - Worker Application */}
             <Link
               href="/register/worker"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
             >
-              Apply in 2 Minutes
+              Start your application
               <ArrowRight className="w-5 h-5" />
             </Link>
             <p className="text-white/60 text-sm mt-4">
-              Mobile-friendly application. Screening process takes 7-10 days.
+              Application is free. No payment, ever, to join or stay in the network.
             </p>
           </motion.div>
 
-          {/* Illustrative acceptance preview */}
+          {/* Screening pipeline card — honest, not fake acceptance preview */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -111,48 +118,58 @@ export default function WorkerCTA() {
                 className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/20 blur-3xl"
               />
 
-              {/* Acceptance card */}
+              {/* Honest 5-step pipeline */}
               <div className="relative w-full max-w-sm bg-white rounded-2xl p-6 shadow-2xl">
                 <div className="flex items-center justify-between mb-5">
                   <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
-                    Acceptance Preview
+                    What joining looks like
                   </span>
-                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-semibold rounded-full">
-                    APPROVED
+                  <span className="px-2 py-0.5 bg-[#d4a853]/20 text-[#1e3a5f] text-[10px] font-semibold rounded-full">
+                    5 STEPS
                   </span>
                 </div>
 
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#d4a853] to-[#e8c77b] flex items-center justify-center shadow-md">
-                    <Sparkles className="w-7 h-7 text-white" />
+                <div className="flex items-center gap-3 mb-5 pb-4 border-b border-gray-100">
+                  <div className="w-11 h-11 rounded-full bg-[#1e3a5f] flex items-center justify-center flex-shrink-0">
+                    <UserCheck className="w-5 h-5 text-[#d4a853]" />
                   </div>
                   <div>
-                    <p className="font-bold text-[#1e3a5f] text-lg leading-tight">You&rsquo;re in.</p>
-                    <p className="text-sm text-gray-600">Welcome to the Elite 8%</p>
+                    <p className="font-bold text-[#1e3a5f] leading-tight">From application to first shift</p>
+                    <p className="text-xs text-gray-500">Typical timeline: 7&ndash;14 days</p>
                   </div>
                 </div>
 
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span>Behavioural assessment passed</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span>Reliability Score: 89/100</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <ShieldCheck className="w-4 h-4 text-green-500 flex-shrink-0" />
-                    <span>RSA + references verified</span>
-                  </div>
-                </div>
+                <ol className="space-y-3 mb-4">
+                  {pipeline.map((step, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#d4a853] text-[#1e3a5f] text-[11px] font-bold flex items-center justify-center mt-0.5">
+                        {i + 1}
+                      </span>
+                      <div>
+                        <p className="text-sm font-semibold text-[#1e3a5f] leading-tight">{step.label}</p>
+                        <p className="text-xs text-gray-500">{step.sub}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
 
-                <div className="flex justify-between items-center p-3 bg-[#faf9f6] rounded-lg">
-                  <span className="text-gray-600 text-sm">Weekly potential</span>
-                  <span className="text-xl font-bold text-[#1e3a5f]">$800&ndash;1,200</span>
+                <div className="flex items-center gap-2 p-3 bg-[#faf9f6] rounded-lg">
+                  <ShieldCheck className="w-4 h-4 text-[#d4a853] flex-shrink-0" />
+                  <span className="text-xs text-gray-600">
+                    We only introduce people we&rsquo;d vouch for.
+                  </span>
                 </div>
               </div>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="absolute -bottom-4 -right-4 bg-[#1e3a5f] text-white px-4 py-2 rounded-full font-bold shadow-lg text-sm flex items-center gap-2"
+            >
+              <Users className="w-4 h-4" /> Small, on purpose
+            </motion.div>
           </motion.div>
         </div>
       </div>

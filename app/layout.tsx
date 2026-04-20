@@ -12,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> {
   
   return {
     metadataBase: new URL(baseUrl),
-    title: "On Call Network | Premium Hospitality Staffing Sydney | 97% Show-Up Rate",
-    description: "Sydney's most reliable hospitality staffing agency. 97% show-up rate, <2hr emergency response, vetted bartenders, waiters & chefs. Solve the $4,500 no-show problem.",
-    keywords: "hospitality staffing Sydney, emergency staff Sydney, bartender hire Sydney, waiter agency Sydney, chef staffing Inner West, reliable hospitality workers",
+    title: "On Call Network | Founder-led Hospitality Staff Introductions, Sydney",
+    description: "A founder-led hospitality network for Sydney venues. Every candidate is personally interviewed by Diego using a structured 5-stage screening process, with a written no-show guarantee. Inner West, Eastern Suburbs, CBD and North Shore.",
+    keywords: "hospitality staffing Sydney, bartender introductions Sydney, waiter agency Sydney, chef staffing Inner West, hospitality recruitment Sydney, reliable hospitality workers, pre-screened hospitality staff",
     openGraph: {
-      title: "On Call Network | Premium Hospitality Staffing Sydney",
-      description: "97% show-up rate. Vetted hospitality professionals. <2hr emergency response. Never worry about staff no-shows again.",
+      title: "On Call Network | Founder-led Hospitality Staff Introductions",
+      description: "Pre-screened Sydney hospitality staff, personally interviewed by the founder. Written no-show guarantee. You hire the worker directly &mdash; no hourly markup.",
       url: baseUrl,
       siteName: "On Call Network",
       images: [
@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "/og-image.png",
           width: 1200,
           height: 630,
-          alt: "On Call Network - Premium Hospitality Staffing Sydney",
+          alt: "On Call Network - Founder-led Hospitality Staff Introductions, Sydney",
         },
       ],
       locale: "en_AU",
@@ -33,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "On Call Network | Premium Hospitality Staffing Sydney",
-      description: "97% show-up rate. Vetted hospitality professionals. <2hr emergency response.",
+      title: "On Call Network | Founder-led Hospitality Staff Introductions",
+      description: "Pre-screened Sydney hospitality staff. 5-stage interview framework. Written no-show guarantee. Inner West &middot; East &middot; CBD &middot; North Shore.",
       images: ["/og-image.png"],
     },
     icons: {

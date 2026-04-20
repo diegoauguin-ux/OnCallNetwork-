@@ -98,15 +98,15 @@ export default function ContactForm() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
-              Get in touch
+              Founding venues
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-              Let&apos;s solve your{" "}
-              <span className="text-[#d4a853]">staffing problem</span>
+              Tell us about your venue.{" "}
+              <span className="text-[#d4a853]">No pitch, no pressure.</span>
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Whether you need reliable casual staff for this weekend or a permanent hire for your team &mdash;
-              Diego handles it personally.
+              A 15-minute call with Diego. If OCN isn&rsquo;t the right fit for your venue right now,
+              he&rsquo;ll tell you and point you toward a better option. That&rsquo;s the whole call.
             </p>
 
             {/* Service highlights */}
@@ -116,9 +116,9 @@ export default function ContactForm() {
                   <Users className="w-5 h-5 text-[#d4a853]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#1e3a5f] mb-1">Casual Introductions</h3>
+                  <h3 className="font-semibold text-[#1e3a5f] mb-1">Casual introductions</h3>
                   <p className="text-gray-600 text-sm">
-                    Pre-screened professionals with a verified Reliability Score. $99/intro or $199/month unlimited.
+                    Pre-screened hospitality professionals &mdash; interviewed and reference-checked before they meet your venue. $99 per intro, or $199/month unlimited.
                   </p>
                 </div>
               </div>
@@ -128,9 +128,9 @@ export default function ContactForm() {
                   <Briefcase className="w-5 h-5 text-[#1e3a5f]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#1e3a5f] mb-1">Permanent Placement</h3>
+                  <h3 className="font-semibold text-[#1e3a5f] mb-1">Permanent placement</h3>
                   <p className="text-gray-600 text-sm">
-                    Venue Managers, Head Chefs, Supervisors. Found in 10&ndash;14 days. 60-day replacement guarantee.
+                    Venue Managers, Head Chefs, Supervisors. Search-and-introduce model with a 60-day replacement guarantee.
                   </p>
                 </div>
               </div>
@@ -145,14 +145,14 @@ export default function ContactForm() {
                   <span>hello@oncallnetwork.com.au</span>
                 </a>
                 <p className="text-white/60 text-sm mt-2">
-                  Diego replies personally within 2 hours on business days.
+                  Diego replies personally within 2 business hours.
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-              Every enquiry is handled directly by the founder.
+              Every enquiry is read and replied to by the founder. No assistants, no auto-responders.
             </div>
           </motion.div>
 

@@ -11,47 +11,51 @@ export default function FAQ() {
 
   const venuesFAQ = [
     {
-      question: "How fast can you really respond?",
-      answer: "For EXPRESS bookings (<6 hours notice), we guarantee confirmation within 15 minutes and worker arrival within 2 hours. Our workers arrive 15 minutes early, uniformed, briefed on your venue, and ready to work. For PREMIUM and PLANNED bookings, we confirm same-day or within 24 hours respectively.",
+      question: "OCN is new. Why should I trust it?",
+      answer: "You shouldn't — not blindly. That's exactly why we built a no-show guarantee into every agreement: if the candidate we introduce doesn't arrive, the fee is refunded and Diego personally sources a replacement. Your risk on the first introduction is limited to time, not money. Try us once, judge us on what actually happens.",
     },
     {
-      question: "What if the worker doesn't show up?",
-      answer: "Our show-up rate is 97% (vs 65% industry average) thanks to our Master's-in-Psychology behavioural screening. But if we ever fail to deliver, you don't pay. Period. We'll also attempt to find a replacement immediately at no additional charge.",
+      question: "How do you screen candidates?",
+      answer: "A documented 5-stage process, the same for every applicant. Stage 1: written application. Stage 2: 15-minute structured phone screen. Stage 3: 45-minute behavioural interview with Diego using a written framework and scoring rubric. Stage 4: two reference calls with the applicant's last two venue managers. Stage 5: only then do we introduce them to a venue. We'll share the interview framework with any venue that asks.",
     },
     {
-      question: "How do you screen your workers?",
-      answer: "Every applicant goes through a rigorous screening process developed by our founder Diego, who holds a Master's in Psychology. We assess reliability, professionalism, and behavioural indicators. Only 8% of applicants make it into our network. All workers must have RSA certification and 2+ years experience.",
+      question: "What happens if the worker doesn't show up?",
+      answer: "The introduction fee is refunded in full, and Diego personally sources a replacement at no extra cost. This is written into your agreement, not just a marketing promise. You never pay for a no-show.",
     },
     {
-      question: "What areas do you cover?",
-      answer: "We focus on Sydney's Inner West: Newtown, Enmore, Marrickville, Balmain, Leichhardt, Drummoyne, and surrounding suburbs. This geographic focus ensures fast response times and workers who know the local scene.",
+      question: "How is this different from Sidekicker or Barcats?",
+      answer: "Sidekicker is a labour-hire agency — they employ the worker, add an hourly markup, and you pay them. Barcats is a public job board where anyone can post. OCN is neither: we're an introduction service. You hire the worker directly at a rate you agree with them, pay them directly, and we charge one flat introduction fee. No markup on hours worked.",
     },
     {
-      question: "What types of staff can you provide?",
-      answer: "Bartenders, waiters/waitresses, kitchen hands, chefs (all levels), baristas, and floor managers. All our workers are experienced hospitality professionals, not students looking for casual work.",
+      question: "What areas and roles do you cover?",
+      answer: "Inner West, Eastern Suburbs, CBD and North Shore Sydney. Bartenders, waitstaff, baristas, kitchen hands, chefs and floor managers. Hospitality only — we deliberately don't do other industries.",
+    },
+    {
+      question: "How fast can you respond?",
+      answer: "For urgent requests with less than 24 hours' notice, our commitment is a reply from Diego within 2 business hours and an introduction attempt within the day. For planned requests, we confirm within 24 hours. We won't promise arrival times we can't control — what arrives is whoever the candidate's own transport allows.",
     },
     {
       question: "Do you offer permanent placements?",
-      answer: "Yes! We offer permanent placement services for senior roles (Head Chef, Sous Chef, Managers) at 20% of annual salary with a 90-day replacement guarantee. Contact us to discuss your hiring needs.",
+      answer: "Yes. For senior roles such as Head Chef, Sous Chef and Venue Manager we run a search-and-introduce service with a below-market flat fee and a 60-day replacement guarantee. Get in touch to discuss specifics.",
     },
   ];
 
   const workersFAQ = [
     {
-      question: "How much can I earn?",
-      answer: "$32-40/hr base rate depending on role and notice period. Plus penalty rates: 125% Saturdays, 150% Sundays, 250% Public Holidays. Top workers earning $800-1,200/week with 3-4 shifts.",
+      question: "How much do I get paid?",
+      answer: "You agree your hourly rate directly with the venue, in line with the Hospitality Industry (General) Award as a minimum. OCN never takes a cut from your pay — the venue pays you in full, to you, under their payment terms. Weekend and public holiday loadings apply as per the Award.",
     },
     {
-      question: "Do I have to accept every shift offered?",
-      answer: "No! Real flexibility means you choose. Accept only shifts that work for your schedule. No mandatory requirements or penalties for declining offers.",
+      question: "Do I have to accept every shift?",
+      answer: "No. You accept only the offers that suit your diary. There is no mandatory acceptance, no minimum shifts and no penalty for saying no.",
     },
     {
       question: "What happens if I can't make a shift I accepted?",
-      answer: "Life happens. Cancel with 4+ hours notice and it's fine. However, reliability is our core value—3 no-shows without valid reason means removal from the network.",
+      answer: "Life happens. Let us and the venue know with as much notice as possible — ideally 4+ hours. Repeated no-shows without reasonable notice will mean removal from the network, because the whole system depends on the word of the people in it.",
     },
     {
-      question: "Why only 8% acceptance?",
-      answer: "Our venues pay premium rates for premium reliability. We maintain high standards to protect both venue relationships and the reputation of workers in our network. Being in the 8% means venues trust and request you.",
+      question: "How selective is the screening?",
+      answer: "We interview every applicant personally before introducing them to a venue, and we check two references from your last two venue managers. We're not trying to filter to a headline percentage — we're trying to make sure every person in the network is someone Diego would genuinely vouch for.",
     },
   ];
 

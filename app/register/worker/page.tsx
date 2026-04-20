@@ -120,7 +120,7 @@ export default function WorkerRegistrationPage() {
             Apply to Join OCN
           </h1>
           <p className="text-gray-600 mb-4">
-            Only the top 8% of applicants are accepted. We review every application personally and get in touch within 48 hours.
+            Every application is reviewed personally by Diego. You&rsquo;ll hear back within 48 hours &mdash; a yes, a not-yet, or a clear reason why.
           </p>
           <p className="text-sm text-gray-500 mb-4">
             2-minute mobile form. Fields marked * are required.
@@ -128,7 +128,7 @@ export default function WorkerRegistrationPage() {
           <div className="flex items-center gap-2 p-3 bg-[#1e3a5f]/5 rounded-lg">
             <Shield className="w-5 h-5 text-[#d4a853] flex-shrink-0" />
             <p className="text-sm text-[#1e3a5f]">
-              Every accepted candidate receives a <strong>Reliability Score</strong> — your verified credential with Sydney venues.
+              Your rate is paid by the venue directly. <strong>OCN never takes a cut from your pay.</strong>
             </p>
           </div>
         </div>
@@ -355,7 +355,7 @@ export default function WorkerRegistrationPage() {
           </Form>
 
           <p className="text-center text-gray-400 text-sm mt-6">
-            We review every application personally. Only the top 8% are accepted.
+            Every application is read by Diego personally. Expect a reply within 48 hours.
           </p>
         </div>
       </div>

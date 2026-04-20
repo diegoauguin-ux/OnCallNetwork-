@@ -18,11 +18,11 @@ export default function Pricing() {
       icon: Zap,
       color: "bg-[#1e3a5f]",
       features: [
-        "Browse verified candidate profiles",
-        "Reliability Score visible upfront",
+        "Diego shortlists from the screened network",
         "1–3 matched candidates introduced",
         "Standard matching within 24–48hrs",
         "Direct hire — you pay the candidate",
+        "No-show guarantee in writing",
       ],
       highlight: false,
       cta: "Get Started",
@@ -87,7 +87,7 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        {/* Vs competitors note */}
+        {/* How we differ from alternatives */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -95,7 +95,9 @@ export default function Pricing() {
           className="text-center mb-12"
         >
           <p className="text-sm text-gray-500">
-            vs Sidekicker: 25–35% hourly markup, they employ the staff · vs Barcats: generic job board, no screening
+            Labour-hire agencies add an hourly markup and employ the worker. Public job boards leave the screening to you.
+            <br className="hidden md:block" />
+            OCN introduces pre-screened candidates &mdash; you hire them directly.
           </p>
         </motion.div>
 
@@ -200,7 +202,7 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        {/* ROI */}
+        {/* What you actually pay for */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -209,18 +211,19 @@ export default function Pricing() {
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">The Math That Matters</h3>
+              <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">What the $99 actually buys</h3>
               <p className="text-gray-600">
-                A Friday no-show costs your venue an average of{" "}
-                <strong className="text-red-500">$380 in lost revenue</strong>.
-                A $99 OCN introduction pays for itself in under 4 minutes of service.
+                Not a worker, not a shift, not a timesheet &mdash; those belong to you.
+                You&rsquo;re paying for the screening work we did <em>before</em> the candidate
+                was introduced: application review, structured interview, scoring and
+                two reference calls. If they don&rsquo;t show, the fee is refunded.
               </p>
             </div>
             <Link
               href="#contact"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#d4a853] text-[#1e3a5f] font-bold rounded-lg hover:bg-[#e8c77b] transition-all whitespace-nowrap"
             >
-              Get Started — $99
+              Book a 15-min call
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -236,7 +239,7 @@ export default function Pricing() {
           <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 rounded-full">
             <Star className="w-5 h-5 text-green-600" />
             <span className="text-green-800 font-medium">
-              Introduction fee only applies when the candidate completes work. Zero risk.
+              No-show guarantee in writing. Fee refunded, replacement sourced at no extra cost.
             </span>
           </div>
         </motion.div>

@@ -11,32 +11,32 @@ export default function HowItWorksWorkers() {
     {
       number: "01",
       icon: FileText,
-      title: "Apply Online",
-      description: "5-minute application. Tell us about your experience and availability.",
+      title: "Apply online",
+      description: "A 5-minute written application covering experience, availability and RSA.",
     },
     {
       number: "02",
       icon: Users,
-      title: "Behavioral Screening",
-      description: "Quick interview with Diego. We assess reliability and professionalism.",
+      title: "Structured interview",
+      description: "A 45-minute interview with Diego using the same framework for every applicant.",
     },
     {
       number: "03",
       icon: CheckCircle,
-      title: "Get Approved",
-      description: "Only 8% accepted. If you're in, you're in the elite network.",
+      title: "Reference checks",
+      description: "We call your last two venue managers. Specific questions, not generic tick-boxes.",
     },
     {
       number: "04",
       icon: Smartphone,
-      title: "Receive Shift Offers",
-      description: "Get SMS/call offers. Accept what works for your schedule.",
+      title: "Receive shift offers",
+      description: "Offers arrive by SMS with the venue, rate and hours. You accept what suits you.",
     },
     {
       number: "05",
       icon: DollarSign,
-      title: "Work & Get Paid",
-      description: "Show up, deliver quality, get paid $32-40/hr + penalties.",
+      title: "Work & get paid by the venue",
+      description: "Your agreed rate is paid directly by the venue. OCN never takes a cut from your pay.",
     },
   ];
 
@@ -54,10 +54,10 @@ export default function HowItWorksWorkers() {
             Simple Process
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            How to Join the Network
+            How to join the network
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            From application to your first shift in as little as 7-10 days.
+            Five clear steps. Typical timeline: 7&ndash;14 days from application to first shift offer.
           </p>
         </motion.div>
 
