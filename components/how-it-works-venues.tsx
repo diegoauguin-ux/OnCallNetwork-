@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -11,35 +11,39 @@ export default function HowItWorksVenues() {
     {
       number: "01",
       icon: Search,
-      title: "Tell us what you need",
-      description: "A short brief: role, suburb, shift pattern, non-negotiables. Book a 15-min call with Diego or send it in writing \u2014 whichever suits.",
-      time: "15 min",
+      title: "Submit Your Role",
+      description:
+        "Tell us the role, team size, and what great looks like for your venue. 5 minutes.",
+      time: "5 minutes",
     },
     {
       number: "02",
       icon: UserCheck,
-      title: "We match from the network",
-      description: "Diego shortlists candidates who already passed the 5-stage screening and actually fit your brief. If no one fits, we tell you upfront.",
-      time: "24\u201348 hrs",
+      title: "We Screen Candidates",
+      description:
+        "Diego personally interviews every candidate using a psychology-based behavioral framework. Only the top 20% make the shortlist.",
+      time: "5-7 days",
     },
     {
       number: "03",
       icon: Handshake,
-      title: "You interview & hire directly",
-      description: "You speak with the candidate, agree the rate, and hire them directly. We charge the introduction fee only once the candidate actually works.",
-      time: "Direct hire",
+      title: "You Meet 3 Candidates",
+      description:
+        "Receive a shortlist of 3 pre-screened candidates within 5-7 days. You decide who to hire.",
+      time: "3 candidates",
     },
     {
       number: "04",
       icon: Star,
-      title: "Keep working with who you like",
-      description: "Build a preferred pool of candidates you\u2019ve worked with before. Next time you need someone, we start from that list.",
-      time: "Ongoing",
+      title: "Hire with Confidence",
+      description:
+        "Pay 15% of annual salary only when your chosen candidate starts. 60-day replacement guarantee included.",
+      time: "15% on hire",
     },
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section id="how-it-works" className="py-16 md:py-24 bg-white scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
@@ -52,10 +56,10 @@ export default function HowItWorksVenues() {
             How It Works
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            From brief to first shift in 4 steps
+            Permanent recruitment in 4 steps
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Diego handles the shortlist. You interview and hire directly. No agency overhead, no hourly markup &mdash; just a short introduction fee when the candidate actually works.
+            A boutique process designed for senior hospitality hires.
           </p>
         </motion.div>
 
@@ -102,7 +106,7 @@ export default function HowItWorksVenues() {
             href="#contact"
             className="inline-flex items-center gap-2 px-8 py-4 bg-[#1e3a5f] text-white font-semibold rounded-lg hover:bg-[#2a4a6f] transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Get Your First Introduction
+            Submit a Role Brief
             <ArrowRight className="w-5 h-5" />
           </a>
         </motion.div>

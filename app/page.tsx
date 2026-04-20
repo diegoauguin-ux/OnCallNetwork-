@@ -8,6 +8,7 @@ import Testimonials from "@/components/testimonials";
 import BenefitsWorkers from "@/components/benefits-workers";
 import HowItWorksWorkers from "@/components/how-it-works-workers";
 import WorkerCTA from "@/components/worker-cta";
+import CandidateApply from "@/components/candidate-apply";
 import FAQ from "@/components/faq";
 import ContactForm from "@/components/contact-form";
 import Footer from "@/components/footer";
@@ -27,10 +28,7 @@ export default function Home() {
       <HowItWorksVenues />
       <Pricing />
 
-      {/* Desktop only */}
-      <div className="hidden md:block">
-        <Testimonials />
-      </div>
+      <Testimonials />
 
       <section id="workers" className="scroll-mt-20">
         {/* Desktop only */}
@@ -41,6 +39,7 @@ export default function Home() {
         <WorkerCTA />
       </section>
 
+      <CandidateApply />
       <FAQ />
       <ContactForm />
       <Footer />

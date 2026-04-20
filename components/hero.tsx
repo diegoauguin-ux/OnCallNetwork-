@@ -1,16 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Shield, ArrowRight, MapPin } from "lucide-react";
+import { Shield, ArrowRight, MapPin } from "lucide-react";
 import Link from "next/link";
 
 export default function Hero() {
-  const processPoints = [
-    { value: "5-stage", label: "screening" },
-    { value: "45-min", label: "founder interview" },
-    { value: "$0", label: "if they don't show" },
-  ];
-
   return (
     <section id="venues" className="relative min-h-[90vh] flex items-center overflow-hidden scroll-mt-20 bg-[#0f1e32]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0f1e32] via-[#1e3a5f] to-[#2a4a6f]" />
@@ -51,28 +45,24 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          {/* Headline — problem-first, honest */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
           >
-            The staff you book{" "}
-            <span className="text-[#d4a853]">actually show up.</span>
+            Sydney&apos;s Boutique Hospitality Recruitment
           </motion.h1>
 
-          {/* Subheadline — specificity + mechanism */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-white/80 mb-4 leading-relaxed"
           >
-            A founder-led hospitality network where every candidate is{" "}
-            <strong className="text-white">interviewed in person by Diego</strong>{" "}
-            using a structured, evidence-based screening framework &mdash; before
-            they ever meet your venue.
+            Permanent placement for Venue Managers, Bar Managers &amp; Head Chefs.
+            Psychology-screened candidates. 15% fee. 60-day guarantee. You pay
+            only when you hire.
           </motion.p>
 
           <motion.div
@@ -85,25 +75,6 @@ export default function Hero() {
             <span>Inner West &middot; Eastern Suburbs &middot; CBD &middot; North Shore</span>
           </motion.div>
 
-          {/* Commitment points — what we promise in writing */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 mb-10"
-          >
-            {[
-              "Structured 5-stage screening",
-              "No-show guarantee in writing",
-              "You hire directly &mdash; no hourly markup",
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-2 text-white/90">
-                <CheckCircle className="w-5 h-5 text-[#d4a853] flex-shrink-0" />
-                <span className="text-sm md:text-base" dangerouslySetInnerHTML={{ __html: item }} />
-              </div>
-            ))}
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,30 +85,27 @@ export default function Hero() {
               href="#contact"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Book a 15-min venue call
+              Submit a Role Brief
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              href="#how-it-works"
+              href="#apply"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold text-lg rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300"
             >
-              See how screening works
+              Apply as a Candidate
             </Link>
           </motion.div>
 
-          {/* Process stats — verifiable, not outcome claims */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20"
+            className="mt-12 pt-8 border-t border-white/20"
           >
-            {processPoints.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-[#d4a853]">{stat.value}</div>
-                <div className="text-sm text-white/70 mt-1">{stat.label}</div>
-              </div>
-            ))}
+            <p className="text-sm md:text-base text-white/75">
+              Venue Managers &middot; Bar Managers &middot; Head Chefs &middot; Sous Chefs &middot;
+              FOH Managers &mdash; Inner West &middot; CBD &middot; Eastern Suburbs
+            </p>
           </motion.div>
         </div>
       </div>

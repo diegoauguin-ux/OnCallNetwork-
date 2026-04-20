@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import {
   ShieldCheck, DollarSign, Mail, Users, MapPin, ClipboardList,
-  Lock, CheckCircle2,
+  CheckCircle2,
 } from "lucide-react";
 
 export default function BenefitsVenues() {
@@ -92,7 +92,7 @@ export default function BenefitsVenues() {
             </div>
           </motion.div>
 
-          {/* Screening framework card — the process IS the proof */}
+          {/* Illustrative candidate profile card */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -114,36 +114,36 @@ export default function BenefitsVenues() {
                 className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#d4a853]/15 blur-3xl"
               />
 
-              {/* Framework card — honest methodology preview */}
+              {/* Example profile card */}
               <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
-                    Interview rubric &middot; excerpt
+                    Candidate snapshot
                   </span>
-                  <span className="px-2 py-0.5 bg-[#1e3a5f]/10 text-[#1e3a5f] text-[10px] font-semibold rounded-full flex items-center gap-1">
-                    <Lock className="w-2.5 h-2.5" /> SHARED WITH VENUES
+                  <span className="px-2 py-0.5 bg-gray-100 text-gray-500 text-[10px] font-semibold rounded-full">
+                    Example Profile
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                  <div className="w-11 h-11 rounded-xl bg-[#1e3a5f] flex items-center justify-center flex-shrink-0">
-                    <ClipboardList className="w-5 h-5 text-[#d4a853]" />
+                  <div className="w-11 h-11 rounded-full bg-[#1e3a5f] text-white flex items-center justify-center flex-shrink-0 font-semibold text-sm">
+                    SM
                   </div>
                   <div>
-                    <p className="font-bold text-[#1e3a5f] leading-tight">Structured behavioural interview</p>
-                    <p className="text-xs text-gray-500">Stage 3 of 5 &middot; 45 minutes</p>
+                    <p className="font-bold text-[#1e3a5f] leading-tight">Sarah M.</p>
+                    <p className="text-xs text-gray-500">Bar Manager &middot; Inner West</p>
                   </div>
                 </div>
 
                 <p className="text-[11px] font-bold tracking-wider text-gray-400 uppercase mb-2">
-                  What we assess
+                  Screening completed
                 </p>
                 <div className="space-y-2 mb-4">
                   {[
-                    "Dependability under shift pressure",
-                    "Stress response & customer rapport",
-                    "Conflict handling (past example)",
-                    "Commitment to agreed shifts",
+                    "Behavioral interview with founder",
+                    "Two reference checks completed",
+                    "Role-fit and leadership reviewed",
+                    "Availability and location verified",
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-gray-700">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#d4a853] flex-shrink-0" />
@@ -153,8 +153,8 @@ export default function BenefitsVenues() {
                 </div>
 
                 <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">Every candidate. Same framework.</span>
-                  <span className="text-xs font-bold text-[#d4a853]">No exceptions</span>
+                  <span className="text-xs text-gray-500">Illustrative profile format.</span>
+                  <span className="text-xs font-bold text-[#d4a853]">For demo only</span>
                 </div>
               </div>
             </div>

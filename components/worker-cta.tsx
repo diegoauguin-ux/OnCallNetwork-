@@ -85,7 +85,7 @@ export default function WorkerCTA() {
             </div>
 
             <Link
-              href="/register/worker"
+              href="#apply"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer"
             >
               Start your application

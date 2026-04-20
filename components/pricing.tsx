@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Zap, Crown, Building2, Check, Star, ArrowRight, Users } from "lucide-react";
+import { Check, ArrowRight, Briefcase, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function Pricing() {
@@ -10,58 +10,42 @@ export default function Pricing() {
 
   const tiers = [
     {
-      name: "PAY PER INTRO",
-      description: "Perfect for occasional needs",
-      rate: "$99",
-      period: "/introduction",
-      subtext: "Pay only when a candidate works",
-      icon: Zap,
+      name: "Permanent Placement",
+      description: "Permanent placement for senior hospitality roles",
+      rate: "15%",
+      period: "of annual salary",
+      subtext: "Only payable when candidate is hired and completes 60 days",
+      icon: Briefcase,
       color: "bg-[#1e3a5f]",
       features: [
-        "Diego shortlists from the screened network",
-        "1–3 matched candidates introduced",
-        "Standard matching within 24–48hrs",
-        "Direct hire — you pay the candidate",
-        "No-show guarantee in writing",
-      ],
-      highlight: false,
-      cta: "Get Started",
-    },
-    {
-      name: "PRIORITY ACCESS",
-      description: "For venues that hire regularly",
-      rate: "$199",
-      period: "/month",
-      subtext: "Unlimited introductions · cancel anytime",
-      icon: Crown,
-      color: "bg-[#d4a853]",
-      features: [
-        "Unlimited candidate introductions",
-        "Priority same-day matching",
-        "Build your preferred talent pool",
-        "Direct email line to founder Diego",
-        "Monthly Inner West talent report",
+        "Venue Manager, Bar Manager, Head Chef, Sous Chef, FOH Manager",
+        "Psychology-based behavioral screening",
+        "Shortlist of 3 candidates in 5-7 days",
+        "60-day replacement guarantee - free",
+        "Founder interviews every candidate personally",
+        "No upfront cost. No retainer.",
       ],
       highlight: true,
-      cta: "Start Free Month",
+      cta: "Submit a Role Brief →",
+      href: "#contact",
     },
     {
-      name: "VENUE PARTNER",
-      description: "Multi-venue or high volume",
-      rate: "$349",
-      period: "/month",
-      subtext: "Everything in Priority, plus dedicated support",
-      icon: Building2,
+      name: "Casual & Contract",
+      description: "For shift coverage and short-term needs",
+      rate: "$99",
+      period: "per introduction",
+      subtext: "For shift coverage and short-term needs",
+      icon: Users,
       color: "bg-[#2a4a6f]",
       features: [
-        "Everything in Priority Access",
-        "Dedicated account support",
-        "First-access to new top candidates",
-        "Bulk permanent placement discounts",
-        "Quarterly staffing strategy session",
+        "Pre-screened candidates with Reliability Score",
+        "Same-day matching available",
+        "Pay only when candidate works",
+        "Priority plan $199/mo for regular needs",
       ],
       highlight: false,
-      cta: "Contact Diego",
+      cta: "Find Casual Staff →",
+      href: "#contact",
     },
   ];
 
@@ -73,35 +57,20 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-6"
-        >
-          <span className="inline-block px-4 py-1.5 bg-[#1e3a5f]/10 text-[#1e3a5f] text-sm font-semibold rounded-full mb-4">
-            Transparent Pricing
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            Simple, Honest Pricing
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            No hourly markups. No hidden fees. You pay the candidate directly at the rate you agree.{" "}
-            <strong className="text-[#1e3a5f]">OCN makes the introduction — that&apos;s it.</strong>
-          </p>
-        </motion.div>
-
-        {/* How we differ from alternatives */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
           className="text-center mb-12"
         >
-          <p className="text-sm text-gray-500">
-            Labour-hire agencies add an hourly markup and employ the worker. Public job boards leave the screening to you.
-            <br className="hidden md:block" />
-            OCN introduces pre-screened candidates &mdash; you hire them directly.
+          <span className="inline-block px-4 py-1.5 bg-[#1e3a5f]/10 text-[#1e3a5f] text-sm font-semibold rounded-full mb-4">
+            Pricing
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
+            Transparent placement and staffing fees
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Built for venues that want better hires without agency complexity.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 items-start max-w-5xl mx-auto">
           {tiers.map((tier, index) => (
             <motion.div
               key={index}
@@ -110,16 +79,10 @@ export default function Pricing() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               className={`relative p-6 rounded-2xl transition-all duration-300 hover:shadow-2xl ${
                 tier.highlight
-                  ? "bg-[#1e3a5f] text-white shadow-xl scale-105"
-                  : "bg-white shadow-lg hover:scale-102"
-              }`}
+                  ? "bg-[#1e3a5f] text-white shadow-xl"
+                  : "bg-white shadow-lg"
+              } ${index === 1 ? "md:scale-95 md:mt-4" : ""}`}
             >
-              {tier.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#d4a853] text-[#1e3a5f] text-xs font-bold rounded-full">
-                  MOST POPULAR
-                </div>
-              )}
-
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-12 h-12 rounded-xl ${tier.color} flex items-center justify-center`}>
                   <tier.icon className="w-6 h-6 text-white" />
@@ -135,13 +98,13 @@ export default function Pricing() {
               </div>
 
               <div className="mb-2">
-                <div className="flex items-baseline gap-1">
+                <div className="flex items-baseline gap-2">
                   <span className={`text-4xl font-bold ${tier.highlight ? "text-white" : "text-[#1e3a5f]"}`}>
                     {tier.rate}
                   </span>
                   <span className={tier.highlight ? "text-white/70" : "text-gray-500"}>{tier.period}</span>
                 </div>
-                <p className={`text-sm mt-1 ${tier.highlight ? "text-white/60" : "text-gray-400"}`}>
+                <p className={`text-sm mt-1 ${tier.highlight ? "text-white/70" : "text-gray-500"}`}>
                   {tier.subtext}
                 </p>
               </div>
@@ -149,10 +112,8 @@ export default function Pricing() {
               <ul className="space-y-3 mb-6 mt-6">
                 {tier.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
-                      tier.highlight ? "text-[#d4a853]" : "text-green-500"
-                    }`} />
-                    <span className={`text-sm ${tier.highlight ? "text-white/80" : "text-gray-600"}`}>
+                    <Check className={`w-5 h-5 flex-shrink-0 mt-0.5 ${tier.highlight ? "text-[#d4a853]" : "text-green-500"}`} />
+                    <span className={`text-sm ${tier.highlight ? "text-white/85" : "text-gray-600"}`}>
                       {feature}
                     </span>
                   </li>
@@ -160,7 +121,7 @@ export default function Pricing() {
               </ul>
 
               <Link
-                href="#contact"
+                href={tier.href}
                 className={`block w-full py-3 rounded-lg font-semibold text-center transition-all duration-300 ${
                   tier.highlight
                     ? "bg-[#d4a853] text-[#1e3a5f] hover:bg-[#e8c77b]"
@@ -173,75 +134,15 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Permanent Placement */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-8 p-6 md:p-8 bg-gradient-to-r from-[#1e3a5f] to-[#2a4a6f] rounded-2xl"
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="text-center mt-8"
         >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#d4a853] flex items-center justify-center flex-shrink-0">
-                <Users className="w-6 h-6 text-[#1e3a5f]" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white mb-1">Permanent Placement</h3>
-                <p className="text-white/70 text-sm">
-                  Your next Venue Manager or Head Chef — found in 10–14 days. Below-market fee. 60-day replacement guarantee.
-                </p>
-              </div>
-            </div>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#d4a853] text-[#1e3a5f] font-bold rounded-lg hover:bg-[#e8c77b] transition-all whitespace-nowrap"
-            >
-              Enquire Now
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* What you actually pay for */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.55 }}
-          className="mt-6 p-6 md:p-8 bg-white rounded-2xl shadow-lg"
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">What the $99 actually buys</h3>
-              <p className="text-gray-600">
-                Not a worker, not a shift, not a timesheet &mdash; those belong to you.
-                You&rsquo;re paying for the screening work we did <em>before</em> the candidate
-                was introduced: application review, structured interview, scoring and
-                two reference calls. If they don&rsquo;t show, the fee is refunded.
-              </p>
-            </div>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#d4a853] text-[#1e3a5f] font-bold rounded-lg hover:bg-[#e8c77b] transition-all whitespace-nowrap"
-            >
-              Book a 15-min call
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* Guarantee */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-8 text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-100 rounded-full">
-            <Star className="w-5 h-5 text-green-600" />
-            <span className="text-green-800 font-medium">
-              No-show guarantee in writing. Fee refunded, replacement sourced at no extra cost.
-            </span>
-          </div>
+          <p className="text-sm text-gray-500">
+            Boutique service. Founder-led screening. Sydney hospitality only.
+          </p>
         </motion.div>
       </div>
     </section>

@@ -149,3 +149,89 @@ export async function createWorkerRecord(
 
   return { id: result.records[0].id };
 }
+
+export interface CandidateApplicationRecord {
+  fullName: string;
+  email: string;
+  phone: string;
+  suburb: string;
+  roleApplyingFor: string;
+  yearsInAustralia: string;
+  currentVenue: string;
+  certifications: string;
+  availability: string;
+  preferredZones: string;
+  employmentType: string;
+  briefIntro?: string;
+  legalConfirmation: string;
+  termsAccepted: string;
+}
+
+export async function createCandidateApplicationRecord(
+  data: CandidateApplicationRecord
+): Promise<{ id: string }> {
+  const apiKey =
+    process.env.AIRTABLE_ACCESS_TOKEN ??
+    process.env.AIRTABLE_API_KEY;
+  const baseId = process.env.AIRTABLE_BASE_ID;
+  const tableName =
+    process.env.AIRTABLE_CANDIDATE_APPLICATIONS_TABLE_NAME ??
+    "Candidate Applications";
+
+  if (!apiKey || !baseId) {
+    throw new Error(
+      "Missing Airtable config: AIRTABLE_ACCESS_TOKEN and AIRTABLE_BASE_ID must be set"
+    );
+  }
+
+  const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}`;
+
+  const fields: Record<string, string> = {
+    "Full Name": data.fullName,
+    Email: data.email,
+    Phone: data.phone,
+    Suburb: data.suburb,
+    "Role Applying For": data.roleApplyingFor,
+    "Years of Experience in Australia": data.yearsInAustralia,
+    "Current or Most Recent Venue": data.currentVenue,
+    Certifications: data.certifications,
+    Availability: data.availability,
+    "Preferred Work Zones": data.preferredZones,
+    "Employment Type Sought": data.employmentType,
+    "Legal Right Confirmation": data.legalConfirmation,
+    "Terms Accepted": data.termsAccepted,
+  };
+
+  if (data.briefIntro) fields["Brief Intro"] = data.briefIntro;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ records: [{ fields }], typecast: true }),
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    let errorMessage = `Airtable API error: ${response.status} ${response.statusText}`;
+    try {
+      const parsed = JSON.parse(errorBody);
+      errorMessage = parsed.error?.message ?? errorMessage;
+    } catch {
+      if (errorBody) errorMessage += ` — ${errorBody}`;
+    }
+    throw new Error(errorMessage);
+  }
+
+  const result = (await response.json()) as {
+    records: Array<{ id: string }>;
+  };
+
+  if (!result.records?.[0]?.id) {
+    throw new Error("Unexpected Airtable response: no record ID returned");
+  }
+
+  return { id: result.records[0].id };
+}

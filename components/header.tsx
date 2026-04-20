@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, Users, Briefcase } from "lucide-react";
+import { Menu, X, Users, Briefcase } from "lucide-react";
 import Link from "next/link";
 
 export default function Header() {
@@ -18,8 +18,9 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { name: "For Venues", href: "#venues", icon: Briefcase },
-    { name: "For Workers", href: "#workers", icon: Users },
+    { name: "For Venues", href: "#contact", icon: Briefcase },
+    { name: "For Candidates", href: "#apply", icon: Users },
+    { name: "How It Works", href: "#how-it-works" },
     { name: "Pricing", href: "#pricing" },
     { name: "FAQ", href: "#faq" },
   ];
