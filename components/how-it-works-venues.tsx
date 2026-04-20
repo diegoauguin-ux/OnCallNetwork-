@@ -52,10 +52,10 @@ export default function HowItWorksVenues() {
             How It Works
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            Find Reliable Staff in 4 Simple Steps
+            From brief to first shift in 4 steps
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            OCN is a marketplace — browse, select, and hire pre-screened candidates directly. No agency overhead.
+            Diego handles the shortlist. You interview and hire directly. No agency overhead, no hourly markup &mdash; just a short introduction fee when the candidate actually works.
           </p>
         </motion.div>
 
