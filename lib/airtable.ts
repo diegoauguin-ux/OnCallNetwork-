@@ -51,9 +51,9 @@ export async function createVenueRecord(
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ records: [{ fields }] }),
+    body: JSON.stringify({ records: [{ fields }], typecast: true }),
   });
- 
+
   if (!response.ok) {
     const errorBody = await response.text();
     let errorMessage = `Airtable API error: ${response.status} ${response.statusText}`;
@@ -65,18 +65,18 @@ export async function createVenueRecord(
     }
     throw new Error(errorMessage);
   }
- 
+
   const result = (await response.json()) as {
     records: Array<{ id: string }>;
   };
- 
+
   if (!result.records?.[0]?.id) {
     throw new Error("Unexpected Airtable response: no record ID returned");
   }
- 
+
   return { id: result.records[0].id };
 }
- 
+
 export interface WorkerRecord {
   fullName: string;
   email: string;
@@ -124,9 +124,9 @@ export async function createWorkerRecord(
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ records: [{ fields }] }),
+    body: JSON.stringify({ records: [{ fields }], typecast: true }),
   });
- 
+
   if (!response.ok) {
     const errorBody = await response.text();
     let errorMessage = `Airtable API error: ${response.status} ${response.statusText}`;
@@ -138,14 +138,14 @@ export async function createWorkerRecord(
     }
     throw new Error(errorMessage);
   }
- 
+
   const result = (await response.json()) as {
     records: Array<{ id: string }>;
   };
- 
+
   if (!result.records?.[0]?.id) {
     throw new Error("Unexpected Airtable response: no record ID returned");
   }
- 
+
   return { id: result.records[0].id };
 }
