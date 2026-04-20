@@ -20,7 +20,7 @@ export default function Testimonials() {
     {
       icon: HandshakeIcon,
       eyebrow: "No-show guarantee",
-      title: "If they don&rsquo;t show up, you don&rsquo;t pay",
+      title: "If they don\u2019t show up, you don\u2019t pay",
       body: "Written into every agreement: if a candidate we introduced fails to arrive, the introduction fee is refunded in full and Diego personally sources a replacement at no extra cost. Zero risk to try us once.",
     },
     {
