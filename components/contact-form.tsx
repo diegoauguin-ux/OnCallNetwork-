@@ -133,7 +133,7 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-white scroll-mt-20">
+    <section id="contact" className="py-12 md:py-24 bg-white scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
@@ -187,6 +187,12 @@ export default function ContactForm() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
+            <a
+              href="tel:0424195996"
+              className="mb-3 inline-flex items-center text-sm text-[#1e3a5f] underline hover:text-[#d4a853]"
+            >
+              Call Diego directly: 0424 195 996
+            </a>
             {status === "success" ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center p-8 bg-green-50 rounded-2xl">
@@ -228,14 +234,14 @@ export default function ContactForm() {
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Venue Name *</label>
                     <div className="relative">
                       <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input type="text" name="venueName" value={formData.venueName} onChange={handleChange} required placeholder="Your venue name" className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input type="text" name="venueName" value={formData.venueName} onChange={handleChange} required placeholder="Your venue name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Your Name *</label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input type="text" name="contactName" value={formData.contactName} onChange={handleChange} required placeholder="Your name" className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input type="text" name="contactName" value={formData.contactName} onChange={handleChange} required placeholder="Your name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                 </div>
@@ -245,14 +251,14 @@ export default function ContactForm() {
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Email *</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="email@venue.com" className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="email@venue.com" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Phone *</label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="0400 000 000" className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="0400 000 000" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                 </div>
@@ -262,12 +268,12 @@ export default function ContactForm() {
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Suburb</label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input type="text" name="suburb" value={formData.suburb} onChange={handleChange} placeholder="E.g., Newtown" className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input type="text" name="suburb" value={formData.suburb} onChange={handleChange} placeholder="E.g., Newtown" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Role Needed *</label>
-                    <select name="positionsNeeded" value={formData.positionsNeeded} onChange={handleChange} required className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900">
+                    <select name="positionsNeeded" value={formData.positionsNeeded} onChange={handleChange} required className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900">
                       <option value="">Select a role</option>
                       {roleOptions.map((option) => (
                         <option key={option} value={option}>{option}</option>
@@ -280,7 +286,7 @@ export default function ContactForm() {
                   <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Anything else we should know?</label>
                   <div className="relative">
                     <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                    <textarea name="additionalNotes" value={formData.additionalNotes} onChange={handleChange} rows={3} placeholder="Role details, shift patterns, team notes..." className="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all resize-none bg-white text-gray-900" />
+                    <textarea name="additionalNotes" value={formData.additionalNotes} onChange={handleChange} rows={3} placeholder="Role details, shift patterns, team notes..." className="w-full text-base pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all resize-none bg-white text-gray-900" />
                   </div>
                 </div>
 
@@ -291,7 +297,7 @@ export default function ContactForm() {
                   </div>
                 )}
 
-                <button type="submit" disabled={status === "loading"} className="w-full py-4 bg-[#1e3a5f] text-white font-bold text-lg rounded-lg hover:bg-[#2a4a6f] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                <button type="submit" disabled={status === "loading"} className="w-full h-14 bg-[#1e3a5f] text-white font-bold text-lg rounded-lg hover:bg-[#2a4a6f] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
                   {status === "loading" ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />

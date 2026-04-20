@@ -43,7 +43,7 @@ export default function HowItWorksVenues() {
   ];
 
   return (
-    <section id="how-it-works" className="py-16 md:py-24 bg-white scroll-mt-20">
+    <section id="how-it-works" className="py-12 md:py-24 bg-white scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}

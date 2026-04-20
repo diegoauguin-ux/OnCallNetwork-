@@ -43,7 +43,7 @@ export default function BenefitsWorkers() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-[#faf9f6]">
+    <section className="py-12 md:py-24 bg-[#faf9f6]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Pay-structure card — honest Award-based breakdown */}

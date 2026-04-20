@@ -64,7 +64,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-16 md:py-24 bg-[#faf9f6] scroll-mt-20">
+    <section id="faq" className="py-12 md:py-24 bg-[#faf9f6] scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}
@@ -104,9 +104,9 @@ export default function FAQ() {
                 >
                   <button
                     onClick={() => toggleQuestion(index)}
-                    className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                    className="w-full min-h-[48px] px-5 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
                   >
-                    <span className="font-semibold text-[#1e3a5f] pr-4">{item?.question}</span>
+                    <span className="text-[17px] font-bold text-[#1e3a5f] pr-4">{item?.question}</span>
                     <ChevronDown
                       className={`w-5 h-5 text-[#d4a853] flex-shrink-0 transition-transform duration-300 ${
                         openIndex === index ? "rotate-180" : ""
@@ -119,10 +119,10 @@ export default function FAQ() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-4 text-gray-600 leading-relaxed">
+                        <div className="px-5 pb-4 text-[15px] leading-[1.6] text-gray-600">
                           {item?.answer}
                         </div>
                       </motion.div>
@@ -153,9 +153,9 @@ export default function FAQ() {
                   >
                     <button
                       onClick={() => toggleQuestion(workerIndex)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                      className="w-full min-h-[48px] px-5 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
                     >
-                      <span className="font-semibold text-[#1e3a5f] pr-4">{item?.question}</span>
+                      <span className="text-[17px] font-bold text-[#1e3a5f] pr-4">{item?.question}</span>
                       <ChevronDown
                         className={`w-5 h-5 text-[#d4a853] flex-shrink-0 transition-transform duration-300 ${
                           openIndex === workerIndex ? "rotate-180" : ""
@@ -168,10 +168,10 @@ export default function FAQ() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="px-5 pb-4 text-gray-600 leading-relaxed">
+                          <div className="px-5 pb-4 text-[15px] leading-[1.6] text-gray-600">
                             {item?.answer}
                           </div>
                         </motion.div>

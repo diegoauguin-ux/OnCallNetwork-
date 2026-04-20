@@ -33,7 +33,7 @@ export default function WorkerCTA() {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-[#1e3a5f] to-[#0f1e32]">
+    <section className="py-12 md:py-24 bg-gradient-to-br from-[#1e3a5f] to-[#0f1e32]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div

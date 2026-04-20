@@ -50,7 +50,7 @@ export default function Pricing() {
   ];
 
   return (
-    <section id="pricing" className="py-16 md:py-24 bg-[#faf9f6] scroll-mt-20">
+    <section id="pricing" className="py-12 md:py-24 bg-[#faf9f6] scroll-mt-20">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <motion.div
           ref={ref}

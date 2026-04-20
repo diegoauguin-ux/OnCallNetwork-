@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section id="venues" className="relative min-h-[90vh] flex items-center overflow-hidden scroll-mt-20 bg-[#0f1e32]">
+    <section id="venues" className="relative min-h-[78vh] md:min-h-[90vh] flex items-center overflow-hidden scroll-mt-20 bg-[#0f1e32]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0f1e32] via-[#1e3a5f] to-[#2a4a6f]" />
 
       <div
@@ -30,7 +30,7 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-r from-[#0f1e32]/80 via-[#0f1e32]/40 to-transparent" />
 
-      <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 py-24 md:py-32">
+      <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 py-12 md:py-32">
         <div className="max-w-2xl">
           {/* Scarcity badge — honest, founder-led */}
           <motion.div
@@ -49,7 +49,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+            className="text-[32px] sm:text-[34px] md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 md:mb-6"
           >
             Sydney&apos;s Boutique Hospitality Recruitment
           </motion.h1>
@@ -58,7 +58,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-white/80 mb-4 leading-relaxed"
+            className="text-base md:text-xl text-white/80 mb-4 leading-relaxed"
           >
             Permanent placement for Venue Managers, Bar Managers &amp; Head Chefs.
             Psychology-screened candidates. 15% fee. 60-day guarantee. You pay
@@ -79,18 +79,18 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4"
           >
             <Link
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#d4a853] text-[#1e3a5f] font-bold text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="w-full sm:w-auto h-[52px] inline-flex items-center justify-center gap-2 px-6 sm:px-8 bg-[#d4a853] text-[#1e3a5f] font-bold text-base sm:text-lg rounded-lg hover:bg-[#e8c77b] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Submit a Role Brief
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="#apply"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white font-semibold text-lg rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300"
+              className="w-full sm:w-auto h-[52px] inline-flex items-center justify-center gap-2 px-6 sm:px-8 bg-white/10 text-white font-semibold text-base sm:text-lg rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300"
             >
               Apply as a Candidate
             </Link>
@@ -100,7 +100,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-12 pt-8 border-t border-white/20"
+            className="hidden md:block mt-12 pt-8 border-t border-white/20"
           >
             <p className="text-sm md:text-base text-white/75">
               Venue Managers &middot; Bar Managers &middot; Head Chefs &middot; Sous Chefs &middot;

@@ -9,6 +9,7 @@ import BenefitsWorkers from "@/components/benefits-workers";
 import HowItWorksWorkers from "@/components/how-it-works-workers";
 import WorkerCTA from "@/components/worker-cta";
 import CandidateApply from "@/components/candidate-apply";
+import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import FAQ from "@/components/faq";
 import ContactForm from "@/components/contact-form";
 import Footer from "@/components/footer";
@@ -43,6 +44,7 @@ export default function Home() {
       <FAQ />
       <ContactForm />
       <Footer />
+      <MobileStickyCTA />
     </main>
   );
 }

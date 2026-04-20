@@ -75,14 +75,22 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Actions */}
+          <div className="md:hidden flex items-center gap-2">
+            <Link
+              href="#contact"
+              className="h-12 px-4 inline-flex items-center justify-center bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg"
+            >
+              Hire Staff →
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="h-12 w-12 inline-flex items-center justify-center rounded-lg text-white hover:bg-white/10 border border-white/20"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -90,30 +98,24 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#1e3a5f] border-t border-white/10"
+            initial={{ opacity: 0, y: -24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -24 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden fixed inset-0 top-16 bg-[#1e3a5f] z-40"
           >
-            <div className="px-4 py-4 space-y-2">
+            <div className="px-4 py-4">
               {navItems?.map((item) => (
                 <Link
                   key={item?.name}
                   href={item?.href ?? "#"}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                  className="h-14 flex items-center gap-3 px-1 text-white/90 hover:text-white border-b border-white/15 text-base font-medium"
                 >
                   {item?.icon && <item.icon className="w-5 h-5" />}
                   {item?.name}
                 </Link>
               ))}
-              <Link
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block w-full px-4 py-3 mt-4 bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg text-center"
-              >
-                Book Trial Shift
-              </Link>
             </div>
           </motion.div>
         )}
