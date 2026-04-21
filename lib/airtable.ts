@@ -178,40 +178,35 @@ export interface CandidateApplicationRecord {
 }
 
 export async function createCandidateApplicationRecord(
-  data: CandidateApplicationRecord
+  record: CandidateApplicationRecord
 ): Promise<{ id: string }> {
   const tableName =
     process.env.AIRTABLE_CANDIDATE_APPLICATIONS_TABLE_NAME ??
     "Candidate Applications";
 
   const fields: AirtableFields = {
-    "Full Name": data.fullName,
-    "Email": data.email,
-    "Phone": data.phone,
-    "Suburb": data.suburb,
-    "Primary role": data.roleApplyingFor,
-    "Work Experience (years)": data.yearsInAustralia,
-    "Venues": data.currentVenue,
-    "Has RSA": data.hasRSA,
-    "RCG": data.hasRCG,
-    "Food Safety": data.hasFoodSafety,
-    "First Aid": data.hasFirstAid,
-    "Availability": data.availability,
-    "Sydney zones": data.preferredZones,
-    "Shifts preferences": data.employmentType,
-    "Experience description": data.briefIntro,
-    "Registration Date": data.registrationDate,
-    "Status": data.status,
+    "Full Name": record.fullName,
+    "Email": record.email,
+    "Phone": record.phone,
+    "Suburb": record.suburb,
+    "Primary role": record.roleApplyingFor,
+    "Work Experience (years)": record.yearsInAustralia,
+    "Venues": record.currentVenue,
+    "Has RSA": record.hasRSA,
+    "RCG": record.hasRCG,
+    "Food Safety": record.hasFoodSafety,
+    "First Aid": record.hasFirstAid,
+    "Availability": record.availability,
+    "Sydney zones": record.preferredZones,
+    "Shifts preferences": record.employmentType,
+    "Experience description": record.briefIntro,
+    "Status": "New Application",
+    "CV": record.cvAttachment ?? null,
+    "RSA Certificate file": record.rsaCertificateAttachment ?? null,
   };
-
-  if (data.cvAttachment?.length) fields["CV"] = data.cvAttachment;
-  if (data.rsaCertificateAttachment?.length) {
-    fields["RSA Certificate file"] = data.rsaCertificateAttachment;
-  }
 
   return writeAirtableRecord({
     tableName,
     fields,
-    optionalFields: ["CV", "RSA Certificate file"],
   });
 }
