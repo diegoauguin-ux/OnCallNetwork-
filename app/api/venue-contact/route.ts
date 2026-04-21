@@ -5,6 +5,7 @@ import {
   type VenueRecord,
   type CandidateApplicationRecord,
 } from "@/lib/airtable";
+import { put } from "@vercel/blob";
 import { z } from "zod";
 import { limit, getClientIp } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -75,6 +76,32 @@ const candidateSchema = z.object({
   website: z.string().optional(),
 });
 
+function parseListField(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter((v): v is string => typeof v === "string");
+  if (typeof value !== "string") return [];
+  const trimmed = value.trim();
+  if (!trimmed) return [];
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (Array.isArray(parsed)) {
+      return parsed.filter((v): v is string => typeof v === "string");
+    }
+  } catch {
+    // Fallback to comma-separated values.
+  }
+  return trimmed.split(",").map((v) => v.trim()).filter(Boolean);
+}
+
+async function uploadCandidateFile(file: File, prefix: "cv" | "rsa"): Promise<string> {
+  const ext = file.name.includes(".") ? file.name.split(".").pop() : "bin";
+  const safeName = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const uploaded = await put(safeName, file, {
+    access: "public",
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  });
+  return uploaded.url;
+}
+
 function tooMany(retryAfter: number) {
   return NextResponse.json(
     {
@@ -91,18 +118,53 @@ export async function POST(request: NextRequest) {
     const rl = limit(`contact:${ip}`, { max: 5, windowSeconds: 60 });
     if (!rl.ok) return tooMany(rl.retryAfterSeconds);
 
-    const body = await request.json();
+    const contentType = request.headers.get("content-type") ?? "";
+    const isMultipart = contentType.includes("multipart/form-data");
+    const body = isMultipart ? null : await request.json();
+    const formData = isMultipart ? await request.formData() : null;
+    const payload = isMultipart
+      ? {
+          formType: String(formData?.get("formType") ?? ""),
+          fullName: String(formData?.get("fullName") ?? ""),
+          email: String(formData?.get("email") ?? ""),
+          phone: String(formData?.get("phone") ?? ""),
+          suburb: String(formData?.get("suburb") ?? ""),
+          roleApplyingFor: String(formData?.get("roleApplyingFor") ?? ""),
+          yearsInAustralia: String(formData?.get("yearsInAustralia") ?? ""),
+          currentVenue: String(formData?.get("currentVenue") ?? ""),
+          certifications: parseListField(formData?.get("certifications")),
+          availability: String(formData?.get("availability") ?? ""),
+          preferredZones: parseListField(formData?.get("preferredZones")),
+          employmentType: parseListField(formData?.get("employmentType")),
+          briefIntro: String(formData?.get("briefIntro") ?? ""),
+          legalConfirmation: String(formData?.get("legalConfirmation")) === "true",
+          termsAccepted: String(formData?.get("termsAccepted")) === "true",
+          turnstileToken: String(formData?.get("turnstileToken") ?? ""),
+          website: String(formData?.get("website") ?? ""),
+          cvFile: formData?.get("cvFile"),
+          rsaCertificateFile: formData?.get("rsaCertificateFile"),
+        }
+      : body;
 
-    if (body.website && String(body.website).trim().length > 0) {
+    if (payload.website && String(payload.website).trim().length > 0) {
       return NextResponse.json({ success: true, message: "Received" });
     }
 
-    if (body.formType === "candidate") {
-      const parsed = candidateSchema.safeParse(body);
+    if (payload.formType === "candidate") {
+      const parsed = candidateSchema.safeParse(payload);
       if (!parsed.success) {
         const errors = parsed.error.flatten().fieldErrors;
         const firstError = Object.values(errors)[0]?.[0] ?? "Validation failed";
         return NextResponse.json({ success: false, message: firstError }, { status: 400 });
+      }
+
+      const cvFile = isMultipart ? payload.cvFile : null;
+      const rsaFile = isMultipart ? payload.rsaCertificateFile : null;
+      if (!(cvFile instanceof File) || !(rsaFile instanceof File)) {
+        return NextResponse.json(
+          { success: false, message: "CV and RSA Certificate files are required." },
+          { status: 400 }
+        );
       }
 
       const turnstile = await verifyTurnstile(parsed.data.turnstileToken, ip);
@@ -110,7 +172,12 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: false, message: turnstile.message }, { status: 400 });
       }
 
-      const consentTimestamp = new Date().toISOString();
+      const [cvUrl, rsaUrl] = await Promise.all([
+        uploadCandidateFile(cvFile, "cv"),
+        uploadCandidateFile(rsaFile, "rsa"),
+      ]);
+      const certifications = parsed.data.certifications;
+      const yearsNum = Number(parsed.data.yearsInAustralia.replace(/[^\d.]/g, ""));
 
       const candidateRecord: CandidateApplicationRecord = {
         fullName: parsed.data.fullName,
@@ -118,16 +185,20 @@ export async function POST(request: NextRequest) {
         phone: parsed.data.phone,
         suburb: parsed.data.suburb,
         roleApplyingFor: parsed.data.roleApplyingFor,
-        yearsInAustralia: parsed.data.yearsInAustralia,
+        yearsInAustralia: Number.isFinite(yearsNum) ? yearsNum : 0,
         currentVenue: parsed.data.currentVenue,
-        certifications: parsed.data.certifications.join(", "),
+        hasRSA: certifications.includes("RSA"),
+        hasRCG: certifications.includes("RCG"),
+        hasFoodSafety: certifications.includes("Food Safety"),
+        hasFirstAid: certifications.includes("First Aid"),
         availability: parsed.data.availability,
         preferredZones: parsed.data.preferredZones.join(", "),
         employmentType: parsed.data.employmentType.join(", "),
         briefIntro: parsed.data.briefIntro,
-        legalConfirmation: "Yes",
-        termsAccepted: "Yes",
-        consentTimestamp,
+        registrationDate: new Date().toISOString(),
+        status: "New Application",
+        cvAttachment: [{ url: cvUrl }],
+        rsaCertificateAttachment: [{ url: rsaUrl }],
       };
 
       const { id } = await createCandidateApplicationRecord(candidateRecord);
@@ -159,18 +230,18 @@ export async function POST(request: NextRequest) {
 
     const parsedVenue = venueSchema.safeParse({
       formType: "venue",
-      serviceType: body.serviceType,
-      venueName: body.venueName,
-      contactPerson: body.contactPerson ?? body.contactName,
-      email: body.email,
-      phone: body.phone,
-      suburb: body.suburb ?? "",
-      positionsNeeded: body.positionsNeeded ?? "",
-      immediateNeed: body.immediateNeed ?? "",
-      additionalNotes: body.additionalNotes ?? body.message ?? "",
-      consentAccepted: body.consentAccepted,
-      turnstileToken: body.turnstileToken,
-      website: body.website,
+      serviceType: payload.serviceType,
+      venueName: payload.venueName,
+      contactPerson: payload.contactPerson ?? payload.contactName,
+      email: payload.email,
+      phone: payload.phone,
+      suburb: payload.suburb ?? "",
+      positionsNeeded: payload.positionsNeeded ?? "",
+      immediateNeed: payload.immediateNeed ?? "",
+      additionalNotes: payload.additionalNotes ?? payload.message ?? "",
+      consentAccepted: payload.consentAccepted,
+      turnstileToken: payload.turnstileToken,
+      website: payload.website,
     });
 
     if (!parsedVenue.success) {

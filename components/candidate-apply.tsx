@@ -106,6 +106,8 @@ export default function CandidateApply() {
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [turnstileKey, setTurnstileKey] = useState<number>(0);
   const [honeypot, setHoneypot] = useState<string>("");
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [rsaCertificateFile, setRsaCertificateFile] = useState<File | null>(null);
 
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -212,10 +214,36 @@ export default function CandidateApply() {
     setErrorMessage("");
 
     try {
+      if (!cvFile || !rsaCertificateFile) {
+        setStatus("error");
+        setErrorMessage("Please upload both your CV and RSA Certificate.");
+        return;
+      }
+
+      const formPayload = new FormData();
+      formPayload.append("formType", formData.formType);
+      formPayload.append("fullName", formData.fullName);
+      formPayload.append("email", formData.email);
+      formPayload.append("phone", formData.phone);
+      formPayload.append("suburb", formData.suburb);
+      formPayload.append("roleApplyingFor", formData.roleApplyingFor);
+      formPayload.append("yearsInAustralia", formData.yearsInAustralia);
+      formPayload.append("currentVenue", formData.currentVenue);
+      formPayload.append("certifications", JSON.stringify(formData.certifications));
+      formPayload.append("availability", formData.availability);
+      formPayload.append("preferredZones", JSON.stringify(formData.preferredZones));
+      formPayload.append("employmentType", JSON.stringify(formData.employmentType));
+      formPayload.append("briefIntro", formData.briefIntro);
+      formPayload.append("legalConfirmation", String(formData.legalConfirmation));
+      formPayload.append("termsAccepted", String(formData.termsAccepted));
+      formPayload.append("turnstileToken", turnstileToken);
+      formPayload.append("website", honeypot);
+      formPayload.append("cvFile", cvFile);
+      formPayload.append("rsaCertificateFile", rsaCertificateFile);
+
       const response = await fetch("/api/venue-contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, turnstileToken, website: honeypot }),
+        body: formPayload,
       });
 
       const result = (await response.json().catch(() => ({}))) as { success?: boolean; message?: string };
@@ -224,6 +252,8 @@ export default function CandidateApply() {
         setStatus("success");
         setTurnstileToken("");
         setTurnstileKey((k) => k + 1);
+        setCvFile(null);
+        setRsaCertificateFile(null);
         if (typeof window !== "undefined") {
           window.dispatchEvent(
             new CustomEvent("ocn:conversion", {
@@ -467,6 +497,34 @@ export default function CandidateApply() {
                           <textarea id="apply-intro" className="w-full min-h-[120px] text-base p-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
                           <p className={`text-[13px] mt-1 ${introRemaining < 20 ? "text-red-600" : "text-gray-500"}`}>{introRemaining} characters remaining</p>
                           {errors.briefIntro && <p className="text-[13px] text-red-600 mt-1">{errors.briefIntro}</p>}
+                        </div>
+
+                        <div>
+                          <label htmlFor="apply-cv" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                            CV (PDF or Word) *
+                          </label>
+                          <input
+                            id="apply-cv"
+                            type="file"
+                            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
+                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 bg-white"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                            RSA Certificate (PDF or image) *
+                          </label>
+                          <input
+                            id="apply-rsa-certificate"
+                            type="file"
+                            accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp"
+                            onChange={(e) => setRsaCertificateFile(e.target.files?.[0] ?? null)}
+                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 bg-white"
+                            required
+                          />
                         </div>
 
                         <div ref={setFieldRef("legalConfirmation")} className="pt-2">

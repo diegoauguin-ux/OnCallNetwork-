@@ -3,7 +3,14 @@
  * Env vars required: AIRTABLE_ACCESS_TOKEN (or AIRTABLE_API_KEY), AIRTABLE_BASE_ID
  */
 
-type AirtableFields = Record<string, string | number>;
+type AirtableAttachment = { url: string };
+type AirtableFieldValue =
+  | string
+  | number
+  | boolean
+  | AirtableAttachment[]
+  | null;
+type AirtableFields = Record<string, AirtableFieldValue>;
 
 async function writeAirtableRecord(params: {
   tableName: string;
@@ -154,16 +161,20 @@ export interface CandidateApplicationRecord {
   phone: string;
   suburb: string;
   roleApplyingFor: string;
-  yearsInAustralia: string;
+  yearsInAustralia: number;
   currentVenue: string;
-  certifications: string;
+  hasRSA: boolean;
+  hasRCG: boolean;
+  hasFoodSafety: boolean;
+  hasFirstAid: boolean;
   availability: string;
   preferredZones: string;
   employmentType: string;
-  briefIntro?: string;
-  legalConfirmation: string;
-  termsAccepted: string;
-  consentTimestamp?: string;
+  briefIntro: string;
+  registrationDate: string;
+  status: string;
+  cvAttachment?: AirtableAttachment[];
+  rsaCertificateAttachment?: AirtableAttachment[];
 }
 
 export async function createCandidateApplicationRecord(
@@ -175,26 +186,32 @@ export async function createCandidateApplicationRecord(
 
   const fields: AirtableFields = {
     "Full Name": data.fullName,
-    Email: data.email,
-    Phone: data.phone,
-    Suburb: data.suburb,
-    "Role Applying For": data.roleApplyingFor,
-    "Years of Experience in Australia": data.yearsInAustralia,
-    "Current or Most Recent Venue": data.currentVenue,
-    Certifications: data.certifications,
-    Availability: data.availability,
-    "Preferred Work Zones": data.preferredZones,
-    "Employment Type Sought": data.employmentType,
-    "Legal Right Confirmation": data.legalConfirmation,
-    "Terms Accepted": data.termsAccepted,
+    "Email": data.email,
+    "Phone": data.phone,
+    "Suburb": data.suburb,
+    "Primary role": data.roleApplyingFor,
+    "Work Experience (years)": data.yearsInAustralia,
+    "Venues": data.currentVenue,
+    "Has RSA": data.hasRSA,
+    "RCG": data.hasRCG,
+    "Food Safety": data.hasFoodSafety,
+    "First Aid": data.hasFirstAid,
+    "Availability": data.availability,
+    "Sydney zones": data.preferredZones,
+    "Shifts preferences": data.employmentType,
+    "Experience description": data.briefIntro,
+    "Registration Date": data.registrationDate,
+    "Status": data.status,
   };
 
-  if (data.briefIntro) fields["Brief Intro"] = data.briefIntro;
-  if (data.consentTimestamp) fields["Consent Timestamp"] = data.consentTimestamp;
+  if (data.cvAttachment?.length) fields["CV"] = data.cvAttachment;
+  if (data.rsaCertificateAttachment?.length) {
+    fields["RSA Certificate file"] = data.rsaCertificateAttachment;
+  }
 
   return writeAirtableRecord({
     tableName,
     fields,
-    optionalFields: ["Consent Timestamp"],
+    optionalFields: ["CV", "RSA Certificate file"],
   });
 }

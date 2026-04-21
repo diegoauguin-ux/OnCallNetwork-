@@ -38,21 +38,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: firstError }, { status: 400 });
     }
 
+    const certifications = parsed.data.certifications;
+    const yearsNum = Number(parsed.data.yearsInAustralia.replace(/[^\d.]/g, ""));
+
     const record: CandidateApplicationRecord = {
       fullName: parsed.data.fullName,
       email: parsed.data.email,
       phone: parsed.data.phone,
       suburb: parsed.data.suburb,
       roleApplyingFor: parsed.data.roleApplyingFor,
-      yearsInAustralia: parsed.data.yearsInAustralia,
+      yearsInAustralia: Number.isFinite(yearsNum) ? yearsNum : 0,
       currentVenue: parsed.data.currentVenue,
-      certifications: parsed.data.certifications.join(", "),
+      hasRSA: certifications.includes("RSA"),
+      hasRCG: certifications.includes("RCG"),
+      hasFoodSafety: certifications.includes("Food Safety"),
+      hasFirstAid: certifications.includes("First Aid"),
       availability: parsed.data.availability,
       preferredZones: parsed.data.preferredZones.join(", "),
       employmentType: parsed.data.employmentType.join(", "),
       briefIntro: parsed.data.briefIntro,
-      legalConfirmation: "Yes",
-      termsAccepted: "Yes",
+      registrationDate: new Date().toISOString(),
+      status: "New Application",
     };
 
     const { id } = await createCandidateApplicationRecord(record);
