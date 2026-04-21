@@ -29,7 +29,7 @@ export default function MobileStickyCTA() {
 
   return (
     <div
-      className={`fixed left-0 right-0 bottom-0 z-40 h-[60px] px-3 py-2 backdrop-blur bg-[#0f1e32]/90 border-t border-white/15 transition-transform duration-200 ${
+      className={`md:hidden fixed left-0 right-0 bottom-0 z-40 h-[60px] px-3 py-2 backdrop-blur bg-[#0f1e32]/90 border-t border-white/15 transition-transform duration-200 ${
         hidden ? "translate-y-full" : "translate-y-0"
       }`}
       style={{ paddingBottom: "max(env(safe-area-inset-bottom), 8px)" }}
@@ -42,7 +42,7 @@ export default function MobileStickyCTA() {
           Get a Quote
         </a>
         <a
-          href="/#apply"
+          href="#apply"
           className="h-full rounded-lg border border-white/40 text-white font-semibold text-sm inline-flex items-center justify-center"
         >
           Apply to Work

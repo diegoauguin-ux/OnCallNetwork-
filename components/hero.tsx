@@ -81,10 +81,10 @@ export default function Hero() {
                 they don't show.
               </p>
               <Link
-                href="/#contact?service=casual"
+                href="#contact"
                 className="inline-flex w-full items-center justify-center gap-2 h-11 px-4 bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg hover:bg-[#e8c77b] transition-all"
               >
-                Book a Casual Intro
+                Get a Quote
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -100,10 +100,10 @@ export default function Hero() {
                 replacement guarantee.
               </p>
               <Link
-                href="/#contact?service=permanent"
+                href="#apply"
                 className="inline-flex w-full items-center justify-center gap-2 h-11 px-4 bg-white/10 text-white border border-white/30 font-semibold rounded-lg hover:bg-white/20 transition-all"
               >
-                Submit a Role Brief
+                Apply to Work
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
