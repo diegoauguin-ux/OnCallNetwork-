@@ -10,10 +10,10 @@ import { z } from "zod";
 const venueSchema = z.object({
   formType: z.literal("venue").optional().default("venue"),
   serviceType: z.enum([
-    "Permanent Placement (15% of annual salary)",
+    "Permanent Placement (18% of annual salary)",
     "Casual Introduction ($99 per intro)",
-    "Priority Casual Access ($199/mo)",
-    "Venue Partner ($349/mo)",
+    "Priority plan (enquire)",
+    "Venue partner (enquire)",
     "General Enquiry",
   ]),
   venueName: z.string().min(1, "Venue name is required"),
@@ -30,6 +30,11 @@ const venueSchema = z.object({
   positionsNeeded: z.string().optional().default(""),
   immediateNeed: z.string().optional().default(""),
   additionalNotes: z.string().optional().default(""),
+  consentAccepted: z.literal(true, {
+    errorMap: () => ({
+      message: "Please accept the Privacy Policy and Terms and Conditions.",
+    }),
+  }),
 });
 
 const candidateSchema = z.object({
@@ -68,6 +73,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: false, message: firstError }, { status: 400 });
       }
 
+      const consentTimestamp = new Date().toISOString();
+
       const candidateRecord: CandidateApplicationRecord = {
         fullName: parsedCandidate.data.fullName,
         email: parsedCandidate.data.email,
@@ -83,6 +90,7 @@ export async function POST(request: NextRequest) {
         briefIntro: parsedCandidate.data.briefIntro,
         legalConfirmation: "Yes",
         termsAccepted: "Yes",
+        consentTimestamp,
       };
 
       const { id } = await createCandidateApplicationRecord(candidateRecord);
@@ -105,6 +113,7 @@ export async function POST(request: NextRequest) {
       positionsNeeded: body.positionsNeeded ?? "",
       immediateNeed: body.immediateNeed ?? "",
       additionalNotes: body.additionalNotes ?? body.message ?? "",
+      consentAccepted: body.consentAccepted,
     });
 
     if (!parsedVenue.success) {
@@ -112,6 +121,8 @@ export async function POST(request: NextRequest) {
       const firstError = Object.values(errors)[0]?.[0] ?? "Validation failed";
       return NextResponse.json({ success: false, message: firstError }, { status: 400 });
     }
+
+    const consentTimestamp = new Date().toISOString();
 
     const venueRecord: VenueRecord = {
       serviceType: parsedVenue.data.serviceType,
@@ -123,6 +134,7 @@ export async function POST(request: NextRequest) {
       positionsNeeded: parsedVenue.data.positionsNeeded || undefined,
       immediateNeed: parsedVenue.data.immediateNeed || undefined,
       additionalNotes: parsedVenue.data.additionalNotes || undefined,
+      consentTimestamp,
     };
 
     const { id } = await createVenueRecord(venueRecord);

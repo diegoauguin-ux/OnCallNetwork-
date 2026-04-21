@@ -468,7 +468,7 @@ export default function CandidateApply() {
                         <div ref={setFieldRef("termsAccepted")}>
                           <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
                             <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#1e3a5f] border-[#1e3a5f]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                            <span className="text-[15px] text-gray-700">I agree to the <a href="/terms-and-conditions" target="_blank" className="underline" rel="noreferrer">Terms & Conditions</a> and <a href="/privacy-policy" target="_blank" className="underline" rel="noreferrer">Privacy Policy</a>.</span>
+                            <span className="text-[15px] text-gray-700">I have read and agree to the <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a> and <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.</span>
                           </button>
                           {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
                         </div>

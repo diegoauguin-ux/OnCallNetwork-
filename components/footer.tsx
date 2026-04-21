@@ -65,7 +65,10 @@ export default function Footer() {
                 Contact
               </Link>
               <Link href="/terms-and-conditions" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                Terms & Conditions
+                Terms &amp; Conditions
+              </Link>
+              <Link href="/privacy" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
+                Privacy Policy
               </Link>
             </div>
           </div>

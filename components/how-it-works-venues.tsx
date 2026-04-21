@@ -37,8 +37,8 @@ export default function HowItWorksVenues() {
       icon: Star,
       title: "Hire with Confidence",
       description:
-        "Pay 15% of annual salary only when your chosen candidate starts. 60-day replacement guarantee included.",
-      time: "15% on hire",
+        "Pay 18% of annual salary (15% for founding venues) only when your chosen candidate starts. 60-day replacement guarantee included.",
+      time: "18% on hire",
     },
   ];
 

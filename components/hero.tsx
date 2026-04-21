@@ -61,8 +61,8 @@ export default function Hero() {
             className="text-base md:text-xl text-white/80 mb-4 leading-relaxed"
           >
             Permanent placement for Venue Managers, Bar Managers &amp; Head Chefs.
-            Psychology-screened candidates. 15% fee. 60-day guarantee. You pay
-            only when you hire.
+            Psychology-screened candidates. 18% fee (15% for founding venues).
+            60-day guarantee. You pay only when you hire.
           </motion.p>
 
           <motion.div

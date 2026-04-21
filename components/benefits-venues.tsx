@@ -153,8 +153,8 @@ export default function BenefitsVenues() {
                 </div>
 
                 <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">Illustrative profile format.</span>
-                  <span className="text-xs font-bold text-[#d4a853]">For demo only</span>
+                  <span className="text-xs text-gray-500">Example profile format &mdash; anonymised for privacy.</span>
+                  <span className="text-xs font-bold text-[#d4a853]">Every candidate has one</span>
                 </div>
               </div>
             </div>

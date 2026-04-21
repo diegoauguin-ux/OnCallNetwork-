@@ -119,7 +119,7 @@ export default function ContactForm() {
                 <div>
                   <h3 className="font-semibold text-[#1e3a5f] mb-1">Casual Introductions</h3>
                   <p className="text-gray-600 text-sm">
-                    Pre-screened professionals with a verified Reliability Score. $99/intro or $199/month unlimited.
+                    Pre-screened professionals with an OCN Behavioural Profile. $99 per introduction.
                   </p>
                 </div>
               </div>
@@ -216,7 +216,7 @@ export default function ContactForm() {
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
                     {isCasual
-                      ? "Pre-screened casual professionals — $99/intro or $199/month"
+                      ? "Pre-screened casual professionals — $99 per introduction"
                       : "Permanent placement — Chef, Manager, Supervisor. 10–14 day turnaround"}
                   </p>
                 </div>
