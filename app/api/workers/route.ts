@@ -36,7 +36,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const workerData: WorkerRecord = parsed.data;
+    const workerData: WorkerRecord = {
+      fullName: parsed.data.fullName,
+      email: parsed.data.email,
+      phone: parsed.data.phone,
+      role: parsed.data.role,
+      workExperience: parsed.data.workExperience,
+      hasRSA: parsed.data.hasRSA,
+      suburb: parsed.data.suburb,
+      availability: parsed.data.availability,
+      additionalNotes: parsed.data.additionalNotes,
+    };
     const { id } = await createWorkerRecord(workerData);
 
     return NextResponse.json({
