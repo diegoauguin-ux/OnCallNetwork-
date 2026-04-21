@@ -1,6 +1,7 @@
 "use client";
 import { MapPin, Mail } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const currentYear = 2026;
@@ -11,9 +12,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-[#d4a853] flex items-center justify-center">
-                <span className="text-[#1e3a5f] font-bold text-lg">OCN</span>
-              </div>
+              <Image
+                src="/ocn-icon.png"
+                alt="On Call Network icon"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain"
+                loading="lazy"
+              />
               <span className="font-semibold text-lg">On Call Network</span>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
