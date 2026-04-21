@@ -335,7 +335,7 @@ export default function TermsAndConditionsPage() {
               <a href="mailto:hello@oncallnetwork.com.au">
                 hello@oncallnetwork.com.au
               </a>{" "}
-              &middot; 0424 195 996
+              &middot; 0493 906 632
             </p>
           </article>
         </div>

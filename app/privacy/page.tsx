@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
                   hello@oncallnetwork.com.au
                 </a>
               </li>
-              <li>Phone: 0424 195 996</li>
+              <li>Phone: 0493 906 632</li>
               <li>Location: Inner West Sydney, NSW, Australia</li>
             </ul>
 
