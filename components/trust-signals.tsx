@@ -36,7 +36,7 @@ export default function TrustSignals() {
       icon: ShieldCheck,
       stage: "Stage 5",
       title: "Venue introduction",
-      description: "Only applicants who pass all four previous stages are introduced. If they don't show, you don't pay.",
+      description: "Only applicants who pass all four previous stages are introduced. If they don't show, the introduction fee is credited in full.",
     },
   ];
 
@@ -106,11 +106,13 @@ export default function TrustSignals() {
                 <ShieldCheck className="w-6 h-6 text-[#1e3a5f]" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-1">The OCN no-show guarantee</h3>
+                <h3 className="text-xl font-bold text-white mb-1">The OCN Introduction Service Credit</h3>
                 <p className="text-white/80 text-sm leading-relaxed max-w-2xl">
-                  If a candidate we introduce fails to arrive, the introduction fee is refunded
-                  in full and Diego personally sources a replacement at no extra cost. Written
-                  into every agreement. No small print.
+                  If an introduced candidate fails to show without 4+ hours&apos; notice,
+                  the $99 introduction fee is credited and OCN will use best efforts
+                  to source a replacement introduction at no extra cost, subject to
+                  network availability. OCN does not employ or direct candidates —
+                  this credit covers the introduction, not the shift.
                 </p>
               </div>
             </div>

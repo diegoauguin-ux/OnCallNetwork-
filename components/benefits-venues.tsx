@@ -18,7 +18,7 @@ export default function BenefitsVenues() {
     },
     {
       icon: ShieldCheck,
-      title: "Written no-show guarantee",
+      title: "Introduction-backed service credit",
       description: "If the candidate we introduce doesn't arrive, the fee is refunded and Diego personally sources a replacement. It's a clause in your agreement.",
     },
     {

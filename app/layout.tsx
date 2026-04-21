@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | On Call Network",
   },
   description:
-    "Founder-led Sydney hospitality recruitment. $99 casual intros with a no-show refund, and 18% permanent placements (15% founding rate) with a 60-day replacement guarantee. Inner West, Eastern Suburbs, CBD, North Shore.",
+    "Founder-led Sydney hospitality recruitment. $99 casual intros with an introduction service credit, and 18% permanent placements (15% founding rate) with a 60-day replacement guarantee. Inner West, Eastern Suburbs, CBD, North Shore.",
   keywords: [
     "Sydney hospitality recruitment",
     "hospitality staff Sydney",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "On Call Network | Sydney Hospitality Recruitment",
     description:
-      "The Sydney hospitality recruiter venues actually trust. One founder, one phone number, every candidate personally interviewed. Written no-show and 60-day replacement guarantees.",
+      "The Sydney hospitality recruiter venues actually trust. One founder, one phone number, every candidate personally interviewed. Introduction-backed service credit and 60-day replacement guarantees.",
     url: BASE_URL,
     siteName: "On Call Network",
     images: [

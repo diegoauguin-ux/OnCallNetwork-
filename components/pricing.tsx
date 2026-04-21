@@ -45,7 +45,7 @@ export default function Pricing() {
         "Pre-screened candidates with OCN Behavioural Profile",
         "Same-day matching available where capacity allows",
         "You pay the candidate directly at the agreed award rate",
-        "Full refund if the candidate no-shows without 4+ hours' notice",
+        "Introduction fee credited if candidate doesn't show without 4+ hours' notice",
       ],
       highlight: false,
       cta: "Book a Casual Intro →",

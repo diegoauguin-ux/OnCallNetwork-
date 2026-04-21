@@ -77,8 +77,8 @@ export default function Hero() {
                 <h3 className="text-white font-bold">Need a shift covered?</h3>
               </div>
               <p className="text-white/75 text-sm mb-4 leading-relaxed">
-                $99 per candidate introduction. Pre-screened. Full refund if
-                they no-show.
+                $99 per candidate introduction. Pre-screened. Service credit if
+                they don't show.
               </p>
               <Link
                 href="/#contact?service=casual"

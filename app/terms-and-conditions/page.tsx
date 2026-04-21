@@ -184,7 +184,7 @@ export default function TermsAndConditionsPage() {
               </li>
             </ul>
 
-            <h2>6. No-Show Guarantee (Casual Introductions only)</h2>
+            <h2>6. Introduction Service Credit (Casual Introductions only)</h2>
             <p>
               If a Candidate fails to attend a confirmed shift without prior
               notice of at least 4 hours:

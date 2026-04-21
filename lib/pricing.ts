@@ -20,7 +20,7 @@ export const PRICING = {
     currency: "AUD",
     gstTreatment: "ex GST",
     payableWhen: "on first confirmed shift",
-    noShowGuarantee: "Full refund + replacement if candidate no-shows",
+    noShowGuarantee: "Service credit + replacement intro if candidate doesn't show",
   },
   gstDisclosure:
     "All prices are GST-exclusive. GST added on invoice where applicable.",

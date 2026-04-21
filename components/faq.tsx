@@ -13,12 +13,12 @@ export default function FAQ() {
     {
       question: "OCN is new. Why should I trust it?",
       answer:
-        "You shouldn't \u2014 not blindly. That's exactly why we built a written no-show guarantee into every casual intro and a 60-day replacement guarantee into every permanent placement. If it doesn't work, you don't pay. Your risk on the first engagement is limited to time, not money. Judge us on what actually happens.",
+        "You shouldn't \u2014 not blindly. That's exactly why we built a introduction-backed service credit into every casual intro and a 60-day replacement guarantee into every permanent placement. If it doesn't work, you don't pay. Your risk on the first engagement is limited to time, not money. Judge us on what actually happens.",
     },
     {
       question: "How does the $99 Casual Introduction work?",
       answer:
-        "You message Diego with the shift details (role, date, hours, rate). Diego proposes one pre-screened candidate from the network. You approve them. The $99 intro fee (ex GST) is invoiced after the candidate completes their first confirmed shift. If the candidate no-shows, the fee is fully refunded and Diego sources a replacement at no extra cost. You pay the candidate their hourly rate directly \u2014 OCN never takes a cut of their pay.",
+        "You message Diego with the shift details (role, date, hours, rate). Diego proposes one pre-screened candidate from the network. You approve them. The $99 intro fee (ex GST) is invoiced after the candidate completes their first confirmed shift. If the candidate doesn't show, the fee is credited in full and Diego sources a replacement at no extra cost. You pay the candidate their hourly rate directly \u2014 OCN never takes a cut of their pay.",
     },
     {
       question: "What's included in the 18% permanent placement fee?",
@@ -43,7 +43,7 @@ export default function FAQ() {
     {
       question: "What happens if the candidate doesn't work out?",
       answer:
-        "Casual: full refund + replacement if the candidate no-shows or leaves within the first two hours. Permanent: 60-day replacement guarantee \u2014 if the candidate resigns or is terminated for performance reasons in the first 60 days, Diego personally re-opens the search and delivers a replacement shortlist at no extra fee.",
+        "Casual: service credit + replacement intro if candidate doesn't show or leaves within the first two hours. Permanent: 60-day replacement guarantee \u2014 if the candidate resigns or is terminated for performance reasons in the first 60 days, Diego personally re-opens the search and delivers a replacement shortlist at no extra fee.",
     },
     {
       question: "What areas and roles do you cover?",
