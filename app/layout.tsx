@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     "Barcats alternative Sydney",
     "Sidekicker alternative Sydney",
   ],
-  authors: [{ name: "Diego Sauvalle" }],
+  authors: [{ name: "Diego Auguin" }],
   creator: "On Call Network",
   publisher: "On Call Network",
   alternates: {

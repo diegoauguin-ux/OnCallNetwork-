@@ -238,12 +238,6 @@ export default function ContactForm() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <a
-              href="tel:0424195996"
-              className="mb-3 inline-flex items-center text-sm text-[#1e3a5f] underline hover:text-[#d4a853]"
-            >
-              Call Diego directly: 0424 195 996
-            </a>
             {status === "success" ? (
               <div className="h-full flex items-center justify-center">
                 <div className="text-center p-8 bg-green-50 rounded-2xl">

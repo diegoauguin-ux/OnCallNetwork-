@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Phone, Mail, User } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function MeetTheFounder() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -18,26 +19,20 @@ export default function MeetTheFounder() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2"
           >
-            <div className="relative aspect-[4/5] max-w-sm mx-auto rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1e3a5f] via-[#2a4a6f] to-[#0f1e32]">
-              <div
-                aria-hidden
-                className="absolute inset-0 opacity-[0.10]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(#d4a853 1px, transparent 1px), linear-gradient(90deg, #d4a853 1px, transparent 1px)",
-                  backgroundSize: "36px 36px",
-                }}
+            <div className="relative max-w-sm mx-auto rounded-2xl overflow-hidden shadow-2xl">
+              <Image
+                src="/diego.jpg"
+                alt="Diego Auguin, Founder of On Call Network"
+                width={400}
+                height={500}
+                className="rounded-xl object-cover w-full"
+                priority
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                  <User className="w-14 h-14 text-white/60" />
-                </div>
-              </div>
               <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[#0f1e32] via-[#0f1e32]/80 to-transparent">
                 <p className="text-[#d4a853] text-xs font-bold tracking-wider uppercase mb-1">
                   Founder
                 </p>
-                <p className="text-white font-bold text-lg">Diego Sauvalle</p>
+                <p className="text-white font-bold text-lg">Diego Auguin</p>
                 <p className="text-white/70 text-sm">
                   M.Psy &middot; Hospitality Recruiter
                 </p>
@@ -60,7 +55,7 @@ export default function MeetTheFounder() {
 
             <div className="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed">
               <p>
-                Diego Sauvalle holds a Master&rsquo;s degree in Psychology from
+                Diego Auguin holds a Master&rsquo;s degree in Psychology from
                 Universidad Andr&eacute;s Bello and has spent the last four
                 years recruiting across hospitality, corporate, and technology
                 sectors in Australia and Latin America. He built On Call
@@ -83,17 +78,10 @@ export default function MeetTheFounder() {
               </p>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href="tel:0424195996"
-                className="inline-flex items-center gap-2 h-11 px-5 bg-[#1e3a5f] text-white font-semibold rounded-lg hover:bg-[#2a4a6f] transition-all"
-              >
-                <Phone className="w-4 h-4" />
-                0424 195 996
-              </a>
+            <div className="mt-6">
               <a
                 href="mailto:hello@oncallnetwork.com.au"
-                className="inline-flex items-center gap-2 h-11 px-5 bg-white text-[#1e3a5f] border border-[#1e3a5f]/20 font-semibold rounded-lg hover:border-[#d4a853] hover:text-[#d4a853] transition-all"
+                className="inline-flex items-center gap-2 h-11 px-5 bg-[#1e3a5f] text-white font-semibold rounded-lg hover:bg-[#2a4a6f] transition-all"
               >
                 <Mail className="w-4 h-4" />
                 hello@oncallnetwork.com.au

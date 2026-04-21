@@ -58,7 +58,7 @@ export async function sendVenueConfirmation(to: string, contactName: string, ser
     "We&rsquo;ve got your brief",
     `<p>Hi ${escapeHtml(contactName)},</p>
      <p>Thanks for reaching out to On Call Network. Diego has received your enquiry about <strong>${escapeHtml(serviceType)}</strong> and will personally respond within <strong>2 business hours</strong>.</p>
-     <p>If it&rsquo;s urgent, call Diego on <strong>0424 195 996</strong>.</p>
+     <p>If it&rsquo;s urgent, reply directly to this email and Diego will see it straight away.</p>
      <p>&mdash; The On Call Network team</p>`
   );
   await safeSend(to, "We&rsquo;ve got your brief &mdash; On Call Network", html);
@@ -98,7 +98,7 @@ export async function sendCandidateConfirmation(
     `<p>Hi ${escapeHtml(fullName.split(" ")[0] || fullName)},</p>
      <p>Thanks for applying to the On Call Network for the role of <strong>${escapeHtml(role)}</strong>. Diego reviews every application personally and will reply within <strong>48 hours</strong> if there&rsquo;s a match for your profile in Sydney.</p>
      <p>In the meantime, feel free to reply to this email with anything else we should know.</p>
-     <p>&mdash; Diego Sauvalle, Founder</p>`
+     <p>&mdash; Diego Auguin, Founder</p>`
   );
   await safeSend(to, "Application received &mdash; On Call Network", html);
 }

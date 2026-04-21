@@ -9,14 +9,13 @@ const organization = {
   logo: `${BASE_URL}/ocn-icon.png`,
   founder: {
     "@type": "Person",
-    name: "Diego Sauvalle",
+    name: "Diego Auguin",
     jobTitle: "Founder",
   },
   sameAs: [],
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+61424195996",
       email: "hello@oncallnetwork.com.au",
       contactType: "customer service",
       areaServed: "AU-NSW",
@@ -36,7 +35,6 @@ const localBusiness = {
   "@type": "EmploymentAgency",
   name: "On Call Network",
   url: BASE_URL,
-  telephone: "+61424195996",
   email: "hello@oncallnetwork.com.au",
   priceRange: "$$",
   areaServed: [
