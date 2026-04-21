@@ -98,7 +98,7 @@ export async function sendCandidateConfirmation(
     `<p>Hi ${escapeHtml(fullName.split(" ")[0] || fullName)},</p>
      <p>Thanks for applying to the On Call Network for the role of <strong>${escapeHtml(role)}</strong>. Diego reviews every application personally and will reply within <strong>48 hours</strong> if there&rsquo;s a match for your profile in Sydney.</p>
      <p>In the meantime, feel free to reply to this email with anything else we should know.</p>
-     <p>&mdash; Diego Auguin, Founder</p>`
+     <p>&mdash; Diego Pascal, Founder</p>`
   );
   await safeSend(to, "Application received &mdash; On Call Network", html);
 }

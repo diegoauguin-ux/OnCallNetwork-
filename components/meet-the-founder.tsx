@@ -22,7 +22,7 @@ export default function MeetTheFounder() {
             <div className="relative max-w-sm mx-auto rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/diego.jpg"
-                alt="Diego Auguin, Founder of On Call Network"
+                alt="Diego Pascal, Founder of On Call Network"
                 width={400}
                 height={500}
                 className="rounded-xl object-cover w-full"
@@ -32,7 +32,7 @@ export default function MeetTheFounder() {
                 <p className="text-[#d4a853] text-xs font-bold tracking-wider uppercase mb-1">
                   Founder
                 </p>
-                <p className="text-white font-bold text-lg">Diego Auguin</p>
+                <p className="text-white font-bold text-lg">Diego Pascal</p>
                 <p className="text-white/70 text-sm">
                   M.Psy &middot; Hospitality Recruiter
                 </p>
@@ -55,7 +55,7 @@ export default function MeetTheFounder() {
 
             <div className="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed">
               <p>
-                Diego Auguin holds a Master&rsquo;s degree in Psychology from
+                Diego Pascal holds a Master&rsquo;s degree in Psychology from
                 Universidad Andr&eacute;s Bello and has spent the last four
                 years recruiting across hospitality, corporate, and technology
                 sectors in Australia and Latin America. He built On Call

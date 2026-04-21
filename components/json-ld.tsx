@@ -9,7 +9,7 @@ const organization = {
   logo: `${BASE_URL}/ocn-icon.png`,
   founder: {
     "@type": "Person",
-    name: "Diego Auguin",
+    name: "Diego Pascal",
     jobTitle: "Founder",
   },
   sameAs: [],
