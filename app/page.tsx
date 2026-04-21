@@ -5,6 +5,7 @@ import BenefitsVenues from "@/components/benefits-venues";
 import HowItWorksVenues from "@/components/how-it-works-venues";
 import Pricing from "@/components/pricing";
 import Testimonials from "@/components/testimonials";
+import MeetTheFounder from "@/components/meet-the-founder";
 import BenefitsWorkers from "@/components/benefits-workers";
 import HowItWorksWorkers from "@/components/how-it-works-workers";
 import WorkerCTA from "@/components/worker-cta";
@@ -30,6 +31,7 @@ export default function Home() {
       <Pricing />
 
       <Testimonials />
+      <MeetTheFounder />
 
       <section id="workers" className="scroll-mt-20">
         {/* Desktop only */}

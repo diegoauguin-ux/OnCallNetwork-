@@ -12,31 +12,53 @@ export default function FAQ() {
   const venuesFAQ = [
     {
       question: "OCN is new. Why should I trust it?",
-      answer: "You shouldn't — not blindly. That's exactly why we built a no-show guarantee into every agreement: if the candidate we introduce doesn't arrive, the fee is refunded and Diego personally sources a replacement. Your risk on the first introduction is limited to time, not money. Try us once, judge us on what actually happens.",
+      answer:
+        "You shouldn't \u2014 not blindly. That's exactly why we built a written no-show guarantee into every casual intro and a 60-day replacement guarantee into every permanent placement. If it doesn't work, you don't pay. Your risk on the first engagement is limited to time, not money. Judge us on what actually happens.",
+    },
+    {
+      question: "How does the $99 Casual Introduction work?",
+      answer:
+        "You message Diego with the shift details (role, date, hours, rate). Diego proposes one pre-screened candidate from the network. You approve them. The $99 intro fee (ex GST) is invoiced after the candidate completes their first confirmed shift. If the candidate no-shows, the fee is fully refunded and Diego sources a replacement at no extra cost. You pay the candidate their hourly rate directly \u2014 OCN never takes a cut of their pay.",
+    },
+    {
+      question: "What's included in the 18% permanent placement fee?",
+      answer:
+        "18% of the candidate's first-year gross annual salary (ex GST), payable on the candidate's start date on 14-day terms. The fee includes: intake brief with Diego, bespoke search, 3-person shortlist (typically within 5\u20137 days), full interview notes and reference checks, and a 60-day replacement guarantee. For the first three venues to sign each month, the fee is 15% under the Founding Venues programme.",
     },
     {
       question: "How do you screen candidates?",
-      answer: "A documented 5-stage process, the same for every applicant. Stage 1: written application. Stage 2: 15-minute structured phone screen. Stage 3: 45-minute behavioural interview with Diego using a written framework and scoring rubric. Stage 4: two reference calls with the applicant's last two venue managers. Stage 5: only then do we introduce them to a venue. We'll share the interview framework with any venue that asks.",
+      answer:
+        "A documented 5-stage process, the same for every applicant. Stage 1: written application. Stage 2: 15-minute structured phone screen. Stage 3: 45-minute behavioural interview with Diego using a written framework and scoring rubric. Stage 4: two reference calls with the applicant's last two venue managers. Stage 5: only then do we introduce them to a venue. We'll share the interview framework with any venue that asks.",
     },
     {
-      question: "What happens if the worker doesn't show up?",
-      answer: "The introduction fee is refunded in full, and Diego personally sources a replacement at no extra cost. This is written into your agreement, not just a marketing promise. You never pay for a no-show.",
+      question: "How is this different from Sidekicker, Barcats or a labour-hire agency?",
+      answer:
+        "Sidekicker and similar labour-hire platforms employ the worker, add an hourly markup on every hour worked, and you pay them. Barcats is a public job board where anyone can post. OCN is neither: we're an introduction and recruitment service. You engage or employ the candidate directly, at a rate you agree with them, and pay them directly. We charge one flat introduction or placement fee per successful engagement \u2014 no hourly markup, no ongoing fees.",
     },
     {
-      question: "How is this different from Sidekicker or Barcats?",
-      answer: "Sidekicker is a labour-hire agency — they employ the worker, add an hourly markup, and you pay them. Barcats is a public job board where anyone can post. OCN is neither: we're an introduction service. You hire the worker directly at a rate you agree with them, pay them directly, and we charge one flat introduction fee. No markup on hours worked.",
+      question: "How do I pay, and when?",
+      answer:
+        "Casual introductions: $99 (ex GST) invoiced after the candidate's first confirmed shift, 7-day terms. Permanent placements: 18% of first-year gross annual salary (ex GST), invoiced on the candidate's start date, 14-day terms. All invoices GST-inclusive where applicable. Bank transfer (preferred) or credit card.",
+    },
+    {
+      question: "What happens if the candidate doesn't work out?",
+      answer:
+        "Casual: full refund + replacement if the candidate no-shows or leaves within the first two hours. Permanent: 60-day replacement guarantee \u2014 if the candidate resigns or is terminated for performance reasons in the first 60 days, Diego personally re-opens the search and delivers a replacement shortlist at no extra fee.",
     },
     {
       question: "What areas and roles do you cover?",
-      answer: "Inner West, Eastern Suburbs, CBD and North Shore Sydney. Bartenders, waitstaff, baristas, kitchen hands, chefs and floor managers. Hospitality only — we deliberately don't do other industries.",
+      answer:
+        "Inner West, Eastern Suburbs, CBD and North Shore Sydney. Venue Managers, Bar Managers, Head Chefs, Sous Chefs, FOH/BOH Managers, Bartenders, Baristas, Chefs and Kitchen Hands. Hospitality only \u2014 we deliberately don't do other industries.",
     },
     {
       question: "How fast can you respond?",
-      answer: "For urgent requests with less than 24 hours' notice, our commitment is a reply from Diego within 2 business hours and an introduction attempt within the day. For planned requests, we confirm within 24 hours. We won't promise arrival times we can't control — what arrives is whoever the candidate's own transport allows.",
+      answer:
+        "For urgent casual requests with less than 24 hours' notice, Diego replies within 2 business hours and attempts to introduce a candidate within the day. For planned casual requests, we confirm within 24 hours. For permanent searches, a 3-person shortlist typically lands within 5\u20137 days of intake.",
     },
     {
-      question: "Do you offer permanent placements?",
-      answer: "Yes. For senior roles such as Head Chef, Sous Chef and Venue Manager we run a search-and-introduce service with a below-market flat fee and a 60-day replacement guarantee. Get in touch to discuss specifics.",
+      question: "When will you publish real testimonials?",
+      answer:
+        "Once the first three venues have completed a placement and given signed consent to be quoted and named. We won't fabricate social proof, and we won't quote anyone without written permission. If you want to speak to an existing venue before engaging, ask Diego for a reference call.",
     },
   ];
 

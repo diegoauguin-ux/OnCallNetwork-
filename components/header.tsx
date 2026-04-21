@@ -74,20 +74,20 @@ export default function Header() {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <Link
-              href="#contact"
+              href="/#contact?service=permanent"
               className="px-5 py-2.5 bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg hover:bg-[#e8c77b] transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              Book Trial Shift
+              Submit a Role Brief
             </Link>
           </div>
 
           {/* Mobile Actions */}
           <div className="md:hidden flex items-center gap-2">
             <Link
-              href="#contact"
-              className="h-12 px-4 inline-flex items-center justify-center bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg"
+              href="/#contact?service=permanent"
+              className="h-12 px-4 inline-flex items-center justify-center bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg text-sm"
             >
-              Hire Staff →
+              Role Brief →
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

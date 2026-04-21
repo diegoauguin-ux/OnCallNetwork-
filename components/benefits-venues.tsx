@@ -126,24 +126,25 @@ export default function BenefitsVenues() {
                 </div>
 
                 <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                  <div className="w-11 h-11 rounded-full bg-[#1e3a5f] text-white flex items-center justify-center flex-shrink-0 font-semibold text-sm">
-                    SM
+                  <div className="w-11 h-11 rounded-full bg-[#1e3a5f]/10 text-[#1e3a5f] flex items-center justify-center flex-shrink-0 font-semibold text-sm">
+                    ?
                   </div>
                   <div>
-                    <p className="font-bold text-[#1e3a5f] leading-tight">Sarah M.</p>
-                    <p className="text-xs text-gray-500">Bar Manager &middot; Inner West</p>
+                    <p className="font-bold text-[#1e3a5f] leading-tight">Candidate: Bar Manager</p>
+                    <p className="text-xs text-gray-500">Inner West Sydney</p>
                   </div>
                 </div>
 
                 <p className="text-[11px] font-bold tracking-wider text-gray-400 uppercase mb-2">
-                  Screening completed
+                  What we can share up-front
                 </p>
                 <div className="space-y-2 mb-4">
                   {[
-                    "Behavioral interview with founder",
-                    "Two reference checks completed",
-                    "Role-fit and leadership reviewed",
-                    "Availability and location verified",
+                    "Suburb radius + transport",
+                    "Availability pattern (e.g. Thu\u2013Sun nights)",
+                    "Years in hospitality + role history",
+                    "Rate expectation (range)",
+                    "OCN Behavioural Profile highlights",
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-gray-700">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#d4a853] flex-shrink-0" />
@@ -152,9 +153,12 @@ export default function BenefitsVenues() {
                   ))}
                 </div>
 
-                <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">Example profile format &mdash; anonymised for privacy.</span>
-                  <span className="text-xs font-bold text-[#d4a853]">Every candidate has one</span>
+                <div className="pt-3 border-t border-gray-100">
+                  <p className="text-[11px] text-gray-500 leading-snug">
+                    Full name, contact details and CV released after Diego
+                    confirms the shortlist with you. Example profile format &mdash;
+                    anonymised for privacy.
+                  </p>
                 </div>
               </div>
             </div>

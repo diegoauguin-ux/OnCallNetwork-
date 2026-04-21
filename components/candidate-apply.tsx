@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertCircle,
   Check,
-  CheckCircle,
   Loader2,
   Send,
 } from "lucide-react";
@@ -87,7 +86,7 @@ const initialFormData: CandidateApplyData = {
   termsAccepted: false,
 };
 
-const stepLabels = ["Who are you?", "Your experience", "Availability & preferences", "Confirm & submit"];
+const stepLabels = ["About you", "Fit & consent"];
 
 export default function CandidateApply() {
   const [formData, setFormData] = useState<CandidateApplyData>(initialFormData);
@@ -158,22 +157,17 @@ export default function CandidateApply() {
       if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) nextErrors.email = "Please enter a valid email address";
       if (!/^04\d{2}\s?\d{3}\s?\d{3}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid Australian mobile number";
       if (!formData.suburb.trim()) nextErrors.suburb = "Please enter your suburb";
-    }
-
-    if (targetStep === 2) {
       if (!formData.roleApplyingFor) nextErrors.roleApplyingFor = "Please select a role";
       if (!formData.yearsInAustralia) nextErrors.yearsInAustralia = "Please select your experience range";
       if (!formData.currentVenue.trim()) nextErrors.currentVenue = "Please enter your most recent venue";
+      if (formData.certifications.length < 1) nextErrors.certifications = "Please tell us which certifications you hold (choose None if you don't have any)";
     }
 
-    if (targetStep === 3) {
+    if (targetStep === 2) {
       if (!formData.availability) nextErrors.availability = "Please select your availability";
       if (formData.preferredZones.length < 1) nextErrors.preferredZones = "Please select at least one work zone";
       if (formData.employmentType.length < 1) nextErrors.employmentType = "Please select at least one employment type";
       if (formData.briefIntro.trim().length < 30) nextErrors.briefIntro = "Please write a brief intro (minimum 30 characters)";
-    }
-
-    if (targetStep === 4) {
       if (!formData.legalConfirmation) nextErrors.legalConfirmation = "Please confirm legal work rights and accuracy";
       if (!formData.termsAccepted) nextErrors.termsAccepted = "Please accept Terms & Conditions and Privacy Policy";
     }
@@ -191,7 +185,7 @@ export default function CandidateApply() {
   const goNext = () => {
     if (!validateStep(step)) return;
     setDirection(1);
-    setStep((s) => Math.min(4, s + 1));
+    setStep((s) => Math.min(2, s + 1));
   };
 
   const goBack = () => {
@@ -199,14 +193,9 @@ export default function CandidateApply() {
     setStep((s) => Math.max(1, s - 1));
   };
 
-  const goToStep = (target: number) => {
-    setDirection(target > step ? 1 : -1);
-    setStep(target);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(4)) return;
+    if (!validateStep(2)) return;
 
     setStatus("loading");
     setErrorMessage("");
@@ -222,6 +211,13 @@ export default function CandidateApply() {
 
       if (response.ok && result.success) {
         setStatus("success");
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(
+            new CustomEvent("ocn:conversion", {
+              detail: { type: "candidate_application_submitted" },
+            })
+          );
+        }
       } else {
         setStatus("error");
         setErrorMessage(result.message || "Something went wrong. Please try again or email hello@oncallnetwork.com.au directly.");
@@ -232,7 +228,7 @@ export default function CandidateApply() {
     }
   };
 
-  const progress = (step / 4) * 100;
+  const progress = (step / 2) * 100;
 
   return (
     <section id="apply" className="py-12 md:py-24 bg-white scroll-mt-20">
@@ -248,11 +244,18 @@ export default function CandidateApply() {
               For candidates
             </span>
             <h2 className="text-[26px] md:text-4xl font-bold text-[#1e3a5f] mb-4">
-              Apply to Join the OCN Talent Network
+              Apply to the OCN Network
             </h2>
             <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
-              Free forever. Diego reviews every application personally. Senior roles only — we work with Sydney&apos;s best venues.
+              Two short steps. Diego reads every application personally and
+              replies within 48 hours if there is a likely match for your
+              profile in Sydney.
             </p>
+            <ul className="space-y-3 text-sm text-gray-700">
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> Free to join &mdash; candidates never pay OCN.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> You agree the rate directly with the venue.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> No mandatory acceptance, no penalties for declining.</li>
+            </ul>
           </motion.div>
 
           <motion.div
@@ -271,21 +274,35 @@ export default function CandidateApply() {
                 >
                   <Check className="w-8 h-8 text-green-600" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Application received ✓</h3>
+                <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Application received</h3>
                 <p className="text-gray-700 mb-3">
-                  Diego reviews every application personally and will be in touch within 48 hours if there&apos;s a match for your profile.
+                  Diego reviews every application personally and will be in
+                  touch within 48 hours if there&apos;s a match for your
+                  profile.
                 </p>
-                <p className="text-sm text-gray-500 mb-4">Check your inbox — a confirmation email is on its way.</p>
-                <a href="#venues" className="text-[#1e3a5f] font-semibold hover:text-[#d4a853]">Back to home ↑</a>
+                <p className="text-sm text-gray-500 mb-4">
+                  Check your inbox for a confirmation email.
+                </p>
+                <a href="#venues" className="text-[#1e3a5f] font-semibold hover:text-[#d4a853]">Back to home &uarr;</a>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg overflow-hidden">
+                {/* Honeypot */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
                 <div className="mb-6">
                   <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
                     <div className="h-full bg-[#1e3a5f] transition-all duration-300" style={{ width: `${progress}%` }} />
                   </div>
                   <p className="text-xs text-gray-500 mt-2">
-                    Step {step} of 4 • {stepLabels[step - 1]}
+                    Step {step} of 2 &middot; {stepLabels[step - 1]}
                   </p>
                 </div>
 
@@ -300,67 +317,62 @@ export default function CandidateApply() {
                   >
                     {step === 1 && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">Who are you?</h3>
+                        <h3 className="text-xl font-bold text-[#1e3a5f]">About you</h3>
 
                         <div ref={setFieldRef("fullName")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Full Name *</label>
-                          <input className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" inputMode="text" />
+                          <label htmlFor="apply-fullname" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Full name *</label>
+                          <input id="apply-fullname" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" />
                           {errors.fullName && <p className="text-[13px] text-red-600 mt-1">{errors.fullName}</p>}
                         </div>
 
-                        <div ref={setFieldRef("email")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Email *</label>
-                          <input className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" />
-                          {errors.email && <p className="text-[13px] text-red-600 mt-1">{errors.email}</p>}
-                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div ref={setFieldRef("email")}>
+                            <label htmlFor="apply-email" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Email *</label>
+                            <input id="apply-email" type="email" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" />
+                            {errors.email && <p className="text-[13px] text-red-600 mt-1">{errors.email}</p>}
+                          </div>
 
-                        <div ref={setFieldRef("phone")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Phone *</label>
-                          <input className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX" inputMode="tel" />
-                          <p className="text-[13px] text-gray-500 mt-1">Australian mobile number</p>
-                          {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
+                          <div ref={setFieldRef("phone")}>
+                            <label htmlFor="apply-phone" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Phone *</label>
+                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX" inputMode="tel" />
+                            {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
+                          </div>
                         </div>
 
                         <div ref={setFieldRef("suburb")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Suburb *</label>
-                          <input className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" inputMode="text" />
+                          <label htmlFor="apply-suburb" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Suburb *</label>
+                          <input id="apply-suburb" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" />
                           {errors.suburb && <p className="text-[13px] text-red-600 mt-1">{errors.suburb}</p>}
                         </div>
 
-                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold">Next — Your Experience →</button>
-                      </div>
-                    )}
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div ref={setFieldRef("roleApplyingFor")}>
+                            <label htmlFor="apply-role" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Role *</label>
+                            <select id="apply-role" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
+                              <option value="">Select role</option>
+                              {roleOptions.map((o)=><option key={o} value={o}>{o}</option>)}
+                            </select>
+                            {errors.roleApplyingFor && <p className="text-[13px] text-red-600 mt-1">{errors.roleApplyingFor}</p>}
+                          </div>
 
-                    {step === 2 && (
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">Your experience</h3>
-
-                        <div ref={setFieldRef("roleApplyingFor")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Role Applying For *</label>
-                          <select className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
-                            <option value="">Select role</option>
-                            {roleOptions.map((o)=><option key={o} value={o}>{o}</option>)}
-                          </select>
-                          {errors.roleApplyingFor && <p className="text-[13px] text-red-600 mt-1">{errors.roleApplyingFor}</p>}
-                        </div>
-
-                        <div ref={setFieldRef("yearsInAustralia")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Years of Experience in Australia *</label>
-                          <select className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.yearsInAustralia} onChange={(e)=>setValue("yearsInAustralia", e.target.value)}>
-                            <option value="">Select experience range</option>
-                            {yearsOptions.map((o)=><option key={o} value={o}>{o}</option>)}
-                          </select>
-                          {errors.yearsInAustralia && <p className="text-[13px] text-red-600 mt-1">{errors.yearsInAustralia}</p>}
+                          <div ref={setFieldRef("yearsInAustralia")}>
+                            <label htmlFor="apply-years" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Experience in Australia *</label>
+                            <select id="apply-years" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.yearsInAustralia} onChange={(e)=>setValue("yearsInAustralia", e.target.value)}>
+                              <option value="">Select</option>
+                              {yearsOptions.map((o)=><option key={o} value={o}>{o}</option>)}
+                            </select>
+                            {errors.yearsInAustralia && <p className="text-[13px] text-red-600 mt-1">{errors.yearsInAustralia}</p>}
+                          </div>
                         </div>
 
                         <div ref={setFieldRef("currentVenue")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Current or Most Recent Venue *</label>
-                          <input className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.currentVenue} onChange={(e)=>setValue("currentVenue", e.target.value)} placeholder="e.g. The Grounds of Alexandria" />
+                          <label htmlFor="apply-venue" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Current or most recent venue *</label>
+                          <input id="apply-venue" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.currentVenue} onChange={(e)=>setValue("currentVenue", e.target.value)} placeholder="e.g. The Grounds of Alexandria" />
                           {errors.currentVenue && <p className="text-[13px] text-red-600 mt-1">{errors.currentVenue}</p>}
                         </div>
 
-                        <div>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Certifications held</label>
+                        <div ref={setFieldRef("certifications")}>
+                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Certifications held *</label>
                           <div className="flex flex-wrap gap-2">
                             {certOptions.map((opt) => {
                               const active = formData.certifications.includes(opt);
@@ -371,16 +383,18 @@ export default function CandidateApply() {
                               );
                             })}
                           </div>
+                          {errors.certifications && <p className="text-[13px] text-red-600 mt-1">{errors.certifications}</p>}
                         </div>
 
-                        <button type="button" onClick={goBack} className="text-[#1e3a5f] font-medium">← Back</button>
-                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold">Next — Availability →</button>
+                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold">
+                          Next &mdash; Fit &amp; Consent &rarr;
+                        </button>
                       </div>
                     )}
 
-                    {step === 3 && (
+                    {step === 2 && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">Availability & preferences</h3>
+                        <h3 className="text-xl font-bold text-[#1e3a5f]">Fit &amp; consent</h3>
 
                         <div ref={setFieldRef("availability")}>
                           <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Availability *</label>
@@ -398,7 +412,7 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("preferredZones")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Preferred Work Zones *</label>
+                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Preferred work zones *</label>
                           <div className="flex flex-wrap gap-2">
                             {zoneOptions.map((opt) => {
                               const active = formData.preferredZones.includes(opt);
@@ -414,7 +428,7 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("employmentType")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Employment Type Sought *</label>
+                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Employment type *</label>
                           <div className="flex flex-wrap gap-2">
                             {employmentOptions.map((opt) => {
                               const active = formData.employmentType.includes(opt);
@@ -429,38 +443,16 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("briefIntro")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Brief intro *</label>
-                          <textarea className="w-full min-h-[120px] text-base p-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
+                          <label htmlFor="apply-intro" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Short intro *</label>
+                          <textarea id="apply-intro" className="w-full min-h-[120px] text-base p-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
                           <p className={`text-[13px] mt-1 ${introRemaining < 20 ? "text-red-600" : "text-gray-500"}`}>{introRemaining} characters remaining</p>
                           {errors.briefIntro && <p className="text-[13px] text-red-600 mt-1">{errors.briefIntro}</p>}
                         </div>
 
-                        <button type="button" onClick={goBack} className="text-[#1e3a5f] font-medium">← Back</button>
-                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold">Next — Review & Submit →</button>
-                      </div>
-                    )}
-
-                    {step === 4 && (
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">Review & Confirm</h3>
-                        <div className="rounded-lg bg-white border border-gray-200 p-4 space-y-2 text-sm">
-                          <Summary label="Name" value={formData.fullName} onEdit={() => goToStep(1)} />
-                          <Summary label="Email" value={formData.email} onEdit={() => goToStep(1)} />
-                          <Summary label="Phone" value={formData.phone.replace(/(04\d{2}\s?\d{3})\s?\d{3}/, "$1 ***")} onEdit={() => goToStep(1)} />
-                          <Summary label="Role" value={formData.roleApplyingFor} onEdit={() => goToStep(2)} />
-                          <Summary label="Experience" value={formData.yearsInAustralia} onEdit={() => goToStep(2)} />
-                          <Summary label="Last Venue" value={formData.currentVenue} onEdit={() => goToStep(2)} />
-                          <Summary label="Certs" value={formData.certifications.join(", ")} onEdit={() => goToStep(2)} />
-                          <Summary label="Availability" value={formData.availability} onEdit={() => goToStep(3)} />
-                          <Summary label="Zones" value={formData.preferredZones.join(", ")} onEdit={() => goToStep(3)} />
-                          <Summary label="Employment" value={formData.employmentType.join(", ")} onEdit={() => goToStep(3)} />
-                          <Summary label="Brief intro" value={formData.briefIntro.length > 120 ? `${formData.briefIntro.slice(0,120)}...` : formData.briefIntro} onEdit={() => goToStep(3)} />
-                        </div>
-
-                        <div ref={setFieldRef("legalConfirmation")}>
+                        <div ref={setFieldRef("legalConfirmation")} className="pt-2">
                           <button type="button" onClick={() => setValue("legalConfirmation", !formData.legalConfirmation)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
                             <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#1e3a5f] border-[#1e3a5f]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                            <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and all information provided is accurate.</span>
+                            <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and that all information provided is accurate.</span>
                           </button>
                           {errors.legalConfirmation && <p className="text-[13px] text-red-600 mt-1">{errors.legalConfirmation}</p>}
                         </div>
@@ -468,26 +460,34 @@ export default function CandidateApply() {
                         <div ref={setFieldRef("termsAccepted")}>
                           <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
                             <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#1e3a5f] border-[#1e3a5f]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                            <span className="text-[15px] text-gray-700">I have read and agree to the <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a> and <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.</span>
+                            <span className="text-[15px] text-gray-700">
+                              I have read and agree to the {" "}
+                              <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a>
+                              {" "}and{" "}
+                              <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.
+                            </span>
                           </button>
                           {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
                         </div>
 
-                        <button type="button" onClick={goBack} className="text-[#1e3a5f] font-medium">← Back</button>
-
-                        <button type="submit" disabled={!formData.legalConfirmation || !formData.termsAccepted || status === "loading"} className="w-full h-14 rounded-lg bg-[#1e3a5f] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
-                          {status === "loading" ? (
-                            <>
-                              <Loader2 className="w-5 h-5 animate-spin" />
-                              Submitting...
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-5 h-5" />
-                              Apply to OCN Network →
-                            </>
-                          )}
-                        </button>
+                        <div className="flex items-center gap-3 pt-2">
+                          <button type="button" onClick={goBack} className="h-[52px] px-5 rounded-lg border border-[#1e3a5f]/30 text-[#1e3a5f] font-medium">
+                            &larr; Back
+                          </button>
+                          <button type="submit" disabled={status === "loading"} className="flex-1 h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
+                            {status === "loading" ? (
+                              <>
+                                <Loader2 className="w-5 h-5 animate-spin" />
+                                Submitting...
+                              </>
+                            ) : (
+                              <>
+                                <Send className="w-5 h-5" />
+                                Apply to the Network
+                              </>
+                            )}
+                          </button>
+                        </div>
 
                         {status === "error" && (
                           <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
@@ -505,17 +505,5 @@ export default function CandidateApply() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Summary({ label, value, onEdit }: { label: string; value: string; onEdit: () => void }) {
-  return (
-    <div className="flex items-start justify-between gap-3">
-      <div>
-        <p className="text-gray-500 text-xs">{label}</p>
-        <p className="text-gray-800 text-sm">{value || "—"}</p>
-      </div>
-      <button type="button" onClick={onEdit} className="text-[#1e3a5f] text-xs underline">Edit</button>
-    </div>
   );
 }

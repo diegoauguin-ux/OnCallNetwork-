@@ -53,7 +53,7 @@ export default function BenefitsWorkers() {
             transition={{ duration: 0.6 }}
             className="relative order-2 lg:order-1"
           >
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1e3a5f] via-[#2a4a6f] to-[#0f1e32] p-8 flex items-center justify-center">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1e3a5f] via-[#2a4a6f] to-[#0f1e32] p-6 md:p-8">
               <div
                 aria-hidden
                 className="absolute inset-0 opacity-[0.08]"
@@ -68,38 +68,52 @@ export default function BenefitsWorkers() {
                 className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-[#d4a853]/15 blur-3xl"
               />
 
-              {/* Pay card */}
-              <div className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5">
+              <div className="relative w-full bg-white rounded-2xl shadow-2xl p-5">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
                     How you get paid on OCN
                   </span>
                   <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-semibold rounded-full flex items-center gap-1">
-                    <Scale className="w-2.5 h-2.5" /> AWARD &amp; ABOVE
+                    <Scale className="w-2.5 h-2.5" /> HIGA 2020
                   </span>
                 </div>
 
-                <div className="mb-5 pb-5 border-b border-gray-100">
+                <div className="mb-5 pb-4 border-b border-gray-100">
                   <p className="text-xs text-gray-500 mb-1">Your hourly rate</p>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-bold text-[#1e3a5f]">You agree it</span>
-                  </div>
+                  <span className="text-2xl font-bold text-[#1e3a5f]">You agree it with the venue</span>
                   <p className="text-xs text-gray-500 mt-1">
-                    Directly with the venue, before the shift. We don&rsquo;t set it.
+                    Before the shift. OCN never sets it and never takes a cut.
                   </p>
                 </div>
 
-                <p className="text-[11px] font-bold tracking-wider text-gray-400 uppercase mb-2">
-                  Pay structure
+                <p className="text-[11px] font-bold tracking-wider text-[#1e3a5f] uppercase mb-2">
+                  Permanent / Part-time loadings
                 </p>
-                <div className="space-y-2 mb-4">
+                <div className="rounded-lg border border-gray-100 overflow-hidden mb-4">
                   {[
-                    { label: "Base rate (weekday)", amount: "100%" },
-                    { label: "Saturday loading", amount: "+25%" },
-                    { label: "Sunday loading", amount: "+50%" },
-                    { label: "Public holiday", amount: "+150%" },
+                    { label: "Monday\u2013Friday", amount: "Base rate" },
+                    { label: "Saturday", amount: "+25%" },
+                    { label: "Sunday", amount: "+50%" },
+                    { label: "Public holiday", amount: "+125%" },
                   ].map((s, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs">
+                    <div key={i} className={`flex items-center justify-between text-xs px-3 py-2 ${i % 2 === 0 ? "bg-[#faf9f6]" : "bg-white"}`}>
+                      <span className="text-gray-600">{s.label}</span>
+                      <span className="font-semibold text-[#1e3a5f]">{s.amount}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-[11px] font-bold tracking-wider text-[#1e3a5f] uppercase mb-2">
+                  Casual loadings <span className="font-normal normal-case text-gray-400">(includes 25% casual loading)</span>
+                </p>
+                <div className="rounded-lg border border-gray-100 overflow-hidden mb-4">
+                  {[
+                    { label: "Monday\u2013Friday", amount: "125%" },
+                    { label: "Saturday", amount: "150%" },
+                    { label: "Sunday", amount: "175%" },
+                    { label: "Public holiday", amount: "250%" },
+                  ].map((s, i) => (
+                    <div key={i} className={`flex items-center justify-between text-xs px-3 py-2 ${i % 2 === 0 ? "bg-[#faf9f6]" : "bg-white"}`}>
                       <span className="text-gray-600">{s.label}</span>
                       <span className="font-semibold text-[#1e3a5f]">{s.amount}</span>
                     </div>
@@ -107,8 +121,11 @@ export default function BenefitsWorkers() {
                 </div>
 
                 <div className="pt-3 border-t border-gray-100">
-                  <p className="text-[11px] text-gray-400 text-center leading-snug">
-                    Per the Hospitality Industry (General) Award.<br />OCN never takes a cut from your pay.
+                  <p className="text-[11px] text-gray-500 leading-snug">
+                    Rates reflect the Hospitality Industry (General) Award 2020
+                    (HIGA). Actual entitlements depend on classification, hours
+                    and employment type &mdash; check your payslip and the
+                    current Award. OCN never takes a cut from your pay.
                   </p>
                 </div>
               </div>

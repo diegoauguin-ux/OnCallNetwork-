@@ -35,7 +35,7 @@ export default function HowItWorksVenues() {
     {
       number: "04",
       icon: Star,
-      title: "Hire with Confidence",
+      title: "Hire on your terms",
       description:
         "Pay 18% of annual salary (15% for founding venues) only when your chosen candidate starts. 60-day replacement guarantee included.",
       time: "18% on hire",

@@ -36,16 +36,16 @@ export default function MobileStickyCTA() {
     >
       <div className="grid grid-cols-2 gap-2 h-full">
         <a
-          href="#contact"
+          href="/#contact?service=permanent"
           className="h-full rounded-lg bg-[#d4a853] text-[#1e3a5f] font-semibold text-sm inline-flex items-center justify-center"
         >
-          Hire Staff
+          Submit a Role Brief
         </a>
         <a
-          href="#apply"
+          href="/#apply"
           className="h-full rounded-lg border border-white/40 text-white font-semibold text-sm inline-flex items-center justify-center"
         >
-          Apply
+          Apply to the Network
         </a>
       </div>
     </div>
