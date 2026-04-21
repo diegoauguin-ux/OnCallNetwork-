@@ -2,12 +2,20 @@
 
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   AlertCircle,
   Check,
   Loader2,
   Send,
 } from "lucide-react";
+
+const Turnstile = dynamic(
+  () => import("@marsidev/react-turnstile").then((m) => m.Turnstile),
+  { ssr: false }
+);
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type CandidateApplyData = {
   formType: "candidate";
@@ -95,6 +103,9 @@ export default function CandidateApply() {
   const [errors, setErrors] = useState<ErrorMap>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [turnstileKey, setTurnstileKey] = useState<number>(0);
+  const [honeypot, setHoneypot] = useState<string>("");
 
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -204,27 +215,34 @@ export default function CandidateApply() {
       const response = await fetch("/api/venue-contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken, website: honeypot }),
       });
 
       const result = (await response.json().catch(() => ({}))) as { success?: boolean; message?: string };
 
       if (response.ok && result.success) {
         setStatus("success");
+        setTurnstileToken("");
+        setTurnstileKey((k) => k + 1);
         if (typeof window !== "undefined") {
           window.dispatchEvent(
             new CustomEvent("ocn:conversion", {
-              detail: { type: "candidate_application_submitted" },
+              detail: {
+                type: "candidate_application_submitted",
+                meta: { role: formData.roleApplyingFor },
+              },
             })
           );
         }
       } else {
         setStatus("error");
         setErrorMessage(result.message || "Something went wrong. Please try again or email hello@oncallnetwork.com.au directly.");
+        setTurnstileKey((k) => k + 1);
       }
     } catch {
       setStatus("error");
       setErrorMessage("Something went wrong. Please try again or email hello@oncallnetwork.com.au directly.");
+      setTurnstileKey((k) => k + 1);
     }
   };
 
@@ -286,16 +304,18 @@ export default function CandidateApply() {
                 <a href="#venues" className="text-[#1e3a5f] font-semibold hover:text-[#d4a853]">Back to home &uarr;</a>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg overflow-hidden">
-                {/* Honeypot */}
-                <input
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  className="hidden"
-                  aria-hidden="true"
-                />
+              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg overflow-hidden" noValidate>
+                <label className="hidden" aria-hidden="true">
+                  Leave this field empty
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </label>
 
                 <div className="mb-6">
                   <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
@@ -470,11 +490,31 @@ export default function CandidateApply() {
                           {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
                         </div>
 
+                        {TURNSTILE_SITE_KEY ? (
+                          <div className="pt-1 flex justify-center">
+                            <Turnstile
+                              key={turnstileKey}
+                              siteKey={TURNSTILE_SITE_KEY}
+                              onSuccess={(token: string) => setTurnstileToken(token)}
+                              onExpire={() => setTurnstileToken("")}
+                              onError={() => setTurnstileToken("")}
+                              options={{ theme: "light", size: "flexible" }}
+                            />
+                          </div>
+                        ) : null}
+
                         <div className="flex items-center gap-3 pt-2">
                           <button type="button" onClick={goBack} className="h-[52px] px-5 rounded-lg border border-[#1e3a5f]/30 text-[#1e3a5f] font-medium">
                             &larr; Back
                           </button>
-                          <button type="submit" disabled={status === "loading"} className="flex-1 h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2">
+                          <button
+                            type="submit"
+                            disabled={
+                              status === "loading" ||
+                              (!!TURNSTILE_SITE_KEY && !turnstileToken)
+                            }
+                            className="flex-1 h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                          >
                             {status === "loading" ? (
                               <>
                                 <Loader2 className="w-5 h-5 animate-spin" />

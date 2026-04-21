@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import {
   Send,
   Building2,
@@ -15,6 +16,13 @@ import {
   Briefcase,
   Phone,
 } from "lucide-react";
+
+const Turnstile = dynamic(
+  () => import("@marsidev/react-turnstile").then((m) => m.Turnstile),
+  { ssr: false }
+);
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type ServiceType =
   | "Permanent Placement (18% of annual salary)"
@@ -102,6 +110,9 @@ export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [turnstileKey, setTurnstileKey] = useState<number>(0);
+  const [honeypot, setHoneypot] = useState<string>("");
 
   useEffect(() => {
     const pre = readServiceFromHash();
@@ -136,7 +147,7 @@ export default function ContactForm() {
       const response = await fetch("/api/venue-contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken, website: honeypot }),
       });
       const result = (await response.json().catch(() => ({}))) as {
         success?: boolean;
@@ -145,13 +156,30 @@ export default function ContactForm() {
       if (response.ok && result?.success) {
         setStatus("success");
         setFormData(initialFormData);
+        setTurnstileToken("");
+        setTurnstileKey((k) => k + 1);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(
+            new CustomEvent("ocn:conversion", {
+              detail: {
+                type:
+                  formData.serviceType === "Casual Introduction ($99 per intro)"
+                    ? "casual_intro_submitted"
+                    : "role_brief_submitted",
+                meta: { serviceType: formData.serviceType },
+              },
+            })
+          );
+        }
       } else {
         setStatus("error");
         setErrorMessage(result?.message || `Error ${response.status}`);
+        setTurnstileKey((k) => k + 1);
       }
     } catch (error) {
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Failed to submit form");
+      setTurnstileKey((k) => k + 1);
     }
   };
 
@@ -235,7 +263,18 @@ export default function ContactForm() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg">
+              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg" noValidate>
+                <label className="hidden" aria-hidden="true">
+                  Leave this field empty
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </label>
                 <div className="mb-4">
                   <label htmlFor="serviceType" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Service *</label>
                   <select
@@ -353,6 +392,19 @@ export default function ContactForm() {
                   </label>
                 </div>
 
+                {TURNSTILE_SITE_KEY ? (
+                  <div className="mb-4 flex justify-center">
+                    <Turnstile
+                      key={turnstileKey}
+                      siteKey={TURNSTILE_SITE_KEY}
+                      onSuccess={(token: string) => setTurnstileToken(token)}
+                      onExpire={() => setTurnstileToken("")}
+                      onError={() => setTurnstileToken("")}
+                      options={{ theme: "light", size: "flexible" }}
+                    />
+                  </div>
+                ) : null}
+
                 {status === "error" && (
                   <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2" role="alert" aria-live="polite">
                     <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
@@ -362,7 +414,11 @@ export default function ContactForm() {
 
                 <button
                   type="submit"
-                  disabled={status === "loading" || !formData.consentAccepted}
+                  disabled={
+                    status === "loading" ||
+                    !formData.consentAccepted ||
+                    (!!TURNSTILE_SITE_KEY && !turnstileToken)
+                  }
                   className="w-full h-14 bg-[#1e3a5f] text-white font-bold text-lg rounded-lg hover:bg-[#2a4a6f] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status === "loading" ? (
