@@ -39,13 +39,13 @@ export default function MobileStickyCTA() {
           href="/#contact?service=permanent"
           className="h-full rounded-lg bg-[#d4a853] text-[#1e3a5f] font-semibold text-sm inline-flex items-center justify-center"
         >
-          Submit a Role Brief
+          Get a Quote
         </a>
         <a
           href="/#apply"
           className="h-full rounded-lg border border-white/40 text-white font-semibold text-sm inline-flex items-center justify-center"
         >
-          Apply to the Network
+          Apply to Work
         </a>
       </div>
     </div>

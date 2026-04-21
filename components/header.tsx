@@ -41,9 +41,9 @@ export default function Header() {
             <Image
               src="/ocn-icon.png"
               alt="On Call Network icon"
-              width={40}
-              height={40}
-              className="w-10 h-10 rounded-full object-cover bg-[#0b2340]"
+              width={52}
+              height={52}
+              className="w-[52px] h-[52px] md:w-11 md:h-11 rounded-full object-cover bg-[#0b2340]"
               priority
             />
             <span className={`font-semibold text-lg hidden sm:block ${
