@@ -14,7 +14,11 @@ const workerSchema = z.object({
   workExperience: z
     .number({ invalid_type_error: "Experience must be a number" })
     .min(1, "Minimum 1 year experience required"),
+  role: z.string().min(1, "Role is required"),
+  hasRSA: z.string().min(1, "RSA status is required"),
+  suburb: z.string().min(1, "Suburb is required"),
   availability: z.string().min(1, "Availability is required"),
+  additionalNotes: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -32,7 +36,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const workerData = parsed.data as WorkerRecord;
+    const workerData: WorkerRecord = parsed.data;
     const { id } = await createWorkerRecord(workerData);
 
     return NextResponse.json({

@@ -126,7 +126,11 @@ export interface WorkerRecord {
 export async function createWorkerRecord(
   data: WorkerRecord
 ): Promise<{ id: string }> {
-  const tableName = "Workers";
+  const tableName =
+    process.env.AIRTABLE_WORKERS_TABLE_NAME ??
+    process.env.AIRTABLE_CANDIDATE_TABLE ??
+    process.env.AIRTABLE_CANDIDATE_APPLICATIONS_TABLE_NAME ??
+    "Candidate Applications";
 
   const fields: AirtableFields = {
     "Full Name": data.fullName,
