@@ -43,7 +43,7 @@ export default function Header() {
               alt="On Call Network icon"
               width={40}
               height={40}
-              className="w-10 h-10 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover bg-[#0b2340]"
               priority
             />
             <span className={`font-semibold text-lg hidden sm:block ${

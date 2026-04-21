@@ -17,7 +17,7 @@ export default function Footer() {
                 alt="On Call Network icon"
                 width={40}
                 height={40}
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover bg-[#0b2340]"
                 loading="lazy"
               />
               <span className="font-semibold text-lg">On Call Network</span>
