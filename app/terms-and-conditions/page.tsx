@@ -337,6 +337,30 @@ export default function TermsAndConditionsPage() {
               </a>{" "}
               &middot; 0493 906 632
             </p>
+
+            <h2>16. CV Rewrite Service</h2>
+            <p>
+              The Australian CV Rewrite is a one-off paid service ($39 AUD).
+              Documents are prepared from the information and files you
+              provide; you are responsible for checking that every detail is
+              accurate before sending it to an employer. OCN does not
+              guarantee interviews or employment.
+            </p>
+            <ul>
+              <li>
+                Delivery is by email within 24 hours of submitting your
+                details. If it is not delivered in that time, you are refunded
+                in full.
+              </li>
+              <li>
+                One round of changes is included if requested by reply email
+                within 7 days of delivery.
+              </li>
+              <li>
+                Nothing in these terms limits your rights under the Australian
+                Consumer Law.
+              </li>
+            </ul>
           </article>
         </div>
       </section>
