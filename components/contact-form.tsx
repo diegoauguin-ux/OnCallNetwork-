@@ -203,18 +203,6 @@ export default function ContactForm() {
             </p>
 
             <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4 p-4 bg-[#F6F3EC] rounded-md">
-                <div className="w-11 h-11 rounded-lg bg-[#C8553D]/20 flex items-center justify-center flex-shrink-0">
-                  <Briefcase className="w-5 h-5 text-[#C8553D]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-[#14342B] mb-1">Permanent placement</h3>
-                  <p className="text-gray-600 text-sm">
-                    Senior hospitality recruitment with founder-led screening and a 60-day guarantee.
-                  </p>
-                </div>
-              </div>
-
               <div className="p-5 bg-[#14342B] rounded-md text-white">
                 <p className="font-semibold mb-2">Prefer email?</p>
                 <a

@@ -6,11 +6,9 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
 const NAV = [
-  { name: "For venues", href: "#venues" },
-  { name: "For candidates", href: "#workers" },
-  { name: "How it works", href: "#how-it-works" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "CV service", href: "/cv" },
+  { name: "Hire staff", href: "#hire" },
+  { name: "Find work", href: "#apply" },
+  { name: "CV rewrite", href: "#cv" },
   { name: "FAQ", href: "#faq" },
 ];
 
@@ -61,7 +59,7 @@ export default function Header() {
 
         <div className="flex items-center gap-2">
           <Link href="/#contact?service=permanent" className="btn btn-solid hidden h-11 px-5 text-[14.5px] sm:inline-flex">
-            Submit a role brief
+            Get a quote
           </Link>
           <button
             onClick={() => setOpen(!open)}
@@ -89,7 +87,7 @@ export default function Header() {
             ))}
             <div className="mt-auto grid gap-3 pt-10">
               <Link href="/#contact?service=permanent" onClick={() => setOpen(false)} className="btn btn-solid">
-                Submit a role brief
+                Get a quote
               </Link>
               <Link href="/#apply" onClick={() => setOpen(false)} className="btn btn-outline">
                 Apply to work

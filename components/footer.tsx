@@ -3,10 +3,9 @@ import Image from "next/image";
 import { SITE } from "@/lib/site-config";
 
 const LINKS = [
-  { n: "For venues", h: "/#venues" },
-  { n: "For candidates", h: "/#workers" },
-  { n: "Pricing", h: "/#pricing" },
-  { n: "CV service", h: "/cv" },
+  { n: "Hire staff", h: "/#hire" },
+  { n: "Find work", h: "/#apply" },
+  { n: "CV rewrite", h: "/cv" },
   { n: "Contact", h: "/#contact" },
 ];
 
