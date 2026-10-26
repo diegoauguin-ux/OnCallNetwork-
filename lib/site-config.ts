@@ -8,7 +8,7 @@ export const SITE = {
   testimonials: [] as { quote: string; name: string; role: string; venue: string }[],
   cvPaymentUrl:
     process.env.NEXT_PUBLIC_CV_PAYMENT_URL ||
-    "https://buy.stripe.com/6oU5kDc893mjfAM5CV6AM02",
+    "https://buy.stripe.com/aFa14o7Tz7Eb40L6fN6Zy00",
   cvPrice: "$39",
   builder: { name: "RapidoWeb", url: "https://rapidoweb.com.au" },
 } as const;
