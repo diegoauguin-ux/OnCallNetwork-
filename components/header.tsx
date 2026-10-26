@@ -1,131 +1,103 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Users, Briefcase } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { Menu, X } from "lucide-react";
+
+const NAV = [
+  { name: "For venues", href: "#venues" },
+  { name: "For candidates", href: "#workers" },
+  { name: "How it works", href: "#how-it-works" },
+  { name: "Pricing", href: "#pricing" },
+  { name: "CV service", href: "/cv" },
+  { name: "FAQ", href: "#faq" },
+];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const on = () => setScrolled(window.scrollY > 24);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
   }, []);
 
-  const navItems = [
-    { name: "For Venues", href: "#contact", icon: Briefcase },
-    { name: "For Candidates", href: "#apply", icon: Users },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "FAQ", href: "#faq" },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[#1e3a5f]/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
+        open ? "border-b border-line bg-paper" : scrolled ? "border-b border-line bg-paper/90 backdrop-blur" : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/ocn-icon.png"
-              alt="On Call Network icon"
-              width={73}
-              height={73}
-              className="w-[73px] h-[73px] md:w-[55px] md:h-[55px] rounded-full object-cover bg-[#0b2340]"
-              priority
-            />
-            <span className={`font-semibold text-lg hidden sm:block ${
-              isScrolled ? "text-white" : "text-white"
-            }`}>
-              On Call Network
-            </span>
+      <div className="wrap flex h-16 items-center justify-between md:h-[72px]">
+        <Link href="/" className="flex items-center gap-3" aria-label="On Call Network home" onClick={() => setOpen(false)}>
+          <Image
+            src="/ocn-icon.png"
+            alt=""
+            width={40}
+            height={40}
+            className="h-9 w-9 rounded-full object-cover md:h-10 md:w-10"
+            priority
+          />
+          <span className="font-display text-[22px] leading-none tracking-tight">On Call Network</span>
+        </Link>
+
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+          {NAV.map((n) => (
+            <Link key={n.name} href={n.href.startsWith("#") ? `/${n.href}` : n.href} className="text-[14.5px] text-ink/75 transition-colors hover:text-ink">
+              {n.name}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link href="/#contact?service=permanent" className="btn btn-solid hidden h-11 px-5 text-[14.5px] sm:inline-flex">
+            Submit a role brief
           </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navItems?.map((item) => (
-              <Link
-                key={item?.name}
-                href={item?.href ?? "#"}
-                className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 ${
-                  isScrolled
-                    ? "text-white/80 hover:text-white hover:bg-white/10"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {item?.icon && <item.icon className="w-4 h-4" />}
-                {item?.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-3">
-            <Link
-              href="/#contact?service=permanent"
-              className="px-5 py-2.5 bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg hover:bg-[#e8c77b] transition-all duration-200 shadow-md hover:shadow-lg"
-            >
-              Submit a Role Brief
-            </Link>
-          </div>
-
-          {/* Mobile Actions */}
-          <div className="md:hidden flex items-center gap-2">
-            <Link
-              href="/#contact?service=permanent"
-              className="h-12 px-4 inline-flex items-center justify-center bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg text-sm"
-            >
-              Role Brief →
-            </Link>
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="h-12 w-12 inline-flex items-center justify-center rounded-lg text-white hover:bg-white/10 border border-white/20"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setOpen(!open)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-ink/20 lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -24 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden fixed inset-0 top-16 bg-[#1e3a5f] z-40"
-          >
-            <div className="px-4 py-4">
-              {navItems?.map((item) => (
-                <Link
-                  key={item?.name}
-                  href={item?.href ?? "#"}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="h-14 flex items-center gap-3 px-1 text-white/90 hover:text-white border-b border-white/15 text-base font-medium"
-                >
-                  {item?.icon && <item.icon className="w-5 h-5" />}
-                  {item?.name}
-                </Link>
-              ))}
+      {open && (
+        <div className="fixed inset-0 top-16 z-40 overflow-y-auto bg-paper lg:hidden">
+          <nav className="wrap flex min-h-[calc(100vh-4rem)] flex-col pb-10 pt-6" aria-label="Mobile">
+            {NAV.map((n) => (
+              <Link
+                key={n.name}
+                href={n.href.startsWith("#") ? `/${n.href}` : n.href}
+                onClick={() => setOpen(false)}
+                className="border-b border-line py-4 font-display text-[34px] leading-none tracking-tight"
+              >
+                {n.name}
+              </Link>
+            ))}
+            <div className="mt-auto grid gap-3 pt-10">
+              <Link href="/#contact?service=permanent" onClick={() => setOpen(false)} className="btn btn-solid">
+                Submit a role brief
+              </Link>
+              <Link href="/#apply" onClick={() => setOpen(false)} className="btn btn-outline">
+                Apply to work
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

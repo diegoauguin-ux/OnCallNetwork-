@@ -21,7 +21,7 @@ export default async function CvGraciasPage({
   if (!result.paid || !sessionId) {
     return (
       <main className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-6 py-20 text-center">
-        <h1 className="text-2xl font-bold text-[#1e3a5f]">We couldn&apos;t find your payment</h1>
+        <h1 className="text-2xl font-bold text-[#14342B]">We couldn&apos;t find your payment</h1>
         <p className="mt-3 text-gray-600">
           This page opens after a successful payment. If you already paid, wait a minute and
           refresh, or email{" "}
@@ -45,7 +45,7 @@ export default async function CvGraciasPage({
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-12">
-      <h1 className="text-center text-2xl font-bold text-[#1e3a5f]">
+      <h1 className="text-center text-2xl font-bold text-[#14342B]">
         Payment received. One last step.
       </h1>
       <p className="mx-auto mt-2 max-w-lg text-center text-gray-600">

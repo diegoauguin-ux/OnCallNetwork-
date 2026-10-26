@@ -14,35 +14,24 @@ import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import FAQ from "@/components/faq";
 import ContactForm from "@/components/contact-form";
 import Footer from "@/components/footer";
+import CvTeaser from "@/components/cv-teaser";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#faf9f6]">
+    <main className="min-h-screen bg-paper">
       <Header />
       <Hero />
+      <BenefitsVenues />
       <TrustSignals />
-
-      {/* Desktop only — too long for mobile */}
-      <div className="hidden md:block">
-        <BenefitsVenues />
-      </div>
-
       <HowItWorksVenues />
       <Pricing />
-
       <Testimonials />
       <MeetTheFounder />
-
-      <section id="workers" className="scroll-mt-20">
-        {/* Desktop only */}
-        <div className="hidden md:block">
-          <BenefitsWorkers />
-          <HowItWorksWorkers />
-        </div>
-        <WorkerCTA />
-      </section>
-
+      <BenefitsWorkers />
+      <HowItWorksWorkers />
+      <WorkerCTA />
       <CandidateApply />
+      <CvTeaser />
       <FAQ />
       <ContactForm />
       <Footer />

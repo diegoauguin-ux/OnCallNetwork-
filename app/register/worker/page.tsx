@@ -102,21 +102,21 @@ export default function WorkerRegistrationPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#faf9f6]">
+    <main className="min-h-screen bg-[#F6F3EC]">
       <div className="max-w-[640px] mx-auto px-4 sm:px-6 py-12 md:py-16 pb-28 md:pb-16">
         <Link
           href="/#workers"
-          className="inline-flex items-center gap-2 text-[#1e3a5f] hover:text-[#d4a853] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-[#14342B] hover:text-[#C8553D] transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
         </Link>
 
         <div className="mb-8">
-          <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
+          <span className="eyebrow mb-6 block">
             Join the Network
           </span>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-2">
+          <h1 className="h-display h-section mb-5">
             Apply to Join OCN
           </h1>
           <p className="text-gray-600 mb-4">
@@ -125,15 +125,15 @@ export default function WorkerRegistrationPage() {
           <p className="text-sm text-gray-500 mb-4">
             2-minute mobile form. Fields marked * are required.
           </p>
-          <div className="flex items-center gap-2 p-3 bg-[#1e3a5f]/5 rounded-lg">
-            <Shield className="w-5 h-5 text-[#d4a853] flex-shrink-0" />
-            <p className="text-sm text-[#1e3a5f]">
+          <div className="flex items-center gap-2 p-3 bg-[#14342B]/5 rounded-lg">
+            <Shield className="w-5 h-5 text-[#C8553D] flex-shrink-0" />
+            <p className="text-sm text-[#14342B]">
               Your rate is paid by the venue directly. <strong>OCN never takes a cut from your pay.</strong>
             </p>
           </div>
         </div>
 
-        <div className="p-6 md:p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+        <div className="p-6 md:p-8 bg-white rounded-md  border border-gray-100">
           <Form {...form}>
             <form id="worker-application-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
 
@@ -143,11 +143,11 @@ export default function WorkerRegistrationPage() {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#1e3a5f]">Full Name *</FormLabel>
+                    <FormLabel className="text-[#14342B]">Full Name *</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} autoComplete="name" placeholder="John Smith" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                        <Input {...field} autoComplete="name" placeholder="John Smith" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -162,11 +162,11 @@ export default function WorkerRegistrationPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#1e3a5f]">Email *</FormLabel>
+                      <FormLabel className="text-[#14342B]">Email *</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="email" autoComplete="email" placeholder="john@example.com" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                          <Input {...field} type="email" autoComplete="email" placeholder="john@example.com" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -178,11 +178,11 @@ export default function WorkerRegistrationPage() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#1e3a5f]">Phone *</FormLabel>
+                      <FormLabel className="text-[#14342B]">Phone *</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="tel" inputMode="tel" autoComplete="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                          <Input {...field} type="tel" inputMode="tel" autoComplete="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -197,13 +197,13 @@ export default function WorkerRegistrationPage() {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#1e3a5f]">Main Role *</FormLabel>
+                    <FormLabel className="text-[#14342B]">Main Role *</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <ChefHat className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <select
                           {...field}
-                          className="w-full pl-11 pr-4 h-11 rounded-md border border-gray-200 bg-white text-gray-900 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none text-sm"
+                          className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#C8553D] focus:ring-2 focus:ring-[#C8553D]/20 outline-none text-sm"
                         >
                           <option value="">Select your main role</option>
                           {ROLES.map((r) => (
@@ -224,7 +224,7 @@ export default function WorkerRegistrationPage() {
                   name="workExperience"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#1e3a5f]">Years Experience *</FormLabel>
+                      <FormLabel className="text-[#14342B]">Years Experience *</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -234,7 +234,7 @@ export default function WorkerRegistrationPage() {
                             inputMode="numeric"
                             min={1}
                             placeholder="2"
-                            className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]"
+                            className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]"
                             value={field.value ?? ""}
                             onChange={(e) => {
                               const val = e.target.value;
@@ -252,13 +252,13 @@ export default function WorkerRegistrationPage() {
                   name="hasRSA"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-[#1e3a5f]">RSA Certificate *</FormLabel>
+                      <FormLabel className="text-[#14342B]">RSA Certificate *</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Shield className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                           <select
                             {...field}
-                            className="w-full pl-11 pr-4 h-11 rounded-md border border-gray-200 bg-white text-gray-900 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none text-sm"
+                            className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#C8553D] focus:ring-2 focus:ring-[#C8553D]/20 outline-none text-sm"
                           >
                             <option value="">Select</option>
                             <option value="Yes — NSW RSA">Yes — NSW RSA</option>
@@ -279,11 +279,11 @@ export default function WorkerRegistrationPage() {
                 name="suburb"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#1e3a5f]">Your Suburb *</FormLabel>
+                    <FormLabel className="text-[#14342B]">Your Suburb *</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} autoComplete="address-level2" placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-gray-200 focus:border-[#d4a853]" />
+                        <Input {...field} autoComplete="address-level2" placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -297,7 +297,7 @@ export default function WorkerRegistrationPage() {
                 name="availability"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#1e3a5f]">Availability *</FormLabel>
+                    <FormLabel className="text-[#14342B]">Availability *</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
@@ -305,7 +305,7 @@ export default function WorkerRegistrationPage() {
                           {...field}
                           placeholder="E.g., Friday–Sunday evenings, weekday lunch shifts, flexible..."
                           rows={3}
-                          className="pl-11 border-gray-200 focus:border-[#d4a853] resize-none"
+                          className="pl-11 border-[#E2DDD1] focus:border-[#C8553D] resize-none"
                         />
                       </div>
                     </FormControl>
@@ -320,13 +320,13 @@ export default function WorkerRegistrationPage() {
                 name="additionalNotes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-[#1e3a5f]">Anything else? (optional)</FormLabel>
+                    <FormLabel className="text-[#14342B]">Anything else? (optional)</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
                         placeholder="E.g., I specialize in cocktail bars, I have my own transport, barista training..."
                         rows={2}
-                        className="border-gray-200 focus:border-[#d4a853] resize-none"
+                        className="border-[#E2DDD1] focus:border-[#C8553D] resize-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -337,7 +337,7 @@ export default function WorkerRegistrationPage() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-12 bg-[#1e3a5f] hover:bg-[#2a4a6f] text-white font-bold text-base"
+                className="w-full h-12 bg-[#14342B] hover:bg-[#1D4A3D] text-white font-bold text-base"
               >
                 {isSubmitting ? (
                   <>
@@ -359,12 +359,12 @@ export default function WorkerRegistrationPage() {
           </p>
         </div>
       </div>
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-20 p-3 bg-[#faf9f6]/95 backdrop-blur border-t border-gray-200">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-20 p-3 bg-[#F6F3EC]/95 backdrop-blur border-t border-[#E2DDD1]">
         <Button
           type="submit"
           form="worker-application-form"
           disabled={isSubmitting}
-          className="w-full h-12 bg-[#1e3a5f] hover:bg-[#2a4a6f] text-white font-bold text-base"
+          className="w-full h-12 bg-[#14342B] hover:bg-[#1D4A3D] text-white font-bold text-base"
         >
           {isSubmitting ? (
             <>

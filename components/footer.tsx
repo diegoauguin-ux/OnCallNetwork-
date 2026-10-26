@@ -1,93 +1,72 @@
-"use client";
-import { MapPin, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { SITE } from "@/lib/site-config";
+
+const LINKS = [
+  { n: "For venues", h: "/#venues" },
+  { n: "For candidates", h: "/#workers" },
+  { n: "Pricing", h: "/#pricing" },
+  { n: "CV service", h: "/cv" },
+  { n: "Contact", h: "/#contact" },
+];
 
 export default function Footer() {
-  const currentYear = 2026;
   return (
-    <footer className="bg-[#0f1e32] text-white py-12">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Image
-                src="/ocn-icon.png"
-                alt="On Call Network icon"
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full object-cover bg-[#0b2340]"
-                loading="lazy"
-              />
-              <span className="font-semibold text-lg">On Call Network</span>
+    <footer className="bg-ink text-paper">
+      <div className="wrap py-20">
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <div className="flex items-center gap-3">
+              <Image src="/ocn-icon.png" alt="" width={40} height={40} className="h-10 w-10 rounded-full object-cover" loading="lazy" />
+              <span className="font-display text-[28px] leading-none tracking-tight">On Call Network</span>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed mb-4">
-              A founder-led hospitality staff introduction service for Sydney venues. Every candidate is personally interviewed and reference-checked before they&rsquo;re introduced to a venue.
+            <p className="mt-6 max-w-[44ch] font-display text-[30px] leading-[1.1] tracking-tight text-paper/90">
+              Sydney hospitality hiring, done by one person who answers the phone.
             </p>
-            <p className="text-[#d4a853] font-semibold text-sm">
-              Inner West &middot; Eastern Suburbs &middot; CBD &middot; North Shore
-            </p>
+            <a href="mailto:hello@oncallnetwork.com.au" className="mt-8 inline-block text-[17px] underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">
+              hello@oncallnetwork.com.au
+            </a>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Contact</h3>
-            <div className="space-y-3">
-              <a
-                href="mailto:hello@oncallnetwork.com.au"
-                className="flex items-center gap-3 text-white/70 hover:text-[#d4a853] transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-                <span>hello@oncallnetwork.com.au</span>
-              </a>
-              <div className="flex items-start gap-3 text-white/70">
-                <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                <span>Inner West Sydney, NSW</span>
-              </div>
-            </div>
+          <div className="lg:col-span-3">
+            <p className="eyebrow mb-5 !text-paper/50">Explore</p>
+            <ul className="space-y-2.5">
+              {LINKS.map((l) => (
+                <li key={l.n}>
+                  <Link href={l.h} className="text-[15.5px] text-paper/80 transition-colors hover:text-accent">{l.n}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
-            <div className="space-y-2">
-              <Link href="#venues" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                For Venues
-              </Link>
-              <Link href="#workers" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                For Workers
-              </Link>
-              <Link href="#pricing" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                Pricing
-              </Link>
-              <Link href="#contact" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                Contact
-              </Link>
-              <Link href="/terms-and-conditions" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                Terms &amp; Conditions
-              </Link>
-              <Link href="/privacy" className="block text-white/70 hover:text-[#d4a853] transition-colors py-0.5">
-                Privacy Policy
-              </Link>
-            </div>
+          <div className="lg:col-span-3">
+            <p className="eyebrow mb-5 !text-paper/50">Areas</p>
+            <p className="text-[15.5px] leading-relaxed text-paper/80">
+              Inner West
+              <br />
+              Eastern Suburbs
+              <br />
+              CBD
+              <br />
+              North Shore
+            </p>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/50 text-sm">
-              <span className="md:hidden">
-                OCN is a marketplace. Employment is directly between venue and candidate.
-              </span>
-              <span className="hidden md:inline">
-                On Call Network is a marketplace platform connecting hospitality venues with pre-screened candidates. All employment relationships are formed directly between the venue and the candidate. OCN does not employ, supervise, or pay candidates.
-              </span>
-            </p>
-            <p className="text-white/50 text-sm">
-              &copy; {currentYear} On Call Network. All rights reserved.
-            </p>
+        <p className="mt-16 max-w-[90ch] border-t border-paper/15 pt-8 text-[12.5px] leading-relaxed text-paper/50">
+          OCN is a marketplace. Employment is directly between venue and candidate. On Call Network is a marketplace platform
+          connecting hospitality venues with pre-screened candidates. All employment relationships are formed directly between the
+          venue and the candidate. OCN does not employ, supervise, or pay candidates.
+        </p>
+
+        <div className="mt-6 flex flex-col justify-between gap-3 text-[13px] text-paper/50 md:flex-row">
+          <p>&copy; 2026 On Call Network. All rights reserved.</p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link href="/terms-and-conditions" className="hover:text-paper">Terms &amp; Conditions</Link>
+            <Link href="/privacy" className="hover:text-paper">Privacy Policy</Link>
+            <a href={SITE.builder.url} target="_blank" rel="noopener" className="text-paper/60 underline-offset-4 hover:text-paper hover:underline">
+              Website by {SITE.builder.name}
+            </a>
           </div>
         </div>
       </div>

@@ -280,7 +280,7 @@ export default function CandidateApply() {
 
   return (
     <section id="apply" className="py-12 md:py-24 bg-white scroll-mt-20">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div className="wrap">
         <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -288,10 +288,10 @@ export default function CandidateApply() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
+            <span className="eyebrow mb-6 block">
               For candidates
             </span>
-            <h2 className="text-[26px] md:text-4xl font-bold text-[#1e3a5f] mb-4">
+            <h2 className="h-display h-section mb-5">
               Apply to the OCN Network
             </h2>
             <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
@@ -300,9 +300,9 @@ export default function CandidateApply() {
               profile in Sydney.
             </p>
             <ul className="space-y-3 text-sm text-gray-700">
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> Free to join &mdash; candidates never pay OCN.</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> You agree the rate directly with the venue.</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#d4a853] mt-0.5 flex-shrink-0" /> No mandatory acceptance, no penalties for declining.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> Free to join, candidates never pay OCN.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> You agree the rate directly with the venue.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> No mandatory acceptance, no penalties for declining.</li>
             </ul>
           </motion.div>
 
@@ -313,7 +313,7 @@ export default function CandidateApply() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {status === "success" ? (
-              <div className="p-6 md:p-8 bg-green-50 rounded-2xl border border-green-200 text-center">
+              <div className="p-6 md:p-8 bg-green-50 rounded-md border border-green-200 text-center">
                 <motion.div
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
@@ -322,7 +322,7 @@ export default function CandidateApply() {
                 >
                   <Check className="w-8 h-8 text-green-600" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Application received</h3>
+                <h3 className="text-2xl font-bold text-[#14342B] mb-2">Application received</h3>
                 <p className="text-gray-700 mb-3">
                   Diego reviews every application personally and will be in
                   touch within 48 hours if there&apos;s a match for your
@@ -331,10 +331,10 @@ export default function CandidateApply() {
                 <p className="text-sm text-gray-500 mb-4">
                   Check your inbox for a confirmation email.
                 </p>
-                <a href="#venues" className="text-[#1e3a5f] font-semibold hover:text-[#d4a853]">Back to home &uarr;</a>
+                <a href="#venues" className="text-[#14342B] font-semibold hover:text-[#C8553D]">Back to home &uarr;</a>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg overflow-hidden" noValidate>
+              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#F6F3EC] rounded-md  overflow-hidden" noValidate>
                 <label className="hidden" aria-hidden="true">
                   Leave this field empty
                   <input
@@ -349,7 +349,7 @@ export default function CandidateApply() {
 
                 <div className="mb-6">
                   <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#1e3a5f] transition-all duration-300" style={{ width: `${progress}%` }} />
+                    <div className="h-full bg-[#14342B] transition-all duration-300" style={{ width: `${progress}%` }} />
                   </div>
                   <p className="text-xs text-gray-500 mt-2">
                     Step {step} of 2 &middot; {stepLabels[step - 1]}
@@ -367,38 +367,38 @@ export default function CandidateApply() {
                   >
                     {step === 1 && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">About you</h3>
+                        <h3 className="text-xl font-bold text-[#14342B]">About you</h3>
 
                         <div ref={setFieldRef("fullName")}>
-                          <label htmlFor="apply-fullname" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Full name *</label>
-                          <input id="apply-fullname" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" />
+                          <label htmlFor="apply-fullname" className="block text-sm font-medium text-[#14342B] mb-1.5">Full name *</label>
+                          <input id="apply-fullname" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" />
                           {errors.fullName && <p className="text-[13px] text-red-600 mt-1">{errors.fullName}</p>}
                         </div>
 
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div ref={setFieldRef("email")}>
-                            <label htmlFor="apply-email" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Email *</label>
-                            <input id="apply-email" type="email" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" />
+                            <label htmlFor="apply-email" className="block text-sm font-medium text-[#14342B] mb-1.5">Email *</label>
+                            <input id="apply-email" type="email" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" />
                             {errors.email && <p className="text-[13px] text-red-600 mt-1">{errors.email}</p>}
                           </div>
 
                           <div ref={setFieldRef("phone")}>
-                            <label htmlFor="apply-phone" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Phone *</label>
-                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX" inputMode="tel" />
+                            <label htmlFor="apply-phone" className="block text-sm font-medium text-[#14342B] mb-1.5">Phone *</label>
+                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX" inputMode="tel" />
                             {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
                           </div>
                         </div>
 
                         <div ref={setFieldRef("suburb")}>
-                          <label htmlFor="apply-suburb" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Suburb *</label>
-                          <input id="apply-suburb" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" />
+                          <label htmlFor="apply-suburb" className="block text-sm font-medium text-[#14342B] mb-1.5">Suburb *</label>
+                          <input id="apply-suburb" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" />
                           {errors.suburb && <p className="text-[13px] text-red-600 mt-1">{errors.suburb}</p>}
                         </div>
 
                         <div className="grid sm:grid-cols-2 gap-4">
                           <div ref={setFieldRef("roleApplyingFor")}>
-                            <label htmlFor="apply-role" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Role *</label>
-                            <select id="apply-role" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
+                            <label htmlFor="apply-role" className="block text-sm font-medium text-[#14342B] mb-1.5">Role *</label>
+                            <select id="apply-role" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
                               <option value="">Select role</option>
                               {roleOptions.map((o)=><option key={o} value={o}>{o}</option>)}
                             </select>
@@ -406,8 +406,8 @@ export default function CandidateApply() {
                           </div>
 
                           <div ref={setFieldRef("yearsInAustralia")}>
-                            <label htmlFor="apply-years" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Experience in Australia *</label>
-                            <select id="apply-years" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.yearsInAustralia} onChange={(e)=>setValue("yearsInAustralia", e.target.value)}>
+                            <label htmlFor="apply-years" className="block text-sm font-medium text-[#14342B] mb-1.5">Experience in Australia *</label>
+                            <select id="apply-years" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.yearsInAustralia} onChange={(e)=>setValue("yearsInAustralia", e.target.value)}>
                               <option value="">Select</option>
                               {yearsOptions.map((o)=><option key={o} value={o}>{o}</option>)}
                             </select>
@@ -416,18 +416,18 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("currentVenue")}>
-                          <label htmlFor="apply-venue" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Current or most recent venue *</label>
-                          <input id="apply-venue" className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20" value={formData.currentVenue} onChange={(e)=>setValue("currentVenue", e.target.value)} placeholder="e.g. The Grounds of Alexandria" />
+                          <label htmlFor="apply-venue" className="block text-sm font-medium text-[#14342B] mb-1.5">Current or most recent venue *</label>
+                          <input id="apply-venue" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.currentVenue} onChange={(e)=>setValue("currentVenue", e.target.value)} placeholder="e.g. The Grounds of Alexandria" />
                           {errors.currentVenue && <p className="text-[13px] text-red-600 mt-1">{errors.currentVenue}</p>}
                         </div>
 
                         <div ref={setFieldRef("certifications")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Certifications held *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Certifications held *</label>
                           <div className="flex flex-wrap gap-2">
                             {certOptions.map((opt) => {
                               const active = formData.certifications.includes(opt);
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("certifications", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-white text-[#1e3a5f] border-gray-300"}`}>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("certifications", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
                                   {opt}
                                 </button>
                               );
@@ -436,23 +436,23 @@ export default function CandidateApply() {
                           {errors.certifications && <p className="text-[13px] text-red-600 mt-1">{errors.certifications}</p>}
                         </div>
 
-                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold">
-                          Next &mdash; Fit &amp; Consent &rarr;
+                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#14342B] text-white font-semibold">
+                          Next: fit &amp; consent &rarr;
                         </button>
                       </div>
                     )}
 
                     {step === 2 && (
                       <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#1e3a5f]">Fit &amp; consent</h3>
+                        <h3 className="text-xl font-bold text-[#14342B]">Fit &amp; consent</h3>
 
                         <div ref={setFieldRef("availability")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Availability *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Availability *</label>
                           <div className="flex flex-wrap gap-2">
                             {availabilityOptions.map((opt) => {
                               const active = formData.availability === opt;
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => setValue("availability", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-white text-[#1e3a5f] border-gray-300"}`}>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => setValue("availability", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
                                   {opt}
                                 </button>
                               );
@@ -462,13 +462,13 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("preferredZones")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Preferred work zones *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Preferred work zones *</label>
                           <div className="flex flex-wrap gap-2">
                             {zoneOptions.map((opt) => {
                               const active = formData.preferredZones.includes(opt);
                               const disabled = formData.preferredZones.includes("Open to all Sydney") && opt !== "Open to all Sydney";
                               return (
-                                <button key={opt} type="button" aria-pressed={active} disabled={disabled} onClick={() => toggleMultiChip("preferredZones", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-white text-[#1e3a5f] border-gray-300"} ${disabled ? "opacity-50" : ""}`}>
+                                <button key={opt} type="button" aria-pressed={active} disabled={disabled} onClick={() => toggleMultiChip("preferredZones", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"} ${disabled ? "opacity-50" : ""}`}>
                                   {opt}
                                 </button>
                               );
@@ -478,12 +478,12 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("employmentType")}>
-                          <label className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Employment type *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Employment type *</label>
                           <div className="flex flex-wrap gap-2">
                             {employmentOptions.map((opt) => {
                               const active = formData.employmentType.includes(opt);
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("employmentType", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-white text-[#1e3a5f] border-gray-300"}`}>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("employmentType", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
                                   {opt}
                                 </button>
                               );
@@ -493,14 +493,14 @@ export default function CandidateApply() {
                         </div>
 
                         <div ref={setFieldRef("briefIntro")}>
-                          <label htmlFor="apply-intro" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Short intro *</label>
-                          <textarea id="apply-intro" className="w-full min-h-[120px] text-base p-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
+                          <label htmlFor="apply-intro" className="block text-sm font-medium text-[#14342B] mb-1.5">Short intro *</label>
+                          <textarea id="apply-intro" className="w-full min-h-[120px] text-base p-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
                           <p className={`text-[13px] mt-1 ${introRemaining < 20 ? "text-red-600" : "text-gray-500"}`}>{introRemaining} characters remaining</p>
                           {errors.briefIntro && <p className="text-[13px] text-red-600 mt-1">{errors.briefIntro}</p>}
                         </div>
 
                         <div>
-                          <label htmlFor="apply-cv" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                          <label htmlFor="apply-cv" className="block text-sm font-medium text-[#14342B] mb-1.5">
                             CV (PDF or Word) *
                           </label>
                           <input
@@ -508,13 +508,13 @@ export default function CandidateApply() {
                             type="file"
                             accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                             onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
-                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 bg-white"
+                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
                             required
                           />
                         </div>
 
                         <div>
-                          <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">
+                          <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#14342B] mb-1.5">
                             RSA Certificate (PDF or image) *
                           </label>
                           <input
@@ -522,14 +522,14 @@ export default function CandidateApply() {
                             type="file"
                             accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp"
                             onChange={(e) => setRsaCertificateFile(e.target.files?.[0] ?? null)}
-                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 bg-white"
+                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
                             required
                           />
                         </div>
 
                         <div ref={setFieldRef("legalConfirmation")} className="pt-2">
                           <button type="button" onClick={() => setValue("legalConfirmation", !formData.legalConfirmation)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
-                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#1e3a5f] border-[#1e3a5f]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
+                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
                             <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and that all information provided is accurate.</span>
                           </button>
                           {errors.legalConfirmation && <p className="text-[13px] text-red-600 mt-1">{errors.legalConfirmation}</p>}
@@ -537,7 +537,7 @@ export default function CandidateApply() {
 
                         <div ref={setFieldRef("termsAccepted")}>
                           <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
-                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#1e3a5f] border-[#1e3a5f]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
+                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
                             <span className="text-[15px] text-gray-700">
                               I have read and agree to the {" "}
                               <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a>
@@ -562,7 +562,7 @@ export default function CandidateApply() {
                         ) : null}
 
                         <div className="flex items-center gap-3 pt-2">
-                          <button type="button" onClick={goBack} className="h-[52px] px-5 rounded-lg border border-[#1e3a5f]/30 text-[#1e3a5f] font-medium">
+                          <button type="button" onClick={goBack} className="h-[52px] px-5 rounded-lg border border-[#14342B]/30 text-[#14342B] font-medium">
                             &larr; Back
                           </button>
                           <button
@@ -571,7 +571,7 @@ export default function CandidateApply() {
                               status === "loading" ||
                               (!!TURNSTILE_SITE_KEY && !turnstileToken)
                             }
-                            className="flex-1 h-[52px] rounded-lg bg-[#1e3a5f] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+                            className="flex-1 h-[52px] rounded-lg bg-[#14342B] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
                           >
                             {status === "loading" ? (
                               <>

@@ -15,17 +15,17 @@ const LAST_UPDATED = "21 April 2026";
 
 export default function TermsAndConditionsPage() {
   return (
-    <main className="min-h-screen bg-[#faf9f6]">
+    <main className="min-h-screen bg-[#F6F3EC]">
       <Header />
       <section className="pt-28 md:pt-32 pb-16 md:pb-24">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <Link
             href="/"
-            className="inline-block text-sm text-[#1e3a5f] underline hover:text-[#d4a853] mb-6"
+            className="inline-block text-sm text-[#14342B] underline hover:text-[#C8553D] mb-6"
           >
             &larr; Back to home
           </Link>
-          <article className="prose prose-slate max-w-none prose-headings:text-[#1e3a5f] prose-a:text-[#1e3a5f] prose-strong:text-[#1e3a5f]">
+          <article className="prose prose-slate max-w-none prose-headings:text-[#14342B] prose-a:text-[#14342B] prose-strong:text-[#14342B]">
             <h1>Terms and Conditions</h1>
             <p>
               <strong>Last updated: {LAST_UPDATED}</strong>

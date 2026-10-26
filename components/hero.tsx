@@ -1,130 +1,79 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Clock, ShieldCheck } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { SITE } from "@/lib/site-config";
+
+const ROLES = [
+  "Venue Managers",
+  "Bar Managers",
+  "Head Chefs",
+  "Sous Chefs",
+  "FOH Managers",
+  "Bartenders",
+  "Baristas",
+  "Waitstaff",
+  "Kitchen Hands",
+];
+
+const FACTS = [
+  { k: "60 days", v: "Replacement guarantee on every permanent placement" },
+  { k: "5–7 days", v: "To a shortlist of three, interviewed and referenced" },
+  { k: "$99", v: "Casual introduction, with a written service credit" },
+];
 
 export default function Hero() {
   return (
-    <section id="venues" className="relative min-h-[86vh] md:min-h-[92vh] flex items-center overflow-hidden scroll-mt-20 bg-[#0f1e32]">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0f1e32] via-[#1e3a5f] to-[#2a4a6f]" />
+    <section id="top" className="relative pt-28 md:pt-36">
+      <div className="wrap">
+        <p className="eyebrow mb-8">Sydney hospitality recruitment &nbsp;/&nbsp; Inner West, Eastern Suburbs, CBD, North Shore</p>
 
-      <div
-        aria-hidden
-        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#d4a853]/10 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#d4a853]/5 blur-3xl"
-      />
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-8">
+            <h1 className="h-display h-hero">
+              Hospitality hiring in Sydney, handled by someone who{" "}
+              <em className="italic text-forest">answers the phone.</em>
+            </h1>
+            <p className="mt-8 max-w-[52ch] text-[19px] leading-[1.55] text-ink/75">
+              One founder interviews and reference-checks every candidate before they reach your venue.
+              Written guarantees in every agreement.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link href="/#contact?service=permanent" className="btn btn-solid h-[52px] px-7">
+                Submit a role brief
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <Link href="#apply" className="btn btn-outline h-[52px] px-7">
+                Apply to work
+              </Link>
+            </div>
+          </div>
 
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.08]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#d4a853 1px, transparent 1px), linear-gradient(90deg, #d4a853 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-        }}
-      />
+          <aside className="lg:col-span-4 lg:pt-3">
+            {SITE.heroImage ? (
+              <div className="relative mb-6 aspect-[4/5] overflow-hidden rounded-md">
+                <Image src={SITE.heroImage} alt={SITE.heroImageAlt} fill priority sizes="(min-width:1024px) 30vw, 100vw" className="object-cover" />
+              </div>
+            ) : null}
+            <dl className="border-t border-ink">
+              {FACTS.map((f) => (
+                <div key={f.k} className="grid grid-cols-[auto_1fr] items-baseline gap-5 border-b border-line py-5">
+                  <dt className="num font-display text-[34px] leading-none tracking-tight text-forest">{f.k}</dt>
+                  <dd className="text-[14.5px] leading-snug text-ink/70">{f.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+        </div>
+      </div>
 
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0f1e32]/80 via-[#0f1e32]/40 to-transparent" />
-
-      <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 py-16 md:py-28 w-full">
-        <div className="max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/15 rounded-full mb-6"
-          >
-            <MapPin className="w-3.5 h-3.5 text-[#d4a853]" />
-            <span className="text-white/80 text-xs md:text-sm font-medium">
-              Sydney Inner West &middot; CBD &middot; Eastern Suburbs &middot; North Shore
+      <div className="marquee mt-20 overflow-hidden border-y border-line py-5" aria-label="Roles we place">
+        <div className="marquee-track" aria-hidden="true">
+          {[...ROLES, ...ROLES, ...ROLES, ...ROLES].map((r, i) => (
+            <span key={i} className="flex items-center whitespace-nowrap font-display text-[26px] tracking-tight text-ink/80">
+              {r}
+              <span className="mx-8 inline-block h-1.5 w-1.5 rounded-full bg-accent" />
             </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-[30px] sm:text-4xl md:text-5xl lg:text-[56px] font-bold text-white leading-tight mb-5"
-          >
-            The Sydney hospitality recruiter{" "}
-            <span className="text-[#d4a853]">venues actually trust.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base md:text-lg text-white/80 mb-8 leading-relaxed max-w-2xl"
-          >
-            One founder. One phone number. Every candidate personally
-            interviewed and reference-checked before they reach your venue.
-            Backed by written guarantees &mdash; in every agreement.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="grid sm:grid-cols-2 gap-4 mb-8"
-          >
-            <div className="p-5 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm hover:border-[#d4a853]/40 transition-colors">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="w-4 h-4 text-[#d4a853]" />
-                <h3 className="text-white font-bold">Need a shift covered?</h3>
-              </div>
-              <p className="text-white/75 text-sm mb-4 leading-relaxed">
-                $99 per candidate introduction. Pre-screened. Service credit if
-                they don't show.
-              </p>
-              <Link
-                href="#contact"
-                className="inline-flex w-full items-center justify-center gap-2 h-11 px-4 bg-[#d4a853] text-[#1e3a5f] font-semibold rounded-lg hover:bg-[#e8c77b] transition-all"
-              >
-                Get a Quote
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            <div className="p-5 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm hover:border-[#d4a853]/40 transition-colors">
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck className="w-4 h-4 text-[#d4a853]" />
-                <h3 className="text-white font-bold">Hiring a senior role?</h3>
-              </div>
-              <p className="text-white/75 text-sm mb-4 leading-relaxed">
-                Venue Manager, Bar Manager, Head Chef. Three shortlisted
-                candidates in 5&ndash;7 days. 18% fee, payable on start. 60-day
-                replacement guarantee.
-              </p>
-              <Link
-                href="#apply"
-                className="inline-flex w-full items-center justify-center gap-2 h-11 px-4 bg-white/10 text-white border border-white/30 font-semibold rounded-lg hover:bg-white/20 transition-all"
-              >
-                Apply to Work
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/60 text-xs md:text-sm"
-          >
-            <span>Venue Managers</span>
-            <span>&middot;</span>
-            <span>Bar Managers</span>
-            <span>&middot;</span>
-            <span>Head Chefs</span>
-            <span>&middot;</span>
-            <span>Sous Chefs</span>
-            <span>&middot;</span>
-            <span>FOH Managers</span>
-          </motion.div>
+          ))}
         </div>
       </div>
     </section>

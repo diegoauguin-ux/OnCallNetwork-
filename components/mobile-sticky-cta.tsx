@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -6,47 +6,26 @@ export default function MobileStickyCTA() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const contact = document.getElementById("contact");
-    const apply = document.getElementById("apply");
-
-    if (!contact && !apply) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const isInContactOrApply = entries.some(
-          (entry) => entry.isIntersecting && (entry.target.id === "contact" || entry.target.id === "apply")
-        );
-        setHidden(isInContactOrApply);
-      },
-      { threshold: 0.2 }
+    const targets = ["contact", "apply"].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    if (!targets.length) return;
+    const io = new IntersectionObserver(
+      (entries) => setHidden(entries.some((e) => e.isIntersecting)),
+      { threshold: 0.15 }
     );
-
-    if (contact) observer.observe(contact);
-    if (apply) observer.observe(apply);
-
-    return () => observer.disconnect();
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
   }, []);
 
   return (
     <div
-      className={`md:hidden fixed left-0 right-0 bottom-0 z-40 h-[60px] px-3 py-2 backdrop-blur bg-[#0f1e32]/90 border-t border-white/15 transition-transform duration-200 ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-line bg-paper/95 px-4 pt-3 backdrop-blur transition-transform duration-200 md:hidden ${
         hidden ? "translate-y-full" : "translate-y-0"
       }`}
-      style={{ paddingBottom: "max(env(safe-area-inset-bottom), 8px)" }}
+      style={{ paddingBottom: "max(env(safe-area-inset-bottom), 12px)" }}
     >
-      <div className="grid grid-cols-2 gap-2 h-full">
-        <a
-          href="#contact"
-          className="h-full rounded-lg bg-[#d4a853] text-[#1e3a5f] font-semibold text-sm inline-flex items-center justify-center"
-        >
-          Get a Quote
-        </a>
-        <a
-          href="#apply"
-          className="h-full rounded-lg border border-white/40 text-white font-semibold text-sm inline-flex items-center justify-center"
-        >
-          Apply to Work
-        </a>
+      <div className="grid grid-cols-2 gap-2">
+        <a href="#contact" className="btn btn-solid h-11 text-[14px]">Hire staff</a>
+        <a href="#apply" className="btn btn-outline h-11 text-[14px]">Apply to work</a>
       </div>
     </div>
   );

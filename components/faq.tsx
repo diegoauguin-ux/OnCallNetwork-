@@ -1,24 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { ChevronDown, HelpCircle } from "lucide-react";
+
+
+const TABS = ["Venues", "Workers"] as const;
 
 export default function FAQ() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
+  const [tab, setTab] = useState<(typeof TABS)[number]>("Venues");
+  const [open, setOpen] = useState<number | null>(0);
   const venuesFAQ = [
     {
       question: "OCN is new. Why should I trust it?",
       answer:
-        "You shouldn't \u2014 not blindly. That's exactly why we built a introduction-backed service credit into every casual intro and a 60-day replacement guarantee into every permanent placement. If it doesn't work, you don't pay. Your risk on the first engagement is limited to time, not money. Judge us on what actually happens.",
+        "You shouldn't, not blindly. That's exactly why we built a written service credit into every casual intro and a 60-day replacement guarantee into every permanent placement. If it doesn't work, you don't pay. Your risk on the first engagement is limited to time, not money. Judge us on what actually happens.",
     },
     {
       question: "How does the $99 Casual Introduction work?",
       answer:
-        "You message Diego with the shift details (role, date, hours, rate). Diego proposes one pre-screened candidate from the network. You approve them. The $99 intro fee (ex GST) is invoiced after the candidate completes their first confirmed shift. If the candidate doesn't show, the fee is credited in full and Diego sources a replacement at no extra cost. You pay the candidate their hourly rate directly \u2014 OCN never takes a cut of their pay.",
+        "You message Diego with the shift details (role, date, hours, rate). Diego proposes one pre-screened candidate from the network. You approve them. The $99 intro fee (ex GST) is invoiced after the candidate completes their first confirmed shift. If the candidate doesn't show, the fee is credited in full and Diego sources a replacement at no extra cost. You pay the candidate their hourly rate directly, OCN never takes a cut of their pay.",
     },
     {
       question: "What's included in the 18% permanent placement fee?",
@@ -33,7 +32,7 @@ export default function FAQ() {
     {
       question: "How is this different from Sidekicker, Barcats or a labour-hire agency?",
       answer:
-        "Sidekicker and similar labour-hire platforms employ the worker, add an hourly markup on every hour worked, and you pay them. Barcats is a public job board where anyone can post. OCN is neither: we're an introduction and recruitment service. You engage or employ the candidate directly, at a rate you agree with them, and pay them directly. We charge one flat introduction or placement fee per successful engagement \u2014 no hourly markup, no ongoing fees.",
+        "Sidekicker and similar labour-hire platforms employ the worker, add an hourly markup on every hour worked, and you pay them. Barcats is a public job board where anyone can post. OCN is neither: we're an introduction and recruitment service. You engage or employ the candidate directly, at a rate you agree with them, and pay them directly. We charge one flat introduction or placement fee per successful engagement, no hourly markup, no ongoing fees.",
     },
     {
       question: "How do I pay, and when?",
@@ -43,12 +42,12 @@ export default function FAQ() {
     {
       question: "What happens if the candidate doesn't work out?",
       answer:
-        "Casual: service credit + replacement intro if candidate doesn't show or leaves within the first two hours. Permanent: 60-day replacement guarantee \u2014 if the candidate resigns or is terminated for performance reasons in the first 60 days, Diego personally re-opens the search and delivers a replacement shortlist at no extra fee.",
+        "Casual: service credit + replacement intro if candidate doesn't show or leaves within the first two hours. Permanent: 60-day replacement guarantee, if the candidate resigns or is terminated for performance reasons in the first 60 days, Diego personally re-opens the search and delivers a replacement shortlist at no extra fee.",
     },
     {
       question: "What areas and roles do you cover?",
       answer:
-        "Inner West, Eastern Suburbs, CBD and North Shore Sydney. Venue Managers, Bar Managers, Head Chefs, Sous Chefs, FOH/BOH Managers, Bartenders, Baristas, Chefs and Kitchen Hands. Hospitality only \u2014 we deliberately don't do other industries.",
+        "Inner West, Eastern Suburbs, CBD and North Shore Sydney. Venue Managers, Bar Managers, Head Chefs, Sous Chefs, FOH/BOH Managers, Bartenders, Baristas, Chefs and Kitchen Hands. Hospitality only, we deliberately don't do other industries.",
     },
     {
       question: "How fast can you respond?",
@@ -65,7 +64,7 @@ export default function FAQ() {
   const workersFAQ = [
     {
       question: "How much do I get paid?",
-      answer: "You agree your hourly rate directly with the venue, in line with the Hospitality Industry (General) Award as a minimum. OCN never takes a cut from your pay — the venue pays you in full, to you, under their payment terms. Weekend and public holiday loadings apply as per the Award.",
+      answer: "You agree your hourly rate directly with the venue, in line with the Hospitality Industry (General) Award as a minimum. OCN never takes a cut from your pay, the venue pays you in full, to you, under their payment terms. Weekend and public holiday loadings apply as per the Award.",
     },
     {
       question: "Do I have to accept every shift?",
@@ -73,137 +72,83 @@ export default function FAQ() {
     },
     {
       question: "What happens if I can't make a shift I accepted?",
-      answer: "Life happens. Let us and the venue know with as much notice as possible — ideally 4+ hours. Repeated no-shows without reasonable notice will mean removal from the network, because the whole system depends on the word of the people in it.",
+      answer: "Life happens. Let us and the venue know with as much notice as possible, ideally 4+ hours. Repeated no-shows without reasonable notice will mean removal from the network, because the whole system depends on the word of the people in it.",
     },
     {
       question: "How selective is the screening?",
-      answer: "We interview every applicant personally before introducing them to a venue, and we check two references from your last two venue managers. We're not trying to filter to a headline percentage — we're trying to make sure every person in the network is someone Diego would genuinely vouch for.",
+      answer: "We interview every applicant personally before introducing them to a venue, and we check two references from your last two venue managers. We're not trying to filter to a headline percentage, we're trying to make sure every person in the network is someone Diego would genuinely vouch for.",
     },
   ];
 
-  const toggleQuestion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const list = tab === "Venues" ? venuesFAQ : workersFAQ;
 
   return (
-    <section id="faq" className="py-12 md:py-24 bg-[#faf9f6] scroll-mt-20">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-4 py-1.5 bg-[#1e3a5f]/10 text-[#1e3a5f] text-sm font-semibold rounded-full mb-4">
-            <HelpCircle className="w-4 h-4 inline mr-1" />
-            Common Questions
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Got questions? We've got answers. If you don't see what you're looking for, reach out directly.
+    <section id="faq" className="py-24 md:py-32">
+      <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <p className="eyebrow mb-6">Questions</p>
+          <h2 className="h-display h-section">Straight answers.</h2>
+          <p className="mt-5 max-w-[34ch] text-[16px] text-ink/70">
+            Not here? Email{" "}
+            <a className="underline decoration-accent decoration-2 underline-offset-4" href="mailto:hello@oncallnetwork.com.au">
+              hello@oncallnetwork.com.au
+            </a>{" "}
+            and Diego replies personally.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Venues FAQ */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h3 className="text-xl font-bold text-[#1e3a5f] mb-6 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-[#1e3a5f] text-white flex items-center justify-center text-sm">V</span>
-              For Venues
-            </h3>
-            <div className="space-y-3">
-              {venuesFAQ?.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl shadow-sm overflow-hidden"
-                >
-                  <button
-                    onClick={() => toggleQuestion(index)}
-                    className="w-full min-h-[48px] px-5 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="text-[17px] font-bold text-[#1e3a5f] pr-4">{item?.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-[#d4a853] flex-shrink-0 transition-transform duration-300 ${
-                        openIndex === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-5 pb-4 text-[15px] leading-[1.6] text-gray-600">
-                          {item?.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+        <div className="lg:col-span-8">
+          <div role="tablist" aria-label="FAQ audience" className="flex gap-8 border-b border-line">
+            {TABS.map((t) => (
+              <button
+                key={t}
+                role="tab"
+                aria-selected={tab === t}
+                onClick={() => {
+                  setTab(t);
+                  setOpen(0);
+                }}
+                className={`-mb-px border-b-2 pb-3 text-[15px] font-medium transition-colors ${
+                  tab === t ? "border-ink text-ink" : "border-transparent text-muted hover:text-ink"
+                }`}
+              >
+                For {t.toLowerCase()}
+              </button>
+            ))}
+          </div>
 
-          {/* Workers FAQ */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <h3 className="text-xl font-bold text-[#1e3a5f] mb-6 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-[#d4a853] text-[#1e3a5f] flex items-center justify-center text-sm font-bold">W</span>
-              For Workers
-            </h3>
-            <div className="space-y-3">
-              {workersFAQ?.map((item, index) => {
-                const workerIndex = index + venuesFAQ?.length;
-                return (
-                  <div
-                    key={workerIndex}
-                    className="bg-white rounded-xl shadow-sm overflow-hidden"
-                  >
+          <div role="tabpanel">
+            {list.map((item, i) => {
+              const isOpen = open === i;
+              return (
+                <div key={item.question} className="border-b border-line">
+                  <h3>
                     <button
-                      onClick={() => toggleQuestion(workerIndex)}
-                      className="w-full min-h-[48px] px-5 py-3 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+                      onClick={() => setOpen(isOpen ? null : i)}
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-${tab}-${i}`}
+                      className="flex min-h-[64px] w-full items-center justify-between gap-6 py-5 text-left"
                     >
-                      <span className="text-[17px] font-bold text-[#1e3a5f] pr-4">{item?.question}</span>
-                      <ChevronDown
-                        className={`w-5 h-5 text-[#d4a853] flex-shrink-0 transition-transform duration-300 ${
-                          openIndex === workerIndex ? "rotate-180" : ""
-                        }`}
-                      />
+                      <span className="font-display text-[24px] leading-snug tracking-tight">{item.question}</span>
+                      <span aria-hidden className="relative h-4 w-4 shrink-0">
+                        <span className="absolute left-0 top-1/2 h-px w-4 bg-ink" />
+                        <span className={`absolute left-1/2 top-0 h-4 w-px bg-ink transition-transform duration-200 ${isOpen ? "scale-y-0" : ""}`} />
+                      </span>
                     </button>
-                    <AnimatePresence>
-                      {openIndex === workerIndex && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 pb-4 text-[15px] leading-[1.6] text-gray-600">
-                            {item?.answer}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                  </h3>
+                  <div
+                    id={`faq-${tab}-${i}`}
+                    role="region"
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="max-w-[62ch] pb-6 text-[16px] leading-[1.65] text-ink/70">{item.answer}</p>
+                    </div>
                   </div>
-                );
-              })}
-            </div>
-          </motion.div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

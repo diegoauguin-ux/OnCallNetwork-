@@ -10,16 +10,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        navy: "#1e3a5f",
-        "navy-dark": "#0f1e32",
-        gold: "#d4a853",
-        "gold-light": "#e8c77b",
-        cream: "#faf9f6",
+        ink: "#0E1512",
+        paper: "#F6F3EC",
+        line: "#E2DDD1",
+        forest: { DEFAULT: "#14342B", soft: "#1D4A3D" },
+        accent: { DEFAULT: "#C8553D", dark: "#A8432E" },
+        muted: "#5B6560",
       },
+      fontFamily: {
+        display: ["'Instrument Serif'", "Georgia", "serif"],
+        sans: ["'Geist Variable'", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+      },
+      maxWidth: { site: "1280px" },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "8px",
+        md: "6px",
+        sm: "4px",
       },
     },
   },

@@ -185,17 +185,17 @@ export default function ContactForm() {
 
   return (
     <section id="contact" className="py-12 md:py-24 bg-white scroll-mt-20">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div className="wrap">
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 bg-[#d4a853]/20 text-[#d4a853] text-sm font-semibold rounded-full mb-4">
+            <span className="eyebrow mb-6 block">
               For venues
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] mb-4">
+            <h2 className="h-display h-section mb-5">
               Submit a Role Brief
             </h2>
             <p className="text-lg text-gray-600 mb-8">
@@ -203,23 +203,23 @@ export default function ContactForm() {
             </p>
 
             <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4 p-4 bg-[#faf9f6] rounded-xl">
-                <div className="w-11 h-11 rounded-lg bg-[#d4a853]/20 flex items-center justify-center flex-shrink-0">
-                  <Briefcase className="w-5 h-5 text-[#d4a853]" />
+              <div className="flex items-start gap-4 p-4 bg-[#F6F3EC] rounded-md">
+                <div className="w-11 h-11 rounded-lg bg-[#C8553D]/20 flex items-center justify-center flex-shrink-0">
+                  <Briefcase className="w-5 h-5 text-[#C8553D]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#1e3a5f] mb-1">Permanent placement</h3>
+                  <h3 className="font-semibold text-[#14342B] mb-1">Permanent placement</h3>
                   <p className="text-gray-600 text-sm">
                     Senior hospitality recruitment with founder-led screening and a 60-day guarantee.
                   </p>
                 </div>
               </div>
 
-              <div className="p-5 bg-[#1e3a5f] rounded-xl text-white">
+              <div className="p-5 bg-[#14342B] rounded-md text-white">
                 <p className="font-semibold mb-2">Prefer email?</p>
                 <a
                   href="mailto:hello@oncallnetwork.com.au"
-                  className="inline-flex items-center gap-2 text-[#d4a853] text-lg font-bold hover:text-[#e8c77b] transition-colors break-all"
+                  className="inline-flex items-center gap-2 text-[#C8553D] text-lg font-bold hover:text-[#A8432E] transition-colors break-all"
                 >
                   <Mail className="w-5 h-5 flex-shrink-0" />
                   <span>hello@oncallnetwork.com.au</span>
@@ -240,24 +240,24 @@ export default function ContactForm() {
           >
             {status === "success" ? (
               <div className="h-full flex items-center justify-center">
-                <div className="text-center p-8 bg-green-50 rounded-2xl">
+                <div className="text-center p-8 bg-green-50 rounded-md">
                   <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="w-8 h-8 text-green-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#1e3a5f] mb-2">Got it!</h3>
+                  <h3 className="text-2xl font-bold text-[#14342B] mb-2">Got it!</h3>
                   <p className="text-gray-600 mb-4">
                     Diego will be in touch within 2 hours on business days.
                   </p>
                   <button
                     onClick={() => setStatus("idle")}
-                    className="text-[#1e3a5f] font-semibold hover:text-[#d4a853] transition-colors"
+                    className="text-[#14342B] font-semibold hover:text-[#C8553D] transition-colors"
                   >
                     Submit another request
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#faf9f6] rounded-2xl shadow-lg" noValidate>
+              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#F6F3EC] rounded-md " noValidate>
                 <label className="hidden" aria-hidden="true">
                   Leave this field empty
                   <input
@@ -270,13 +270,13 @@ export default function ContactForm() {
                   />
                 </label>
                 <div className="mb-4">
-                  <label htmlFor="serviceType" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Service *</label>
+                  <label htmlFor="serviceType" className="block text-sm font-medium text-[#14342B] mb-1.5">Service *</label>
                   <select
                     id="serviceType"
                     name="serviceType"
                     value={formData.serviceType}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900"
+                    className="w-full px-4 py-3 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900"
                   >
                     {serviceOptions.map((option) => (
                       <option key={option} value={option}>
@@ -288,49 +288,49 @@ export default function ContactForm() {
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label htmlFor="venueName" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Venue Name *</label>
+                    <label htmlFor="venueName" className="block text-sm font-medium text-[#14342B] mb-1.5">Venue Name *</label>
                     <div className="relative">
                       <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input id="venueName" type="text" name="venueName" value={formData.venueName} onChange={handleChange} required placeholder="Your venue name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input id="venueName" type="text" name="venueName" value={formData.venueName} onChange={handleChange} required placeholder="Your venue name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="contactName" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Your Name *</label>
+                    <label htmlFor="contactName" className="block text-sm font-medium text-[#14342B] mb-1.5">Your Name *</label>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input id="contactName" type="text" name="contactName" value={formData.contactName} onChange={handleChange} required placeholder="Your name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input id="contactName" type="text" name="contactName" value={formData.contactName} onChange={handleChange} required placeholder="Your name" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-[#14342B] mb-1.5">Email *</label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="email@venue.com" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="email@venue.com" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Phone *</label>
+                    <label htmlFor="phone" className="block text-sm font-medium text-[#14342B] mb-1.5">Phone *</label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input id="phone" type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="0400 000 000" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input id="phone" type="tel" name="phone" value={formData.phone} onChange={handleChange} required placeholder="0400 000 000" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label htmlFor="suburb" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Suburb</label>
+                    <label htmlFor="suburb" className="block text-sm font-medium text-[#14342B] mb-1.5">Suburb</label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                      <input id="suburb" type="text" name="suburb" value={formData.suburb} onChange={handleChange} placeholder="E.g., Newtown" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900" />
+                      <input id="suburb" type="text" name="suburb" value={formData.suburb} onChange={handleChange} placeholder="E.g., Newtown" className="w-full h-[52px] text-base pl-11 pr-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900" />
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="positionsNeeded" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Role Needed *</label>
-                    <select id="positionsNeeded" name="positionsNeeded" value={formData.positionsNeeded} onChange={handleChange} required className="w-full h-[52px] text-base px-4 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all bg-white text-gray-900">
+                    <label htmlFor="positionsNeeded" className="block text-sm font-medium text-[#14342B] mb-1.5">Role Needed *</label>
+                    <select id="positionsNeeded" name="positionsNeeded" value={formData.positionsNeeded} onChange={handleChange} required className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all bg-white text-gray-900">
                       <option value="">Select a role</option>
                       {roleOptions.map((option) => (
                         <option key={option} value={option}>{option}</option>
@@ -340,10 +340,10 @@ export default function ContactForm() {
                 </div>
 
                 <div className="mb-5">
-                  <label htmlFor="additionalNotes" className="block text-sm font-medium text-[#1e3a5f] mb-1.5">Anything else we should know?</label>
+                  <label htmlFor="additionalNotes" className="block text-sm font-medium text-[#14342B] mb-1.5">Anything else we should know?</label>
                   <div className="relative">
                     <MessageSquare className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                    <textarea id="additionalNotes" name="additionalNotes" value={formData.additionalNotes} onChange={handleChange} rows={3} placeholder="Role details, shift patterns, team notes..." className="w-full text-base pl-11 pr-4 py-3 rounded-lg border border-gray-200 focus:border-[#d4a853] focus:ring-2 focus:ring-[#d4a853]/20 outline-none transition-all resize-none bg-white text-gray-900" />
+                    <textarea id="additionalNotes" name="additionalNotes" value={formData.additionalNotes} onChange={handleChange} rows={3} placeholder="Role details, shift patterns, team notes..." className="w-full text-base pl-11 pr-4 py-3 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 outline-none transition-all resize-none bg-white text-gray-900" />
                   </div>
                 </div>
 
@@ -360,7 +360,7 @@ export default function ContactForm() {
                         }))
                       }
                       required
-                      className="mt-1 h-5 w-5 rounded border-gray-300 text-[#1e3a5f] focus:ring-[#d4a853] cursor-pointer"
+                      className="mt-1 h-5 w-5 rounded border-gray-300 text-[#14342B] focus:ring-[#C8553D] cursor-pointer"
                     />
                     <span className="text-sm text-gray-700 leading-relaxed">
                       I have read and agree to the{" "}
@@ -368,7 +368,7 @@ export default function ContactForm() {
                         href="/privacy"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline text-[#1e3a5f] hover:text-[#d4a853]"
+                        className="underline text-[#14342B] hover:text-[#C8553D]"
                       >
                         Privacy Policy
                       </a>{" "}
@@ -377,7 +377,7 @@ export default function ContactForm() {
                         href="/terms-and-conditions"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline text-[#1e3a5f] hover:text-[#d4a853]"
+                        className="underline text-[#14342B] hover:text-[#C8553D]"
                       >
                         Terms and Conditions
                       </a>
@@ -413,7 +413,7 @@ export default function ContactForm() {
                     !formData.consentAccepted ||
                     (!!TURNSTILE_SITE_KEY && !turnstileToken)
                   }
-                  className="w-full h-14 bg-[#1e3a5f] text-white font-bold text-lg rounded-lg hover:bg-[#2a4a6f] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full h-14 bg-[#14342B] text-white font-bold text-lg rounded-lg hover:bg-[#1D4A3D] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {status === "loading" ? (
                     <>

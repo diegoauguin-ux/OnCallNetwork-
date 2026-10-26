@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import JsonLd from "@/components/json-ld";
 import Analytics from "@/components/analytics";
+import "@fontsource/instrument-serif/400.css";
+import "@fontsource/instrument-serif/400-italic.css";
+import "@fontsource-variable/geist";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
 
 const BASE_URL = "https://oncallnetwork.com.au";
 
@@ -93,8 +89,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-AU" className={inter.variable} suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+    <html lang="en-AU" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <style dangerouslySetInnerHTML={{ __html: `[data-hydration-error] { display: none !important; }` }} />
         <JsonLd />
         {children}
