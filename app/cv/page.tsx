@@ -5,11 +5,13 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Reveal from "@/components/reveal";
 import { SITE } from "@/lib/site-config";
+import { GUIDES } from "@/lib/guides";
 
 export const metadata: Metadata = {
-  title: "Australian CV Rewrite",
+  title: "Australian CV Rewrite and Cover Letter Service",
   description:
-    "Your CV rewritten to Australian standards by a recruiter. Rewritten CV, matching cover letter and application checklist, delivered by email within 24 hours.",
+    "Professional CV and cover letter rewrite for Australian employers, reviewed by a recruiter. $39 AUD, delivered by email within 24 hours. Ideal for hospitality and entry-level roles.",
+  keywords: ["australian cv rewrite", "cv writing service australia", "cover letter service", "hospitality resume australia", "resume rewrite sydney"],
   alternates: { canonical: "/cv" },
 };
 
@@ -119,6 +121,18 @@ export default function CvPage() {
                 </div>
               ))}
             </dl>
+          </div>
+          <div className="wrap mt-20">
+            <p className="eyebrow mb-4">Free guides</p>
+            <ul className="border-t border-ink">
+              {GUIDES.slice(0, 3).map((g) => (
+                <li key={g.slug} className="border-b border-line">
+                  <Link href={`/guides/${g.slug}`} className="block py-5 font-display text-[26px] leading-tight tracking-tight hover:text-forest">
+                    {g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="wrap mt-16">
             <Link href="/" className="text-[15px] underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">

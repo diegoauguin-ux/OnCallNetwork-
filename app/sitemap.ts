@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+import { GUIDES, GUIDES_UPDATED } from "@/lib/guides";
+
 const BASE_URL = "https://oncallnetwork.com.au";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -17,6 +19,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/guides`,
+      lastModified: new Date(GUIDES_UPDATED),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...GUIDES.map((g) => ({
+      url: `${BASE_URL}/guides/${g.slug}`,
+      lastModified: new Date(GUIDES_UPDATED),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${BASE_URL}/privacy`,
       lastModified: now,

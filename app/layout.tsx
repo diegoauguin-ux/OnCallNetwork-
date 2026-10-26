@@ -14,11 +14,11 @@ const BASE_URL = "https://oncallnetwork.com.au";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "On Call Network | Sydney Hospitality Recruitment",
+    default: "On Call Network | Sydney Hospitality Recruitment and Australian CV Rewrite",
     template: "%s | On Call Network",
   },
   description:
-    "Founder-led Sydney hospitality recruitment. $99 casual intros with an introduction service credit, and 18% permanent placements (15% founding rate) with a 60-day replacement guarantee. Inner West, Eastern Suburbs, CBD, North Shore.",
+    "Founder-led Sydney hospitality recruitment: $99 casual introductions and 18% permanent placements. Plus an Australian CV rewrite with cover letter for $39. Inner West, Eastern Suburbs, CBD, North Shore.",
   keywords: [
     "Sydney hospitality recruitment",
     "hospitality staff Sydney",
@@ -26,8 +26,11 @@ export const metadata: Metadata = {
     "venue manager recruitment Sydney",
     "head chef recruitment Sydney",
     "hospitality agency Inner West",
-    "Barcats alternative Sydney",
-    "Sidekicker alternative Sydney",
+    "australian cv rewrite",
+    "cv writing service australia",
+    "cover letter service australia",
+    "hospitality jobs sydney",
+    "hospitality interview tips australia",
   ],
   authors: [{ name: "Diego Pascal" }],
   creator: "On Call Network",

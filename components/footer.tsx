@@ -6,6 +6,7 @@ const LINKS = [
   { n: "Hire staff", h: "/#hire" },
   { n: "Find work", h: "/#apply" },
   { n: "CV rewrite", h: "/cv" },
+  { n: "Job guides", h: "/guides" },
   { n: "Contact", h: "/#contact" },
 ];
 
