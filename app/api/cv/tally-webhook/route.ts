@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 import { Resend } from "resend";
 import mammoth from "mammoth";
 import { checkPaidSession } from "@/lib/stripe-check";
+import { extractSection, textToDocx } from "@/lib/cv-docx";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -207,10 +208,34 @@ export async function POST(req: NextRequest) {
     body = `Automatic draft failed (${(error as Error).message}). Process this one manually.\n\nForm answers:\n${formSummary}`;
   }
 
+  // Word attachments (only when a real draft was generated)
+  const attachments: { filename: string; content: Buffer }[] = [];
+  let drafted = false;
+  if (paid.paid && /^## CV/m.test(body)) {
+    try {
+      const safe = customerName.replace(/[^A-Za-z0-9]+/g, "_").replace(/^_|_$/g, "") || "Candidate";
+      const cvText = extractSection(body, "CV");
+      const letter = extractSection(body, "COVER LETTER");
+      const prep = [extractSection(body, "SCREENING PREP"), extractSection(body, "CHECKLIST")].filter(Boolean).join("\n\n");
+      if (cvText) attachments.push({ filename: `${safe}_CV.docx`, content: await textToDocx(cvText, { nameFirstLine: true }) });
+      if (letter) attachments.push({ filename: `${safe}_Cover_Letter.docx`, content: await textToDocx(letter) });
+      if (prep) attachments.push({ filename: `${safe}_Phone_Screen_Prep.docx`, content: await textToDocx(prep) });
+      drafted = attachments.length > 0;
+    } catch (error) {
+      console.error("[cv-webhook] docx failed", error);
+    }
+  }
+
+  const firstName = customerName.split(" ")[0] || "there";
+  const reply = `Hi ${firstName},\n\nYour Australian CV, cover letter and phone-screen prep are attached as Word files. Everything is based on your own details; if anything is not right, reply to this email within 7 days and I will update it for free.\n\nOne tip: save your CV as a PDF named ${customerName.replace(/\s+/g, "_")}_CV.pdf before sending it to employers.\n\nGood luck,\nDiego\nOn Call Network`;
+
   const html = `<div style="font-family:system-ui,sans-serif;max-width:720px">
     <p><strong>Status:</strong> ${escapeHtml(status)} &middot; <strong>Customer:</strong> ${escapeHtml(customerName)} (${escapeHtml(customerEmail || paid.email || "no email")})</p>
     ${file?.url ? `<p><a href="${escapeHtml(file.url)}">Original CV file</a></p>` : ""}
-    <p><em>Draft for your review. Check every line against the original CV, fill the [COMPLETAR] items, then send to the customer from hello@oncallnetwork.com.au.</em></p>
+    ${drafted ? `<p><strong>Review checklist:</strong> 1) read REVIEWER NOTES below, 2) check the attached .docx against the original CV, 3) fill every [COMPLETAR] (or ask the customer using QUESTIONS), 4) forward the .docx files to the customer with the reply text below. The internal notes are NOT in the attachments.</p>` : `<p><em>No attachments generated. Process manually.</em></p>`}
+    <p><strong>Suggested reply to customer:</strong></p>
+    <pre style="white-space:pre-wrap;font-family:inherit;background:#f5f5f5;padding:10px">${escapeHtml(reply)}</pre>
+    <p><em>Full draft:</em></p>
     <pre style="white-space:pre-wrap;font-family:inherit;border-top:1px solid #ddd;padding-top:12px">${escapeHtml(body)}</pre>
   </div>`;
 
@@ -220,6 +245,7 @@ export async function POST(req: NextRequest) {
     subject: `[CV order] ${customerName} - ${status}`,
     html,
     replyTo: customerEmail || paid.email || undefined,
+    attachments: attachments.length ? attachments : undefined,
   });
 
   return NextResponse.json({ ok: true });
