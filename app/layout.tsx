@@ -4,6 +4,7 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import JsonLd from "@/components/json-ld";
 import Analytics from "@/components/analytics";
+import PostHogProvider from "@/components/PostHogProvider";
 import "@fontsource/instrument-serif/400.css";
 import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource-variable/geist";
@@ -99,6 +100,7 @@ export default function RootLayout({
         {children}
         <Toaster position="top-center" richColors closeButton />
         <Analytics />
+        <PostHogProvider />
         <VercelAnalytics />
         <SpeedInsights />
       </body>
