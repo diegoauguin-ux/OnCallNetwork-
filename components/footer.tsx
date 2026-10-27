@@ -23,7 +23,7 @@ export default function Footer() {
             <p className="mt-6 max-w-[44ch] font-display text-[30px] leading-[1.1] tracking-tight text-paper/90">
               Sydney hospitality hiring, done by one person who answers the phone.
             </p>
-            <a href="mailto:hello@oncallnetwork.com.au" className="mt-8 inline-block text-[17px] underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">
+            <a href="mailto:hello@oncallnetwork.com.au" className="mt-8 inline-block text-[17px] underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-light">
               hello@oncallnetwork.com.au
             </a>
           </div>
@@ -33,7 +33,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {LINKS.map((l) => (
                 <li key={l.n}>
-                  <Link href={l.h} className="text-[15.5px] text-paper/80 transition-colors hover:text-accent">{l.n}</Link>
+                  <Link href={l.h} className="text-[15.5px] text-paper/80 transition-colors hover:text-accent-light">{l.n}</Link>
                 </li>
               ))}
             </ul>
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="mt-16 max-w-[90ch] border-t border-paper/15 pt-8 text-[12.5px] leading-relaxed text-paper/50">
+        <p className="mt-16 max-w-[90ch] border-t border-paper/20 pt-8 text-[12.5px] leading-relaxed text-paper/50">
           OCN is a marketplace. Employment is directly between venue and candidate. On Call Network is a marketplace platform
           connecting hospitality venues with pre-screened candidates. All employment relationships are formed directly between the
           venue and the candidate. OCN does not employ, supervise, or pay candidates.

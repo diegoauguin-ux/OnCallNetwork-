@@ -32,7 +32,7 @@ export default function Hero() {
                 >
                   <span>
                     <span className="block font-display text-[32px] leading-none tracking-tight">{p.t}</span>
-                    <span className="mt-2 block text-[15px] text-ink/65">{p.s}</span>
+                    <span className="mt-2 block text-[15px] text-ink/70">{p.s}</span>
                   </span>
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink/25 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white">
                     <ArrowUpRight className="h-5 w-5" />

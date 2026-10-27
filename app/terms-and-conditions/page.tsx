@@ -21,7 +21,7 @@ export default function TermsAndConditionsPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <Link
             href="/"
-            className="inline-block text-sm text-[#14342B] underline hover:text-[#C8553D] mb-6"
+            className="inline-block text-sm text-[#14342B] underline hover:text-[#B9452D] mb-6"
           >
             &larr; Back to home
           </Link>

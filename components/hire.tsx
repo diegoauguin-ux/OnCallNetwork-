@@ -45,11 +45,11 @@ export default function Hire() {
             <h3 className="mt-3 font-display text-[30px] leading-tight tracking-tight">Permanent placement</h3>
             <div className="mt-6 flex items-end gap-3">
               <span className="num font-display text-[88px] leading-[0.8] tracking-tight">{PRICING.permanentStandard.feePercent}%</span>
-              <span className="pb-1 text-[15px] text-paper/65">of annual salary</span>
+              <span className="pb-1 text-[15px] text-paper/70">of annual salary</span>
             </div>
             <p className="mt-5 text-[15.5px] text-paper/80">
               Shortlist of three in 5 to 7 days. Paid only when they start.{" "}
-              <span className="text-accent">{PRICING.permanentFounding.feePercent}% for the first 3 venues each month.</span>
+              <span className="text-accent-light">{PRICING.permanentFounding.feePercent}% for the first 3 venues each month.</span>
             </p>
             <Link href="/#contact?service=permanent" className="btn btn-accent mt-8 self-start">Submit a role brief</Link>
           </Reveal>

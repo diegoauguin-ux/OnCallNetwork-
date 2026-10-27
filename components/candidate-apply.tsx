@@ -283,8 +283,8 @@ export default function CandidateApply() {
       <div className="wrap">
         <div className="grid lg:grid-cols-2 gap-10 md:gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
@@ -300,15 +300,15 @@ export default function CandidateApply() {
               profile in Sydney.
             </p>
             <ul className="space-y-3 text-sm text-gray-700">
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> Free to join, candidates never pay OCN.</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> You agree the rate directly with the venue.</li>
-              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#C8553D] mt-0.5 flex-shrink-0" /> No mandatory acceptance, no penalties for declining.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#B9452D] mt-0.5 flex-shrink-0" /> Free to join, candidates never pay OCN.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#B9452D] mt-0.5 flex-shrink-0" /> You agree the rate directly with the venue.</li>
+              <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#B9452D] mt-0.5 flex-shrink-0" /> No mandatory acceptance, no penalties for declining.</li>
             </ul>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
@@ -331,7 +331,7 @@ export default function CandidateApply() {
                 <p className="text-sm text-gray-500 mb-4">
                   Check your inbox for a confirmation email.
                 </p>
-                <a href="#venues" className="text-[#14342B] font-semibold hover:text-[#C8553D]">Back to home &uarr;</a>
+                <a href="#venues" className="text-[#14342B] font-semibold hover:text-[#B9452D]">Back to home &uarr;</a>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#F6F3EC] rounded-md  overflow-hidden" noValidate>

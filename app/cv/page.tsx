@@ -11,7 +11,7 @@ import JsonLdScript from "@/components/cv-jsonld";
 export const metadata: Metadata = {
   title: "Australian CV Rewrite and Cover Letter Service",
   description:
-    "Professional CV and cover letter rewrite for Australian employers, reviewed by a recruiter. $39 AUD, delivered by email within 24 hours. Ideal for hospitality and entry-level roles.",
+    "Professional CV and cover letter rewrite for Australian employers, reviewed by a recruiter. $39 AUD, delivered by email within 24 hours.",
   keywords: ["australian cv rewrite", "cv writing service australia", "cover letter service", "hospitality resume australia", "resume rewrite sydney"],
   alternates: { canonical: "/cv" },
 };
@@ -148,12 +148,12 @@ export default function CvPage() {
 
         <section className="bg-forest py-24 text-paper md:py-32">
           <div className="wrap">
-            <p className="eyebrow mb-6 !text-paper/55">How it works</p>
+            <p className="eyebrow mb-6 !text-paper/60">How it works</p>
             <h2 className="h-display h-section max-w-[16ch] !text-paper">Three steps, one day.</h2>
             <ol className="mt-14 grid border-t border-paper/25 md:grid-cols-3">
               {STEPS.map((s, i) => (
                 <li key={s.t} className="border-b border-paper/20 py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0">
-                  <span className="num font-display text-[56px] leading-none text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="num font-display text-[56px] leading-none text-accent-light">{String(i + 1).padStart(2, "0")}</span>
                   <h3 className="mt-5 font-display text-[28px] leading-tight tracking-tight">{s.t}</h3>
                   <p className="mt-2 text-[15.5px] text-paper/70">{s.d}</p>
                 </li>

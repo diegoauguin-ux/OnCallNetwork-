@@ -106,7 +106,7 @@ export default function WorkerRegistrationPage() {
       <div className="max-w-[640px] mx-auto px-4 sm:px-6 py-12 md:py-16 pb-28 md:pb-16">
         <Link
           href="/#workers"
-          className="inline-flex items-center gap-2 text-[#14342B] hover:text-[#C8553D] transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-[#14342B] hover:text-[#B9452D] transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to home
@@ -126,7 +126,7 @@ export default function WorkerRegistrationPage() {
             2-minute mobile form. Fields marked * are required.
           </p>
           <div className="flex items-center gap-2 p-3 bg-[#14342B]/5 rounded-lg">
-            <Shield className="w-5 h-5 text-[#C8553D] flex-shrink-0" />
+            <Shield className="w-5 h-5 text-[#B9452D] flex-shrink-0" />
             <p className="text-sm text-[#14342B]">
               Your rate is paid by the venue directly. <strong>OCN never takes a cut from your pay.</strong>
             </p>
@@ -147,7 +147,7 @@ export default function WorkerRegistrationPage() {
                     <FormControl>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} autoComplete="name" placeholder="John Smith" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
+                        <Input {...field} autoComplete="name" placeholder="John Smith" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#B9452D]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -166,7 +166,7 @@ export default function WorkerRegistrationPage() {
                       <FormControl>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="email" autoComplete="email" placeholder="john@example.com" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
+                          <Input {...field} type="email" autoComplete="email" placeholder="john@example.com" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#B9452D]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -182,7 +182,7 @@ export default function WorkerRegistrationPage() {
                       <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                          <Input {...field} type="tel" inputMode="tel" autoComplete="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
+                          <Input {...field} type="tel" inputMode="tel" autoComplete="tel" placeholder="04XX XXX XXX" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#B9452D]" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -203,7 +203,7 @@ export default function WorkerRegistrationPage() {
                         <ChefHat className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                         <select
                           {...field}
-                          className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#C8553D] focus:ring-2 focus:ring-[#C8553D]/20 outline-none text-sm"
+                          className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#B9452D] focus:ring-2 focus:ring-[#B9452D]/20 outline-none text-sm"
                         >
                           <option value="">Select your main role</option>
                           {ROLES.map((r) => (
@@ -234,7 +234,7 @@ export default function WorkerRegistrationPage() {
                             inputMode="numeric"
                             min={1}
                             placeholder="2"
-                            className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]"
+                            className="pl-11 h-11 border-[#E2DDD1] focus:border-[#B9452D]"
                             value={field.value ?? ""}
                             onChange={(e) => {
                               const val = e.target.value;
@@ -258,7 +258,7 @@ export default function WorkerRegistrationPage() {
                           <Shield className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                           <select
                             {...field}
-                            className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#C8553D] focus:ring-2 focus:ring-[#C8553D]/20 outline-none text-sm"
+                            className="w-full pl-11 pr-4 h-11 rounded-md border border-[#E2DDD1] bg-white text-gray-900 focus:border-[#B9452D] focus:ring-2 focus:ring-[#B9452D]/20 outline-none text-sm"
                           >
                             <option value="">Select</option>
                             <option value="Yes — NSW RSA">Yes — NSW RSA</option>
@@ -283,7 +283,7 @@ export default function WorkerRegistrationPage() {
                     <FormControl>
                       <div className="relative">
                         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <Input {...field} autoComplete="address-level2" placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#C8553D]" />
+                        <Input {...field} autoComplete="address-level2" placeholder="E.g., Newtown, Glebe, Surry Hills" className="pl-11 h-11 border-[#E2DDD1] focus:border-[#B9452D]" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -305,7 +305,7 @@ export default function WorkerRegistrationPage() {
                           {...field}
                           placeholder="E.g., Friday–Sunday evenings, weekday lunch shifts, flexible..."
                           rows={3}
-                          className="pl-11 border-[#E2DDD1] focus:border-[#C8553D] resize-none"
+                          className="pl-11 border-[#E2DDD1] focus:border-[#B9452D] resize-none"
                         />
                       </div>
                     </FormControl>
@@ -326,7 +326,7 @@ export default function WorkerRegistrationPage() {
                         {...field}
                         placeholder="E.g., I specialize in cocktail bars, I have my own transport, barista training..."
                         rows={2}
-                        className="border-[#E2DDD1] focus:border-[#C8553D] resize-none"
+                        className="border-[#E2DDD1] focus:border-[#B9452D] resize-none"
                       />
                     </FormControl>
                     <FormMessage />

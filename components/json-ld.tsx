@@ -1,5 +1,3 @@
-import { venuesFAQ, workersFAQ } from "@/lib/faq-data";
-
 const BASE_URL = "https://oncallnetwork.com.au";
 
 const organization = {
@@ -72,29 +70,6 @@ const website = {
   },
 };
 
-const faq = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [...venuesFAQ, ...workersFAQ].map((f) => ({
-    "@type": "Question",
-    name: f.question,
-    acceptedAnswer: { "@type": "Answer", text: f.answer },
-  })),
-};
-
-const cvService = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  name: "Australian CV Rewrite",
-  serviceType: "CV and cover letter writing",
-  description:
-    "Your CV rewritten to Australian standards, with a matching cover letter and application checklist, reviewed by a recruiter and delivered by email within 24 hours.",
-  provider: { "@type": "Organization", name: "On Call Network", url: BASE_URL },
-  areaServed: { "@type": "Country", name: "Australia" },
-  url: `${BASE_URL}/cv`,
-  offers: { "@type": "Offer", price: "39", priceCurrency: "AUD", availability: "https://schema.org/InStock", url: `${BASE_URL}/cv` },
-};
-
 export default function JsonLd() {
   return (
     <>
@@ -109,14 +84,6 @@ export default function JsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(cvService) }}
       />
     </>
   );

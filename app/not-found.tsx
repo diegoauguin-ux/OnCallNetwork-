@@ -64,7 +64,7 @@ export default function NotFound() {
           <div className="mt-12">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-[#14342B] font-medium underline hover:text-[#C8553D]"
+              className="inline-flex items-center gap-2 text-[#14342B] font-medium underline hover:text-[#B9452D]"
             >
               &larr; Back to home
             </Link>

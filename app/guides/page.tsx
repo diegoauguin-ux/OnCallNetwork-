@@ -28,7 +28,7 @@ export default function GuidesPage() {
                 <Link href={`/guides/${g.slug}`} className="group flex items-center justify-between gap-6 border-b border-line py-8 hover:bg-white md:px-3">
                   <span>
                     <span className="block font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight tracking-tight">{g.title}</span>
-                    <span className="mt-2 block max-w-[60ch] text-[15.5px] text-ink/65">{g.description}</span>
+                    <span className="mt-2 block max-w-[60ch] text-[15.5px] text-ink/70">{g.description}</span>
                     <span className="mt-3 block text-[12px] uppercase tracking-[0.12em] text-muted">{g.readMins} min read</span>
                   </span>
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink/25 group-hover:border-accent group-hover:bg-accent group-hover:text-white">

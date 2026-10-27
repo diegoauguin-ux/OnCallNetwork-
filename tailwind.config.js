@@ -14,7 +14,7 @@ module.exports = {
         paper: "#F6F3EC",
         line: "#E2DDD1",
         forest: { DEFAULT: "#14342B", soft: "#1D4A3D" },
-        accent: { DEFAULT: "#C8553D", dark: "#A8432E" },
+        accent: { DEFAULT: "#B9452D", dark: "#9A3822", light: "#EE8D76" },
         muted: "#5B6560",
       },
       fontFamily: {

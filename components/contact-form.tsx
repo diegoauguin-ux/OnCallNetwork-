@@ -188,8 +188,8 @@ export default function ContactForm() {
       <div className="wrap">
         <div className="grid lg:grid-cols-2 gap-12">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <span className="eyebrow mb-6 block">
@@ -207,7 +207,7 @@ export default function ContactForm() {
                 <p className="font-semibold mb-2">Prefer email?</p>
                 <a
                   href="mailto:hello@oncallnetwork.com.au"
-                  className="inline-flex items-center gap-2 text-[#C8553D] text-lg font-bold hover:text-[#A8432E] transition-colors break-all"
+                  className="inline-flex items-center gap-2 text-[#EE8D76] text-lg font-bold hover:text-white transition-colors break-all"
                 >
                   <Mail className="w-5 h-5 flex-shrink-0" />
                   <span>hello@oncallnetwork.com.au</span>
@@ -222,8 +222,8 @@ export default function ContactForm() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {status === "success" ? (
@@ -238,7 +238,7 @@ export default function ContactForm() {
                   </p>
                   <button
                     onClick={() => setStatus("idle")}
-                    className="text-[#14342B] font-semibold hover:text-[#C8553D] transition-colors"
+                    className="text-[#14342B] font-semibold hover:text-[#B9452D] transition-colors"
                   >
                     Submit another request
                   </button>
@@ -348,7 +348,7 @@ export default function ContactForm() {
                         }))
                       }
                       required
-                      className="mt-1 h-5 w-5 rounded border-gray-300 text-[#14342B] focus:ring-[#C8553D] cursor-pointer"
+                      className="mt-1 h-5 w-5 rounded border-gray-300 text-[#14342B] focus:ring-[#B9452D] cursor-pointer"
                     />
                     <span className="text-sm text-gray-700 leading-relaxed">
                       I have read and agree to the{" "}
@@ -356,7 +356,7 @@ export default function ContactForm() {
                         href="/privacy"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline text-[#14342B] hover:text-[#C8553D]"
+                        className="underline text-[#14342B] hover:text-[#B9452D]"
                       >
                         Privacy Policy
                       </a>{" "}
@@ -365,7 +365,7 @@ export default function ContactForm() {
                         href="/terms-and-conditions"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline text-[#14342B] hover:text-[#C8553D]"
+                        className="underline text-[#14342B] hover:text-[#B9452D]"
                       >
                         Terms and Conditions
                       </a>
