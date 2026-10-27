@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 import { GUIDES, GUIDES_UPDATED, getGuide } from "@/lib/guides";
 import { SITE } from "@/lib/site-config";
 
-const BASE = "https://oncallnetwork.com.au";
+const BASE = "https://www.oncallnetwork.com.au";
 
 export function generateStaticParams() {
   return GUIDES.map((g) => ({ slug: g.slug }));

@@ -9,7 +9,7 @@ import "@fontsource/instrument-serif/400-italic.css";
 import "@fontsource-variable/geist";
 import "./globals.css";
 
-const BASE_URL = "https://oncallnetwork.com.au";
+const BASE_URL = "https://www.oncallnetwork.com.au";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

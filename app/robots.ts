@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://oncallnetwork.com.au";
+const BASE_URL = "https://www.oncallnetwork.com.au";
 const AI_BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "PerplexityBot", "Google-Extended", "Applebot-Extended", "CCBot"];
 
 export default function robots(): MetadataRoute.Robots {

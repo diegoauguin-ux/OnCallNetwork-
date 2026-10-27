@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { GUIDES, GUIDES_UPDATED } from "@/lib/guides";
 
-const BASE_URL = "https://oncallnetwork.com.au";
+const BASE_URL = "https://www.oncallnetwork.com.au";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

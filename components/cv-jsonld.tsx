@@ -1,4 +1,4 @@
-const BASE_URL = "https://oncallnetwork.com.au";
+const BASE_URL = "https://www.oncallnetwork.com.au";
 
 export default function CvJsonLd({ faq }: { faq: { q: string; a: string }[] }) {
   const data = [

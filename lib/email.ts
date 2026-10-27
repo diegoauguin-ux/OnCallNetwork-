@@ -45,7 +45,7 @@ const brand = (title: string, body: string) => `
           ${body}
         </td></tr>
         <tr><td style="padding:18px 32px;border-top:1px solid #eef1f5;color:#6b7280;font-size:12px">
-          On Call Network &middot; Sydney, NSW &middot; <a href="https://oncallnetwork.com.au" style="color:#1e3a5f">oncallnetwork.com.au</a><br/>
+          On Call Network &middot; Sydney, NSW &middot; <a href="https://www.oncallnetwork.com.au" style="color:#1e3a5f">oncallnetwork.com.au</a><br/>
           You&apos;re receiving this because you submitted a form on oncallnetwork.com.au.
         </td></tr>
       </table>

@@ -1,6 +1,6 @@
 import { GUIDES } from "@/lib/guides";
 
-const BASE = "https://oncallnetwork.com.au";
+const BASE = "https://www.oncallnetwork.com.au";
 
 export const dynamic = "force-static";
 
