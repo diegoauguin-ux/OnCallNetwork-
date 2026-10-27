@@ -2,6 +2,7 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
+import { track } from "@/lib/posthog";
 
 const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
@@ -14,6 +15,8 @@ export default function Analytics() {
     const handler = (event: Event) => {
       const detail = (event as CustomEvent<{ type: string; meta?: Record<string, unknown> }>).detail;
       if (!detail) return;
+
+      track(detail.type, detail.meta);
 
       const w = window as ClarityWindow;
 
