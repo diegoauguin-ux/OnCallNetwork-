@@ -6,6 +6,7 @@ const LINKS = [
   { n: "Hire staff", h: "/#hire" },
   { n: "Find work", h: "/#apply" },
   { n: "CV rewrite", h: "/cv" },
+  { n: "Corporate DJ hire", h: "/dj-hire-sydney" },
   { n: "Job guides", h: "/guides" },
   { n: "Contact", h: "/#contact" },
 ];
@@ -56,7 +57,7 @@ export default function Footer() {
         <p className="mt-16 max-w-[90ch] border-t border-paper/20 pt-8 text-[12.5px] leading-relaxed text-paper/50">
           OCN is a marketplace. Employment is directly between venue and candidate. On Call Network is a marketplace platform
           connecting hospitality venues with pre-screened candidates. All employment relationships are formed directly between the
-          venue and the candidate. OCN does not employ, supervise, or pay candidates.
+          venue and the candidate. OCN does not employ, supervise, or pay candidates. DJ and event entertainment services are supplied directly by On Call Network under a written quote.
         </p>
 
         <div className="mt-6 flex flex-col justify-between gap-3 text-[13px] text-paper/50 md:flex-row">

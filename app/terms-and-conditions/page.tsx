@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const LAST_UPDATED = "21 April 2026";
+const LAST_UPDATED = "30 October 2026";
 
 export default function TermsAndConditionsPage() {
   return (
@@ -69,7 +69,7 @@ export default function TermsAndConditionsPage() {
               </li>
             </ul>
 
-            <h2>2. Nature of our services &mdash; marketplace only</h2>
+            <h2>2. Nature of our services</h2>
             <p>
               OCN is a hospitality{" "}
               <strong>introduction service and marketplace</strong>. We do NOT
@@ -78,6 +78,17 @@ export default function TermsAndConditionsPage() {
               supervision, work health and safety, superannuation, taxation,
               and workplace compliance obligations rest with the Venue, who
               becomes the employer or engager of the Candidate.
+            </p>
+            <p>
+              The paragraph above applies to our recruitment and introduction
+              services. <strong>DJ and event entertainment services</strong>{" "}
+              (DJ, sound and lighting) are different: they are supplied directly
+              by OCN to the client under a written quote, which sets out the
+              price, what is included, the deposit and the cancellation terms.
+              Nothing is booked until the client accepts the written quote.
+              Nothing in these terms excludes, restricts or modifies any right or
+              remedy you have under the Australian Consumer Law that cannot be
+              excluded.
             </p>
 
             <h2>3. Services provided</h2>

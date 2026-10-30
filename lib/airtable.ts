@@ -210,3 +210,58 @@ export async function createCandidateApplicationRecord(
     fields,
   });
 }
+
+export interface DjEnquiryRecord {
+  fullName: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  eventType: string;
+  eventDate: string;
+  venueAndSuburb: string;
+  startTime?: string;
+  endTime?: string;
+  guests?: number;
+  venueHasSoundSystem: "Yes" | "No" | "Not sure";
+  packageName: string;
+  message?: string;
+  needsPaRental: boolean;
+  zoneGuess: "A" | "B" | "C" | "Check";
+  sourcePage: string;
+}
+
+/**
+ * DJ / event entertainment enquiries go to their OWN table. There is
+ * deliberately no fallback to any other table: if AIRTABLE_DJ_TABLE is missing
+ * this throws, so enquiries can never mix with candidate or venue data.
+ */
+export async function createDjEnquiryRecord(
+  data: DjEnquiryRecord
+): Promise<{ id: string }> {
+  const tableName = process.env.AIRTABLE_DJ_TABLE;
+  if (!tableName || !tableName.trim()) {
+    throw new Error("AIRTABLE_DJ_TABLE is not set");
+  }
+
+  const fields: AirtableFields = {
+    "Full name": data.fullName,
+    Email: data.email,
+    "Event type": data.eventType,
+    "Event date": data.eventDate,
+    "Venue and suburb": data.venueAndSuburb,
+    "Venue has sound system": data.venueHasSoundSystem,
+    Package: data.packageName,
+    "Needs PA rental": data.needsPaRental,
+    "Zone guess": data.zoneGuess,
+    "Source page": data.sourcePage,
+    Status: "New",
+  };
+  if (data.phone) fields["Phone"] = data.phone;
+  if (data.company) fields["Company"] = data.company;
+  if (data.startTime) fields["Start time"] = data.startTime;
+  if (data.endTime) fields["End time"] = data.endTime;
+  if (typeof data.guests === "number") fields["Guests"] = data.guests;
+  if (data.message) fields["Message"] = data.message;
+
+  return writeAirtableRecord({ tableName: tableName.trim(), fields });
+}
