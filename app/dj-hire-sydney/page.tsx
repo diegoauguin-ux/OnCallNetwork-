@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { CalendarDays, Check, Music2, PartyPopper } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import DjEnquiryForm from "@/components/dj/dj-enquiry-form";
 import PackageCta from "@/components/dj/package-cta";
 import DjJsonLd, { DJ_ROOT_CRUMBS } from "@/components/dj/dj-jsonld";
-import { DJ, DJ_BASE_PATH, DJ_FAQS, DJ_TRUST, formatFrom } from "@/lib/dj";
+import DjStickyCta from "@/components/dj/dj-sticky-cta";
+import { DJ, DJ_AREAS_DETAIL, DJ_BASE_PATH, DJ_BENEFITS, DJ_FAQS, DJ_STEPS, DJ_TRUST, formatFrom } from "@/lib/dj";
 import { DJ_SUBPAGES, DJ_SUBPAGE_PATH } from "@/lib/dj-pages";
 
 const FROM = formatFrom(DJ.packages[0].from);
@@ -45,11 +46,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png"] },
 };
 
-const STEPS = [
-  { t: "Send your event details", d: "Date, venue, hours and guest numbers. It takes two minutes." },
-  { t: "Get a written quote", d: "We aim to reply within one business day with the price, inclusions and booking terms." },
-  { t: "Accept and relax", d: "Once you accept, the date is held. We plan the run sheet and handle setup on the day." },
-];
+const STEP_ICONS = [CalendarDays, Music2, PartyPopper];
 
 export default function DjHirePage() {
   return (
@@ -72,13 +69,14 @@ export default function DjHirePage() {
               DJ hire in Sydney for <em className="italic text-forest">corporate and private</em> events.
             </h1>
             <p className="mt-8 max-w-[56ch] text-[19px] leading-[1.55] text-ink/75">
-              Reggaeton, Latin, house, R&amp;B, hip-hop and Top 40, with sound and lighting for corporate events and private parties. Packages from {FROM}. Led by resident DJ{" "}
+              Reggaeton, Latin, house, R&amp;B, hip-hop and Top 40, with sound and lighting for work functions, birthdays, weddings and venue nights across Sydney. Packages from {FROM}. Led by resident DJ{" "}
               {DJ.residentDj}.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a href="#quote" className="btn btn-solid h-[52px] px-7">Get a quote</a>
-              <a href="#packages" className="btn btn-outline h-[52px] px-7">See packages</a>
+              <a href="#quote" className="btn btn-accent h-[56px] px-8 text-[16px]">Get a free quote</a>
+              <a href="#packages" className="btn btn-outline h-[56px] px-7">See packages</a>
             </div>
+            <p className="mt-4 text-[14px] text-muted">Written quote within one business day. No obligation.</p>
             <ul className="mt-14 grid gap-3 border-t border-ink pt-6 sm:grid-cols-2 lg:grid-cols-4">
               {DJ_TRUST.map((t) => (
                 <li key={t} className="flex gap-3 text-[15px] text-ink/80">
@@ -101,6 +99,24 @@ export default function DjHirePage() {
                 />
               </div>
             )}
+          </div>
+        </section>
+
+        <section className="border-y border-line bg-white py-20 md:py-24">
+          <div className="wrap">
+            <p className="eyebrow mb-6">Why book with us</p>
+            <h2 className="h-display h-section max-w-[20ch]">A DJ that makes your event easy.</h2>
+            <ul className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+              {DJ_BENEFITS.map((b) => (
+                <li key={b.t} className="flex gap-4">
+                  <Check className="mt-1.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+                  <div>
+                    <h3 className="font-display text-[24px] leading-tight tracking-tight">{b.t}</h3>
+                    <p className="mt-1.5 text-[15.5px] leading-relaxed text-ink/70">{b.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -142,6 +158,29 @@ export default function DjHirePage() {
           </div>
         </section>
 
+        <section id="how-it-works" className="bg-forest py-24 text-paper md:py-32">
+          <div className="wrap">
+            <p className="eyebrow mb-6 !text-paper/60">How it works</p>
+            <h2 className="h-display h-section max-w-[16ch] !text-paper">Booking is easy. Three steps.</h2>
+            <ol className="mt-14 grid border-t border-paper/25 md:grid-cols-3">
+              {DJ_STEPS.map((st, i) => {
+                const Icon = STEP_ICONS[i];
+                return (
+                  <li key={st.t} className="border-b border-paper/20 py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0">
+                    <div className="flex items-center gap-4">
+                      <span className="num font-display text-[56px] leading-none text-accent-light">{String(i + 1).padStart(2, "0")}</span>
+                      <Icon className="h-7 w-7 text-paper/70" aria-hidden="true" />
+                    </div>
+                    <h3 className="mt-5 font-display text-[28px] leading-tight tracking-tight">{st.t}</h3>
+                    <p className="mt-2 text-[15.5px] text-paper/75">{st.d}</p>
+                  </li>
+                );
+              })}
+            </ol>
+            <a href="#quote" className="btn btn-accent mt-12 h-[56px] px-8 text-[16px]">Get a free quote</a>
+          </div>
+        </section>
+
         <section className="bg-white py-24 md:py-32">
           <div className="wrap grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
@@ -168,6 +207,22 @@ export default function DjHirePage() {
                 ))}
               </ul>
             </div>
+          </div>
+        </section>
+
+        <section id="areas" className="bg-white py-24 md:py-32">
+          <div className="wrap">
+            <p className="eyebrow mb-6">Where we play</p>
+            <h2 className="h-display h-section max-w-[18ch]">Across Sydney, from the CBD to the beaches.</h2>
+            <div className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2">
+              {DJ_AREAS_DETAIL.map((a) => (
+                <div key={a.t} className="bg-paper p-7">
+                  <h3 className="font-display text-[26px] leading-tight tracking-tight">{a.t}</h3>
+                  <p className="mt-2 text-[15.5px] leading-relaxed text-ink/70">{a.d}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-[14px] text-muted">CBD and inner-city dates are our home base. Pricing for other areas depends on distance and access, and is confirmed in your written quote.</p>
           </div>
         </section>
 
@@ -211,25 +266,6 @@ export default function DjHirePage() {
                 </a>
               </p>
             </div>
-          </div>
-        </section>
-
-        <section className="bg-forest py-24 text-paper md:py-32">
-          <div className="wrap">
-            <p className="eyebrow mb-6 !text-paper/60">How it works</p>
-            <h2 className="h-display h-section max-w-[16ch] !text-paper">Three steps to a booked date.</h2>
-            <ol className="mt-14 grid border-t border-paper/25 md:grid-cols-3">
-              {STEPS.map((s, i) => (
-                <li key={s.t} className="border-b border-paper/20 py-8 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0">
-                  <span className="num font-display text-[56px] leading-none text-accent-light">{String(i + 1).padStart(2, "0")}</span>
-                  <h3 className="mt-5 font-display text-[28px] leading-tight tracking-tight">{s.t}</h3>
-                  <p className="mt-2 text-[15.5px] text-paper/70">{s.d}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-10 max-w-[70ch] text-[14.5px] leading-relaxed text-paper/70">
-              Where we work: {DJ.areas.join(", ")}.
-            </p>
           </div>
         </section>
 
@@ -283,6 +319,7 @@ export default function DjHirePage() {
           </div>
         </section>
       </main>
+      <DjStickyCta />
       <Footer />
     </>
   );

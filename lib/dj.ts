@@ -95,6 +95,7 @@ export const DJ = {
     "Team offsites and staff celebrations",
     "Latin and themed nights",
     "Private parties and birthdays",
+    "Weddings and engagement parties",
     "Venue and bar nights",
   ],
   musicHeadline: ["Reggaeton and Latin", "Tech house and house"],
@@ -190,6 +191,28 @@ const FAQ_ALL: DjFaq[] = [
 export const DJ_FAQS: DjFaq[] = FAQ_ALL.filter(
   (f) => f.requires !== "insurance" || DJ.hasPublicLiability
 );
+
+export const DJ_BENEFITS = [
+  { t: "Sound that suits the room", d: "Professional speakers sized to your venue, plus a wireless mic for speeches (Signature and Premium)." },
+  { t: "Music for every crowd", d: "Reggaeton, Latin, house, R&B, hip-hop and Top 40, read live so the dance floor stays full." },
+  { t: "Set up before guests arrive", d: "We load in early and sound-check, so the music is ready when your first guest walks in." },
+  { t: "Clear, upfront pricing", d: `Packages from $${DJ.packages[0].from} and a written quote before you commit. No surprises on the night.` },
+  { t: "Planned with you", d: "A short run sheet plus your must-play and do-not-play lists, agreed before the event." },
+  { t: "Local to Sydney", d: "CBD, Eastern Suburbs, Inner West and North Shore. Further out is quoted by distance." },
+] as const;
+
+export const DJ_STEPS = [
+  { t: "Pick your date", d: "Send your date, venue and hours. Takes two minutes, no obligation." },
+  { t: "Tell us your vibe", d: "Share the crowd, the music you love and any speeches. We reply with a written quote within one business day." },
+  { t: "Hit the dance floor", d: "Accept the quote and we plan the run sheet. On the night we set up, sound-check and play." },
+] as const;
+
+export const DJ_AREAS_DETAIL = [
+  { t: "Sydney CBD and the harbour", d: "Work functions, product launches and networking nights in function rooms, bars and rooftops from Circular Quay to Barangaroo." },
+  { t: "Eastern Suburbs", d: "Birthdays, engagement parties and milestone celebrations from Bondi and Paddington to Double Bay." },
+  { t: "Inner West and Surry Hills", d: "Venue nights, themed parties and Latin nights across Newtown, Marrickville and Surry Hills." },
+  { t: "North Shore and beyond", d: "North Sydney, Mosman and further out across Greater Sydney, quoted by distance and access." },
+] as const;
 
 export const DJ_TRUST = [
   "10+ years DJing",
