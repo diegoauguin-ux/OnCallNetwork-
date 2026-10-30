@@ -193,7 +193,7 @@ export default function DjEnquiryForm({ sourcePage, defaultEventType }: { source
 
       <div className="mb-4">
         <label htmlFor="dj-venue" className={label}>Venue and suburb *</label>
-        <input id="dj-venue" className={input} value={form.venueAndSuburb} onChange={set("venueAndSuburb")} required placeholder="E.g. The Establishment, Sydney CBD" />
+        <input id="dj-venue" className={input} value={form.venueAndSuburb} onChange={set("venueAndSuburb")} required placeholder="E.g. Circular Quay" />
       </div>
 
       <div className="mb-4 grid gap-4 sm:grid-cols-3">
