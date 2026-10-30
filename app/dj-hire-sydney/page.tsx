@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Check } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -10,15 +11,19 @@ import { DJ, DJ_BASE_PATH, DJ_FAQS, DJ_TRUST, formatFrom } from "@/lib/dj";
 import { DJ_SUBPAGES, DJ_SUBPAGE_PATH } from "@/lib/dj-pages";
 
 const FROM = formatFrom(DJ.packages[0].from);
-const TITLE = `Corporate DJ Hire Sydney | From ${FROM}`;
-const DESCRIPTION = `Corporate DJ hire in Sydney CBD. DJ, sound and lighting for Christmas parties, launches and networking events. Packages from ${FROM}. Written quote within one business day.`;
+const TITLE = `DJ Hire Sydney | Corporate & Private Events | From ${FROM}`;
+const DESCRIPTION = `Sydney DJ hire for corporate and private events. Reggaeton, Latin, house, R&B, hip-hop and Top 40. Sound and lighting packages from ${FROM}.`;
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: { absolute: TITLE },
   description: DESCRIPTION,
   keywords: [
-    "corporate dj sydney",
+    "dj sydney",
     "dj hire sydney",
+    "corporate dj sydney",
+    "party dj sydney",
+    "birthday dj sydney",
+    "open format dj sydney",
     "corporate event dj sydney cbd",
     "christmas party dj sydney",
     "office party dj sydney",
@@ -29,15 +34,15 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: DJ_BASE_PATH },
   openGraph: {
-    title: `${TITLE} | On Call Network`,
+    title: TITLE,
     description: DESCRIPTION,
     url: DJ_BASE_PATH,
     siteName: "On Call Network",
     locale: "en_AU",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "On Call Network: corporate DJ hire in Sydney" }],
+    images: [DJ.photo ? { url: DJ.photo.src, width: DJ.photo.width, height: DJ.photo.height, alt: DJ.photo.alt } : { url: "/og-image.png", width: 1200, height: 630, alt: "On Call Network: DJ hire in Sydney" }],
   },
-  twitter: { card: "summary_large_image", title: `${TITLE} | On Call Network`, description: DESCRIPTION, images: ["/og-image.png"] },
+  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png"] },
 };
 
 const STEPS = [
@@ -52,20 +57,22 @@ export default function DjHirePage() {
       <DjJsonLd
         crumbs={DJ_ROOT_CRUMBS}
         faqs={DJ_FAQS.map((f) => ({ q: f.q, a: f.a }))}
-        serviceName="Corporate DJ and event entertainment in Sydney"
+        serviceName="DJ hire and event entertainment in Sydney"
         servicePath={DJ_BASE_PATH}
         withCatalog
+        withPerson
       />
       <Header />
       <main>
         <section className="pt-32 md:pt-44">
-          <div className="wrap">
-            <p className="eyebrow mb-8">Corporate DJ hire, Sydney</p>
+          <div className={`wrap ${DJ.photo ? "grid items-center gap-12 lg:grid-cols-12" : ""}`}>
+            <div className={DJ.photo ? "lg:col-span-7" : ""}>
+            <p className="eyebrow mb-8">DJ hire, Sydney</p>
             <h1 className="h-display h-hero max-w-[16ch]">
-              Corporate DJ &amp; <em className="italic text-forest">event entertainment</em> in Sydney.
+              DJ hire in Sydney for <em className="italic text-forest">corporate and private</em> events.
             </h1>
             <p className="mt-8 max-w-[56ch] text-[19px] leading-[1.55] text-ink/75">
-              DJ, sound and lighting for corporate events in the Sydney CBD. Packages from {FROM}. Led by resident DJ{" "}
+              Reggaeton, Latin, house, R&amp;B, hip-hop and Top 40, with sound and lighting for corporate events and private parties. Packages from {FROM}. Led by resident DJ{" "}
               {DJ.residentDj}.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -80,6 +87,20 @@ export default function DjHirePage() {
                 </li>
               ))}
             </ul>
+            </div>
+            {DJ.photo && (
+              <div className="lg:col-span-5">
+                <Image
+                  src={DJ.photo.src}
+                  alt={DJ.photo.alt}
+                  width={DJ.photo.width}
+                  height={DJ.photo.height}
+                  priority
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="h-auto w-full rounded-md object-cover"
+                />
+              </div>
+            )}
           </div>
         </section>
 
@@ -125,7 +146,7 @@ export default function DjHirePage() {
           <div className="wrap grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="eyebrow mb-6">Events we play</p>
-              <h2 className="h-display h-section">Built for Sydney business events.</h2>
+              <h2 className="h-display h-section">Events we play across Sydney.</h2>
             </div>
             <div className="lg:col-span-7 lg:col-start-6">
               <ul className="grid gap-3 sm:grid-cols-2">
@@ -136,7 +157,7 @@ export default function DjHirePage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-8 text-[15px] text-ink/70">Looking for something specific?</p>
+              <p className="mt-8 text-[15px] text-ink/70">Looking for a specific style or occasion?</p>
               <ul className="mt-2 space-y-1.5">
                 {DJ_SUBPAGES.map((s) => (
                   <li key={s.slug}>
@@ -219,7 +240,7 @@ export default function DjHirePage() {
               <h2 className="h-display h-section">Who you are booking.</h2>
             </div>
             <p className="max-w-[58ch] text-[17px] leading-relaxed text-ink/75 lg:col-span-7 lg:col-start-6">
-              On Call Network delivers DJ and event sound for Sydney businesses, led by resident DJ {DJ.residentDj}, who has more than ten
+              On Call Network delivers DJ and event sound for Sydney businesses and private clients, led by resident DJ {DJ.residentDj}, who has more than ten
               years of experience DJing in clubs and at corporate and private events. These entertainment services are supplied directly by
               On Call Network under a written quote.
             </p>

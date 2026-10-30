@@ -289,7 +289,7 @@ export default function DjEnquiryForm({ sourcePage, defaultEventType }: { source
           </>
         )}
       </button>
-      <p className="mt-3 text-center text-[13px] text-gray-500">No obligation. Nothing is booked until you accept the written quote.</p>
+      <p className="mt-3 text-center text-[13px] text-gray-700">No obligation. Nothing is booked until you accept the written quote.</p>
     </form>
   );
 }

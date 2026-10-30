@@ -20,6 +20,11 @@ export const DJ = {
   residentDj: "Diego Pascal",
   city: "Sydney",
   instagram: "https://instagram.com/diegopascal",
+  soundcloud: "https://soundcloud.com/diego-632302372",
+  // A real photo of the DJ at work (not stock). Put the file in /public/img and set
+  // e.g. { src: "/img/diego-pascal-dj.jpg", alt: "DJ Diego Pascal performing in Sydney", width: 1200, height: 1500 }.
+  // The hero, structured data and social image pick it up automatically.
+  photo: null as { src: string; alt: string; width: number; height: number } | null,
   // Add public links to 1–2 mixes (SoundCloud / Instagram). The block hides if empty.
   mixLinks: [
     { label: "Reggaeton mix on SoundCloud", url: "https://soundcloud.com/diego-632302372/reggaeton-mix" },
@@ -84,6 +89,7 @@ export const DJ = {
     "Awards nights and gala dinners",
     "Team offsites and staff celebrations",
     "Latin and themed nights",
+    "Private parties and birthdays",
     "Venue and bar nights",
   ],
   musicHeadline: ["Reggaeton and Latin", "Tech house and house"],
@@ -143,11 +149,19 @@ const FAQ_ALL: DjFaq[] = [
   },
   {
     q: "What music do you play?",
-    a: "Reggaeton, Latin, tech house and house are our specialty. We also play what a Sydney crowd expects: R&B, hip-hop, Top 40, pop and dance classics. We build the set around your guests and brand.",
+    a: "Reggaeton, Latin, tech house and house are our specialty. We also play what a Sydney crowd expects: R&B, hip-hop, Top 40, pop and dance classics. We build the set around your guests and the occasion.",
   },
   {
     q: "What types of events do you cover?",
-    a: "End-of-year parties, product launches, networking and cocktail events, conference after-parties, gala dinners, team celebrations and themed nights.",
+    a: "Corporate events such as end-of-year parties, product launches, networking nights, conference after-parties and gala dinners, plus private parties, birthdays, themed nights and venue nights across Sydney.",
+  },
+  {
+    q: "Do you play private parties and birthdays?",
+    a: "Yes. We play private parties, birthdays and milestone celebrations as well as corporate events. The same packages apply, and your written quote confirms the price for your date, venue and hours.",
+  },
+  {
+    q: "Can you play any style of music?",
+    a: "Yes. Reggaeton, Latin, house and tech house are our specialty, and we also play R&B, hip-hop, Top 40, pop and dance classics. Tell us your guests and the mood you want and we build the set around it.",
   },
   {
     q: "Can you handle speeches and announcements?",

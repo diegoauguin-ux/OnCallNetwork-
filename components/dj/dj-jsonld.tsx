@@ -12,12 +12,14 @@ export default function DjJsonLd({
   serviceName,
   servicePath,
   withCatalog,
+  withPerson,
 }: {
   crumbs: Crumb[];
   faqs: { q: string; a: string }[];
   serviceName: string;
   servicePath: string;
   withCatalog?: boolean;
+  withPerson?: boolean;
 }) {
   const service: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -47,8 +49,21 @@ export default function DjJsonLd({
     };
   }
 
+  const person = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: DJ.residentDj,
+    jobTitle: "DJ",
+    url: `${BASE_URL}${DJ_BASE_PATH}`,
+    worksFor: { "@type": "Organization", name: "On Call Network", url: BASE_URL },
+    knowsAbout: ["Reggaeton", "Latin music", "House music", "Tech house", "R&B", "Hip-hop", "Corporate event entertainment"],
+    sameAs: [DJ.instagram, DJ.soundcloud],
+    ...(DJ.photo ? { image: `${BASE_URL}${DJ.photo.src}` } : {}),
+  };
+
   const data = [
     service,
+    ...(withPerson ? [person] : []),
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -75,6 +90,6 @@ export default function DjJsonLd({
 
 export const DJ_ROOT_CRUMBS: Crumb[] = [
   { name: "Home", path: "/" },
-  { name: "Corporate DJ hire Sydney", path: DJ_BASE_PATH },
+  { name: "DJ hire Sydney", path: DJ_BASE_PATH },
 ];
 

@@ -31,14 +31,16 @@ async function safeSend(
   }
 }
 
+export type SendResult = { ok: boolean; error?: string };
+
 async function trySend(
   to: string | string[],
   subject: string,
   html: string,
   replyTo?: string
-): Promise<boolean> {
+): Promise<SendResult> {
   const client = getClient();
-  if (!client) return false;
+  if (!client) return { ok: false, error: "RESEND_API_KEY is not set" };
   try {
     const res = await client.emails.send({
       from: FROM,
@@ -47,10 +49,14 @@ async function trySend(
       html,
       replyTo: replyTo || REPLY_TO,
     });
-    return !res.error;
+    if (res.error) {
+      console.error("[email] Resend error", res.error);
+      return { ok: false, error: `${res.error.name ?? "error"}: ${res.error.message ?? ""}`.slice(0, 300) };
+    }
+    return { ok: true };
   } catch (error) {
     console.error("[email] send failed", error);
-    return false;
+    return { ok: false, error: error instanceof Error ? error.message.slice(0, 300) : "unknown error" };
   }
 }
 
@@ -163,7 +169,7 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-export async function sendDjEnquiryConfirmation(to: string, fullName: string, eventType: string): Promise<void> {
+export async function sendDjEnquiryConfirmation(to: string, fullName: string, eventType: string): Promise<SendResult> {
   const html = brand(
     "We&rsquo;ve got your enquiry",
     `<p>Hi ${escapeHtml(fullName.split(" ")[0] || fullName)},</p>
@@ -172,10 +178,10 @@ export async function sendDjEnquiryConfirmation(to: string, fullName: string, ev
      <p>&mdash; Diego Pascal, On Call Network</p>`,
     "Corporate DJ and event entertainment, Sydney"
   );
-  await safeSend(to, "We&rsquo;ve got your enquiry &mdash; On Call Network", html);
+  return trySend(to, "We&rsquo;ve got your enquiry &mdash; On Call Network", html);
 }
 
-export async function sendDjInternalNotice(record: Record<string, string>, replyTo: string, subjectName: string): Promise<boolean> {
+export async function sendDjInternalNotice(record: Record<string, string>, replyTo: string, subjectName: string): Promise<SendResult> {
   const rows = Object.entries(record)
     .filter(([, v]) => v && String(v).trim().length > 0)
     .map(
