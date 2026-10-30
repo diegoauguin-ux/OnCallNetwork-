@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import DjEnquiryForm from "@/components/dj/dj-enquiry-form";
 import DjJsonLd from "@/components/dj/dj-jsonld";
+import DjStickyCta from "@/components/dj/dj-sticky-cta";
 import { DJ, DJ_BASE_PATH, formatFrom } from "@/lib/dj";
 import { DJ_SUBPAGES, DJ_SUBPAGE_PATH, subPageBySlug } from "@/lib/dj-pages";
 
@@ -74,7 +75,7 @@ export default function DjSubPage({ params }: { params: { slug: string } }) {
             <h1 className="h-display h-hero max-w-[18ch]">{page.h1}</h1>
             <p className="mt-8 max-w-[58ch] text-[19px] leading-[1.55] text-ink/75">{page.intro}</p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a href="#quote" className="btn btn-solid h-[52px] px-7">Get a quote</a>
+              <a href="#quote" className="btn btn-accent h-[56px] px-8 text-[16px]">Get a free quote</a>
               <Link href={`${DJ_BASE_PATH}#packages`} className="btn btn-outline h-[52px] px-7">
                 Packages from {formatFrom(DJ.packages[0].from)}
               </Link>
@@ -146,6 +147,7 @@ export default function DjSubPage({ params }: { params: { slug: string } }) {
           </div>
         </section>
       </main>
+      <DjStickyCta />
       <Footer />
     </>
   );

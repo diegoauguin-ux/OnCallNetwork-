@@ -285,7 +285,7 @@ export default function DjEnquiryForm({ sourcePage, defaultEventType }: { source
           </>
         ) : (
           <>
-            <Send className="h-5 w-5" /> Get a written quote
+            <Send className="h-5 w-5" /> Get my free quote
           </>
         )}
       </button>

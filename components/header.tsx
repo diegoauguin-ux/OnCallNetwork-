@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 
@@ -17,6 +18,10 @@ const NAV = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname() ?? "";
+  const onDj = pathname.startsWith("/dj-hire-sydney");
+  const quoteHref = onDj ? "#quote" : "/#contact?service=permanent";
+  const quoteLabel = onDj ? "Get a free quote" : "Get a quote";
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
@@ -60,8 +65,8 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/#contact?service=permanent" className="btn btn-solid hidden h-11 px-5 text-[14.5px] sm:inline-flex">
-            Get a quote
+          <Link href={quoteHref} className="btn btn-solid hidden h-11 px-5 text-[14.5px] sm:inline-flex">
+            {quoteLabel}
           </Link>
           <button
             onClick={() => setOpen(!open)}
@@ -88,8 +93,8 @@ export default function Header() {
               </Link>
             ))}
             <div className="mt-auto grid gap-3 pt-10">
-              <Link href="/#contact?service=permanent" onClick={() => setOpen(false)} className="btn btn-solid">
-                Get a quote
+              <Link href={quoteHref} onClick={() => setOpen(false)} className="btn btn-solid">
+                {quoteLabel}
               </Link>
               <Link href="/#apply" onClick={() => setOpen(false)} className="btn btn-outline">
                 Apply to work
