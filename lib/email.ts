@@ -31,14 +31,37 @@ async function safeSend(
   }
 }
 
-const brand = (title: string, body: string) => `
+async function trySend(
+  to: string | string[],
+  subject: string,
+  html: string,
+  replyTo?: string
+): Promise<boolean> {
+  const client = getClient();
+  if (!client) return false;
+  try {
+    const res = await client.emails.send({
+      from: FROM,
+      to,
+      subject,
+      html,
+      replyTo: replyTo || REPLY_TO,
+    });
+    return !res.error;
+  } catch (error) {
+    console.error("[email] send failed", error);
+    return false;
+  }
+}
+
+const brand = (title: string, body: string, subtitle = "Sydney hospitality recruitment") => `
 <!doctype html><html><body style="margin:0;padding:0;background:#faf9f6;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e3a5f">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#faf9f6;padding:32px 16px">
     <tr><td align="center">
       <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(15,30,50,.08)">
         <tr><td style="padding:28px 32px;background:#0f1e32;color:#ffffff">
           <div style="font-size:20px;font-weight:700">On Call Network</div>
-          <div style="font-size:13px;color:#d4a853">Sydney hospitality recruitment</div>
+          <div style="font-size:13px;color:#d4a853">${subtitle}</div>
         </td></tr>
         <tr><td style="padding:28px 32px">
           <h1 style="margin:0 0 12px;font-size:22px;color:#1e3a5f">${title}</h1>
@@ -138,4 +161,33 @@ function escapeHtml(value: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+export async function sendDjEnquiryConfirmation(to: string, fullName: string, eventType: string): Promise<void> {
+  const html = brand(
+    "We&rsquo;ve got your enquiry",
+    `<p>Hi ${escapeHtml(fullName.split(" ")[0] || fullName)},</p>
+     <p>Thanks for your enquiry about <strong>${escapeHtml(eventType)}</strong>. We aim to send you a written quote within <strong>one business day</strong>. It will confirm the price, what is included and the booking terms before you commit to anything.</p>
+     <p>If your event is urgent or details change, reply to this email.</p>
+     <p>&mdash; Diego Pascal, On Call Network</p>`,
+    "Corporate DJ and event entertainment, Sydney"
+  );
+  await safeSend(to, "We&rsquo;ve got your enquiry &mdash; On Call Network", html);
+}
+
+export async function sendDjInternalNotice(record: Record<string, string>, replyTo: string, subjectName: string): Promise<boolean> {
+  const rows = Object.entries(record)
+    .filter(([, v]) => v && String(v).trim().length > 0)
+    .map(
+      ([k, v]) =>
+        `<tr><td style="padding:6px 10px;color:#6b7280;font-size:13px;vertical-align:top">${escapeHtml(k)}</td><td style="padding:6px 10px;font-size:14px;color:#1e3a5f">${escapeHtml(String(v))}</td></tr>`
+    )
+    .join("");
+  const html = brand(
+    "New DJ enquiry",
+    `<table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;background:#faf9f6;border-radius:10px;overflow:hidden">${rows}</table>
+     <p style="margin-top:14px;font-size:13px;color:#6b7280">Reminder: aim to send the written quote within one business day.</p>`,
+    "Corporate DJ and event entertainment, Sydney"
+  );
+  return trySend(NOTIFY_TO, `New DJ enquiry: ${subjectName}`, html, replyTo);
 }

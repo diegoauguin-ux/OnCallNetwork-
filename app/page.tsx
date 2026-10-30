@@ -3,6 +3,7 @@ import Hero from "@/components/hero";
 import Hire from "@/components/hire";
 import Vetting from "@/components/vetting";
 import CvTeaser from "@/components/cv-teaser";
+import DjTeaser from "@/components/dj/dj-teaser";
 import CandidateApply from "@/components/candidate-apply";
 import MeetTheFounder from "@/components/meet-the-founder";
 import FAQ from "@/components/faq";
@@ -20,6 +21,7 @@ export default function Home() {
       <Hire />
       <Vetting />
       <CvTeaser />
+      <DjTeaser />
       <CandidateApply />
       <MeetTheFounder />
       <FAQ />

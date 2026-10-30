@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 
 import { GUIDES, GUIDES_UPDATED } from "@/lib/guides";
+import { DJ_BASE_PATH, DJ_UPDATED } from "@/lib/dj";
+import { DJ_SUBPAGES } from "@/lib/dj-pages";
 
 const BASE_URL = "https://www.oncallnetwork.com.au";
 
@@ -19,6 +21,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}${DJ_BASE_PATH}`,
+      lastModified: new Date(DJ_UPDATED),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...DJ_SUBPAGES.map((p) => ({
+      url: `${BASE_URL}${DJ_BASE_PATH}/${p.slug}`,
+      lastModified: new Date(DJ_UPDATED),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${BASE_URL}/guides`,
       lastModified: new Date(GUIDES_UPDATED),

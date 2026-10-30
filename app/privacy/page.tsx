@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const LAST_UPDATED = "21 April 2026";
+const LAST_UPDATED = "30 October 2026";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -74,6 +74,12 @@ export default function PrivacyPolicyPage() {
               provided.
             </p>
             <p>
+              <strong>From people requesting a DJ or event entertainment quote</strong>,
+              we collect: name, work email, phone number (optional), company,
+              event type, date, venue and suburb, event times, guest numbers,
+              and any information voluntarily provided in the enquiry.
+            </p>
+            <p>
               <strong>Automatically</strong>, we collect limited technical
               information when you visit the site: IP address, browser type,
               device type, pages visited, and referral source. This is used for
@@ -98,6 +104,10 @@ export default function PrivacyPolicyPage() {
               <li>
                 To communicate with you about applications, role briefs,
                 introductions, and service updates.
+              </li>
+              <li>
+                To prepare quotes, take bookings and deliver DJ and event
+                entertainment services you request.
               </li>
               <li>To operate and improve our services.</li>
               <li>To comply with our legal obligations.</li>
@@ -169,6 +179,12 @@ export default function PrivacyPolicyPage() {
               <li>
                 Venue role briefs and correspondence: retained for 7 years for
                 tax and commercial records compliance.
+              </li>
+              <li>
+                DJ and event entertainment enquiries that do not proceed:
+                retained for 12 months from last contact, then deleted. Booked
+                events: retained for 7 years for tax and commercial records
+                compliance.
               </li>
               <li>
                 You may request earlier deletion (see section 10).
