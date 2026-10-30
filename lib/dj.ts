@@ -19,7 +19,7 @@ export const DJ = {
   brand: "On Call Network",
   residentDj: "Diego Pascal",
   city: "Sydney",
-  instagram: "https://instagram.com/djdiegopascal",
+  instagram: "https://instagram.com/diegopascal",
   // Add public links to 1–2 mixes (SoundCloud / Instagram). The block hides if empty.
   mixLinks: [] as { label: string; url: string }[],
   // Flip to true ONLY once public liability insurance is in place and a

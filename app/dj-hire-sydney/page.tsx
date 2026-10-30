@@ -186,7 +186,7 @@ export default function DjHirePage() {
               <p className="mt-8 text-[15px] text-ink/70">
                 Instagram:{" "}
                 <a href={DJ.instagram} target="_blank" rel="noopener noreferrer" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">
-                  @djdiegopascal
+                  @diegopascal
                 </a>
               </p>
             </div>
