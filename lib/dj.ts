@@ -24,7 +24,12 @@ export const DJ = {
   // A real photo of the DJ at work (not stock). Put the file in /public/img and set
   // e.g. { src: "/img/diego-pascal-dj.jpg", alt: "DJ Diego Pascal performing in Sydney", width: 1200, height: 1500 }.
   // The hero, structured data and social image pick it up automatically.
-  photo: null as { src: string; alt: string; width: number; height: number } | null,
+  photo: {
+    src: "/img/diego-pascal-dj.jpg",
+    alt: "DJ Diego Pascal playing a live set to a crowd at a club night",
+    width: 1620,
+    height: 1080,
+  } as { src: string; alt: string; width: number; height: number } | null,
   // Add public links to 1–2 mixes (SoundCloud / Instagram). The block hides if empty.
   mixLinks: [
     { label: "Reggaeton mix on SoundCloud", url: "https://soundcloud.com/diego-632302372/reggaeton-mix" },
