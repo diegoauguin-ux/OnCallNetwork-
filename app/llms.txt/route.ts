@@ -14,7 +14,9 @@ export function GET() {
 - [Casual introductions](${BASE}/#hire): $99 per pre-screened hospitality candidate introduction (ex GST), with a written service credit if the candidate does not show.
 - [Permanent placement](${BASE}/#hire): 18% of first-year salary (15% for the first three venues each month), shortlist of three in 5 to 7 days, 60-day replacement guarantee.
 - [Australian CV Rewrite](${BASE}/cv): $39 AUD one-off. Rewritten CV, matching cover letter and application checklist, reviewed by a recruiter, delivered by email within 24 hours.
-- [Corporate DJ hire](${BASE}/dj-hire-sydney): DJ, sound and lighting for Sydney corporate events (Christmas parties, product launches, networking events). Packages from $${DJ.packages[0].from} AUD, quoted individually in writing. Led by resident DJ Diego Pascal. Specialty: reggaeton, Latin, tech house and house, plus R&B, hip-hop and Top 40.
+- [DJ hire in Sydney](${BASE}/dj-hire-sydney): DJ, sound and lighting for Sydney corporate events and private parties (Christmas parties, product launches, networking events, birthdays). Packages from $${DJ.packages[0].from} AUD, quoted individually in writing. Led by resident DJ Diego Pascal. Specialty: reggaeton, Latin, house and tech house, plus R&B, hip-hop, Top 40 and open-format sets.
+- [Latin and reggaeton DJ](${BASE}/dj-hire-sydney/latin-reggaeton-dj), [house and tech house DJ](${BASE}/dj-hire-sydney/house-tech-house-dj), [R&B, hip-hop and Top 40 DJ](${BASE}/dj-hire-sydney/rnb-hip-hop-dj), [private party DJ](${BASE}/dj-hire-sydney/private-party-dj), [Christmas party DJ](${BASE}/dj-hire-sydney/christmas-party-dj), [product launch DJ](${BASE}/dj-hire-sydney/product-launch-dj).
+- Social: Instagram @diegopascal (https://instagram.com/diegopascal), SoundCloud (https://soundcloud.com/diego-632302372).
 - [Apply to work](${BASE}/#apply): free for hospitality candidates. Venues pay workers directly; OCN takes no cut of pay.
 
 ## Guides

@@ -265,3 +265,20 @@ export async function createDjEnquiryRecord(
 
   return writeAirtableRecord({ tableName: tableName.trim(), fields });
 }
+
+/** Best-effort note on an existing DJ enquiry (used to record email delivery problems). */
+export async function appendDjEnquiryNote(recordId: string, note: string): Promise<void> {
+  const apiKey = process.env.AIRTABLE_ACCESS_TOKEN ?? process.env.AIRTABLE_API_KEY;
+  const baseId = process.env.AIRTABLE_BASE_ID;
+  const tableName = process.env.AIRTABLE_DJ_TABLE?.trim();
+  if (!apiKey || !baseId || !tableName) return;
+  try {
+    await fetch(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(tableName)}/${recordId}`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ fields: { Notes: note }, typecast: true }),
+    });
+  } catch (error) {
+    console.error("[dj-enquiry] could not write note", error);
+  }
+}

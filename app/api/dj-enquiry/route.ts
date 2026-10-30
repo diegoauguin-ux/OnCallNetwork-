@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { createDjEnquiryRecord } from "@/lib/airtable";
+import { createDjEnquiryRecord, appendDjEnquiryNote } from "@/lib/airtable";
 import { limit, getClientIp } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { sendDjEnquiryConfirmation, sendDjInternalNotice } from "@/lib/email";
@@ -91,8 +91,9 @@ export async function POST(request: NextRequest) {
     const sourcePage = d.sourcePage.startsWith("/") ? d.sourcePage : "/dj-hire-sydney";
 
     let recordSaved = false;
+    let recordId = "";
     try {
-      await createDjEnquiryRecord({
+      const created = await createDjEnquiryRecord({
         fullName: d.fullName,
         email: d.email,
         phone: d.phone || undefined,
@@ -111,6 +112,7 @@ export async function POST(request: NextRequest) {
         sourcePage,
       });
       recordSaved = true;
+      recordId = created.id;
     } catch (error) {
       // Loud on purpose (check AIRTABLE_DJ_TABLE and the table's columns), but we
       // still email the enquiry so a paying lead is never lost.
@@ -139,11 +141,20 @@ export async function POST(request: NextRequest) {
       `${d.fullName} (${d.eventType})`
     );
 
-    if (!recordSaved && !noticeSent) {
+    if (!recordSaved && !noticeSent.ok) {
       return NextResponse.json({ success: false, message: FALLBACK_MESSAGE }, { status: 500 });
     }
 
-    await sendDjEnquiryConfirmation(d.email, d.fullName, d.eventType);
+    const confirmation = await sendDjEnquiryConfirmation(d.email, d.fullName, d.eventType);
+
+    // Record delivery problems on the Airtable row so a silent email failure is visible.
+    const problems = [
+      noticeSent.ok ? "" : `Internal notice email FAILED: ${noticeSent.error}`,
+      confirmation.ok ? "" : `Auto-reply email FAILED: ${confirmation.error}`,
+    ].filter(Boolean);
+    if (problems.length && recordSaved && recordId) {
+      await appendDjEnquiryNote(recordId, problems.join(" | "));
+    }
 
     return NextResponse.json({ success: true, message: "Enquiry received" });
   } catch (error) {

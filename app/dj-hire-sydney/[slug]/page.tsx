@@ -42,19 +42,21 @@ export default function DjSubPage({ params }: { params: { slug: string } }) {
   if (!page) notFound();
   const path = DJ_SUBPAGE_PATH(page.slug);
   const related = DJ_SUBPAGES.filter((p) => page.other.includes(p.slug));
-  const defaultEventType =
-    page.slug === "christmas-party-dj"
-      ? "End-of-year and Christmas parties"
-      : page.slug === "product-launch-dj"
-        ? "Product launches and brand activations"
-        : "Latin and themed nights";
+  const defaultEventType = ({
+    "christmas-party-dj": "End-of-year and Christmas parties",
+    "product-launch-dj": "Product launches and brand activations",
+    "latin-reggaeton-dj": "Latin and themed nights",
+    "private-party-dj": "Private parties and birthdays",
+    "house-tech-house-dj": "Venue and bar nights",
+    "rnb-hip-hop-dj": "Private parties and birthdays",
+  } as Record<string, string>)[page.slug];
 
   return (
     <>
       <DjJsonLd
         crumbs={[
           { name: "Home", path: "/" },
-          { name: "Corporate DJ hire Sydney", path: DJ_BASE_PATH },
+          { name: "DJ hire Sydney", path: DJ_BASE_PATH },
           { name: page.h1, path },
         ]}
         faqs={page.faqs}
@@ -128,7 +130,7 @@ export default function DjSubPage({ params }: { params: { slug: string } }) {
               <ul className="space-y-1.5">
                 <li>
                   <Link href={DJ_BASE_PATH} className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">
-                    Corporate DJ hire in Sydney: all packages
+                    DJ hire in Sydney: all packages
                   </Link>
                 </li>
                 {related.map((r) => (

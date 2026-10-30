@@ -52,7 +52,7 @@ export const DJ_SUBPAGES: DjSubPage[] = [
         a: "Your date, start and end time, venue and suburb, approximate guest numbers, and whether the venue already has a sound system.",
       },
     ],
-    other: ["product-launch-dj", "latin-reggaeton-dj"],
+    other: ["product-launch-dj", "latin-reggaeton-dj", "private-party-dj"],
   },
   {
     slug: "product-launch-dj",
@@ -124,6 +124,111 @@ export const DJ_SUBPAGES: DjSubPage[] = [
       },
     ],
     other: ["christmas-party-dj", "product-launch-dj"],
+  },
+  {
+    slug: "private-party-dj",
+    h1: "Birthday & Private Party DJ in Sydney",
+    eyebrow: "Private parties",
+    title: `Birthday & Private Party DJ Sydney | From ${from}`,
+    description: `Book a DJ for your Sydney birthday, milestone party or private event. DJ, sound and lighting packages from ${from}, quoted in writing before you commit.`,
+    keywords: ["party dj sydney", "birthday dj sydney", "private party dj sydney", "30th birthday dj sydney", "house party dj sydney"],
+    intro:
+      "A private party works when the music matches the people in the room. We play birthdays, milestone celebrations and private events across Sydney, and build the set around your guests rather than a fixed playlist.",
+    body: [
+      "Tell us the age group, the venue and the kind of night you want. A relaxed dinner party, a packed dance floor and a mixed-age celebration all need a different approach, and we plan each one with you beforehand.",
+      "Reggaeton, Latin and house are our specialty, and we also play R&B, hip-hop, Top 40, pop and throwback classics. If your venue has no sound system, Signature and Premium include speakers, a wireless microphone and lighting.",
+    ],
+    points: [
+      "Music planned around your guests: ages, taste and the mood of the night",
+      "Birthdays, milestone parties, engagement parties and private events",
+      "Sound, microphone and lighting included in Signature and Premium",
+      "A written quote before you commit, with the price confirmed for your date and venue",
+    ],
+    faqs: [
+      {
+        q: "Do you play house parties and small venues?",
+        a: "Yes, where the space and access allow it. Send the address and the number of guests and we confirm what is possible and quote it in writing.",
+      },
+      {
+        q: "Can we choose the songs?",
+        a: "Yes. Share your favourites and any songs you want avoided, and we build the night around them while keeping the dance floor moving.",
+      },
+      {
+        q: "How much does a party DJ cost in Sydney?",
+        a: `Packages start from ${from} for a 2-hour set and from ${sig} for a 4-hour set with speakers, microphone and lighting, for standard dates in the CBD and inner city. Your written quote confirms the final price for your date, location and hours.`,
+      },
+    ],
+    other: ["rnb-hip-hop-dj", "latin-reggaeton-dj"],
+  },
+  {
+    slug: "house-tech-house-dj",
+    h1: "House & Tech House DJ in Sydney",
+    eyebrow: "House and tech house",
+    title: "House & Tech House DJ Sydney | Events and Venues",
+    description: `House, deep house and tech house DJ for Sydney events and venue nights. Sound and lighting available. Packages from ${from}, quoted in writing.`,
+    keywords: ["house dj sydney", "tech house dj sydney", "deep house dj sydney", "dance music dj sydney"],
+    intro:
+      "House and tech house are core to our sets: warm grooves for early in the night, then a steady build for the dance floor. We play for corporate events, private parties and venue nights across Sydney.",
+    body: [
+      "Our sets move from deep, easy-listening house at arrivals to tech house once the room is ready to dance. We read the crowd and adjust the energy, and we can keep the music lower for networking events.",
+      "For venues and promoters, we can play one-off or recurring nights. Send the venue, date and hours and we respond with a written quote. Signature and Premium include speakers, microphone and lighting where the venue needs them.",
+    ],
+    points: [
+      "Deep house, house and tech house, with the energy shaped to your crowd",
+      "Suitable for corporate events, private parties and venue nights",
+      "Easy-listening sets for networking and arrivals",
+      "Sound and lighting available when the venue has none",
+    ],
+    faqs: [
+      {
+        q: "Do you play sets for bars and venues?",
+        a: "Yes. Venues can enquire about one-off or recurring nights. Send the venue, date and hours and we reply with a written quote.",
+      },
+      {
+        q: "Can the set start deep and build up?",
+        a: "Yes. A common plan is deep or melodic house early in the night, then tech house as the dance floor fills. We agree the flow with you beforehand.",
+      },
+      {
+        q: "Can you mix house with other styles?",
+        a: "Yes. We also play Latin, reggaeton, R&B, hip-hop and Top 40, so the set can follow what your guests respond to.",
+      },
+    ],
+    other: ["latin-reggaeton-dj", "christmas-party-dj"],
+  },
+  {
+    slug: "rnb-hip-hop-dj",
+    h1: "R&B, Hip-Hop & Top 40 DJ in Sydney",
+    eyebrow: "Open-format DJ",
+    title: "R&B, Hip-Hop & Top 40 DJ Sydney | Open Format",
+    description: `Open-format DJ in Sydney for R&B, hip-hop, Top 40, pop and dance classics. Corporate and private events. Packages from ${from}, quoted in writing.`,
+    keywords: ["open format dj sydney", "rnb dj sydney", "hip hop dj sydney", "top 40 dj sydney", "party dj sydney"],
+    intro:
+      "Not every crowd wants the same genre. An open-format set covers R&B, hip-hop, Top 40, pop and dance classics, so a mixed room of guests all find something to dance to.",
+    body: [
+      "We build the set around your guests and the occasion. Corporate events usually lean on recognisable crowd favourites, while private parties can go further into R&B, hip-hop or throwbacks.",
+      "If you want a touch of our specialty, reggaeton, Latin and house sit comfortably inside an open-format night. Tell us what to include and what to leave out, and we plan it with you before the event.",
+    ],
+    points: [
+      "R&B, hip-hop, Top 40, pop and dance classics in one set",
+      "Mixed-age rooms handled with care: familiar songs first, then more variety",
+      "Must-play and do-not-play lists respected",
+      "Reggaeton, Latin and house available on request",
+    ],
+    faqs: [
+      {
+        q: "What does open format mean?",
+        a: "It means the DJ is not limited to one genre. We play across R&B, hip-hop, pop, dance and more, guided by your guests and the moment.",
+      },
+      {
+        q: "Can you keep the set clean for a workplace event?",
+        a: "Yes. For corporate events we choose radio-friendly versions and keep the content suitable for a workplace audience.",
+      },
+      {
+        q: "Do you take requests on the night?",
+        a: "Within the style of the event, yes. We agree the direction beforehand and use judgement on the night so the dance floor keeps its energy.",
+      },
+    ],
+    other: ["private-party-dj", "christmas-party-dj"],
   },
 ];
 
