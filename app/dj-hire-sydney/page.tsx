@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "On Call Network",
     locale: "en_AU",
     type: "website",
-    images: [DJ.photo ? { url: DJ.photo.src, width: DJ.photo.width, height: DJ.photo.height, alt: DJ.photo.alt } : { url: "/og-image.png", width: 1200, height: 630, alt: "On Call Network: DJ hire in Sydney" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "On Call Network: DJ hire in Sydney" }],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION, images: ["/og-image.png"] },
 };
@@ -94,8 +94,8 @@ export default function DjHirePage() {
                   width={DJ.photo.width}
                   height={DJ.photo.height}
                   priority
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="h-auto w-full rounded-md object-cover"
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                  className="mx-auto h-auto w-full max-w-[460px] rounded-md object-cover lg:ml-auto lg:mr-0"
                 />
               </div>
             )}
@@ -275,11 +275,23 @@ export default function DjHirePage() {
               <p className="eyebrow mb-6">About</p>
               <h2 className="h-display h-section">Who you are booking.</h2>
             </div>
-            <p className="max-w-[58ch] text-[17px] leading-relaxed text-ink/75 lg:col-span-7 lg:col-start-6">
-              On Call Network delivers DJ and event sound for Sydney businesses and private clients, led by resident DJ {DJ.residentDj}, who has more than ten
-              years of experience DJing in clubs and at corporate and private events. These entertainment services are supplied directly by
-              On Call Network under a written quote.
-            </p>
+            <div className="lg:col-span-7 lg:col-start-6">
+              <p className="max-w-[58ch] text-[17px] leading-relaxed text-ink/75">
+                On Call Network delivers DJ and event sound for Sydney businesses and private clients, led by resident DJ {DJ.residentDj}, who has more than ten
+                years of experience DJing in clubs and at corporate and private events. These entertainment services are supplied directly by
+                On Call Network under a written quote.
+              </p>
+              {DJ.livePhoto && (
+                <Image
+                  src={DJ.livePhoto.src}
+                  alt={DJ.livePhoto.alt}
+                  width={DJ.livePhoto.width}
+                  height={DJ.livePhoto.height}
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className="mt-10 h-auto w-full rounded-md object-cover"
+                />
+              )}
+            </div>
           </div>
         </section>
 

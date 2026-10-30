@@ -25,6 +25,13 @@ export const DJ = {
   // e.g. { src: "/img/diego-pascal-dj.jpg", alt: "DJ Diego Pascal performing in Sydney", width: 1200, height: 1500 }.
   // The hero, structured data and social image pick it up automatically.
   photo: {
+    src: "/img/diego-pascal-portrait.jpg",
+    alt: "Portrait of DJ Diego Pascal with headphones",
+    width: 1200,
+    height: 1442,
+  } as { src: string; alt: string; width: number; height: number } | null,
+  // Secondary photo shown in the About section (live set).
+  livePhoto: {
     src: "/img/diego-pascal-dj.jpg",
     alt: "DJ Diego Pascal playing a live set to a crowd at a club night",
     width: 1620,
