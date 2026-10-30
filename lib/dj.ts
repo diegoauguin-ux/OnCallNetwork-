@@ -21,7 +21,10 @@ export const DJ = {
   city: "Sydney",
   instagram: "https://instagram.com/diegopascal",
   // Add public links to 1–2 mixes (SoundCloud / Instagram). The block hides if empty.
-  mixLinks: [] as { label: string; url: string }[],
+  mixLinks: [
+    { label: "Reggaeton mix on SoundCloud", url: "https://soundcloud.com/diego-632302372/reggaeton-mix" },
+    { label: "Latin Party Vol. 1 on SoundCloud", url: "https://soundcloud.com/diego-632302372/latin-party-vol-1" },
+  ] as { label: string; url: string }[],
   // Flip to true ONLY once public liability insurance is in place and a
   // certificate of currency can be supplied. Controls the insurance FAQ + claim.
   hasPublicLiability: false,
