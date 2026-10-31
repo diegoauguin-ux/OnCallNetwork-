@@ -188,22 +188,23 @@ export async function createCandidateApplicationRecord(
     "Full Name": record.fullName,
     "Email": record.email,
     "Phone": record.phone,
-    "Suburb": record.suburb,
     "Primary role": record.roleApplyingFor,
-    "Work Experience (years)": record.yearsInAustralia,
-    "Venues": record.currentVenue,
     "Has RSA": record.hasRSA,
     "RCG": record.hasRCG,
     "Food Safety": record.hasFoodSafety,
     "First Aid": record.hasFirstAid,
-    "Availability": record.availability,
-    "Sydney zones": record.preferredZones,
-    "Shifts preferences": record.employmentType,
-    "Experience description": record.briefIntro,
     "Status": "New Application",
     "CV": record.cvAttachment ?? null,
     "RSA Certificate file": record.rsaCertificateAttachment ?? null,
   };
+  // Optional answers are only written when the applicant provided them.
+  if (record.suburb) fields["Suburb"] = record.suburb;
+  if (record.yearsInAustralia) fields["Work Experience (years)"] = record.yearsInAustralia;
+  if (record.currentVenue) fields["Venues"] = record.currentVenue;
+  if (record.availability) fields["Availability"] = record.availability;
+  if (record.preferredZones) fields["Sydney zones"] = record.preferredZones;
+  if (record.employmentType) fields["Shifts preferences"] = record.employmentType;
+  if (record.briefIntro) fields["Experience description"] = record.briefIntro;
 
   return writeAirtableRecord({
     tableName,
