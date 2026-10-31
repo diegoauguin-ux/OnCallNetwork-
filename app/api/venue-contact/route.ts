@@ -58,8 +58,8 @@ const candidateSchema = z.object({
     .string()
     .trim()
     .regex(
-      /^04\d{2}\s?\d{3}\s?\d{3}$/,
-      "Phone must be Australian mobile format (04XX XXX XXX)"
+      /^\+?[0-9][0-9\s()-]{7,17}$/,
+      "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)"
     ),
   suburb: z.string().trim().min(1, "Suburb is required").max(120),
   roleApplyingFor: z.string().trim().min(1, "Role applying for is required").max(120),

@@ -23,6 +23,11 @@ export default function MeetTheFounder() {
             <Mail className="h-4 w-4" />
             hello@oncallnetwork.com.au
           </a>
+          <p className="mt-4 text-[14px] text-muted">
+            Looking for work? Please use the{" "}
+            <a href="/#apply" className="underline decoration-accent decoration-2 underline-offset-4 hover:text-accent">application form</a>{" "}
+            so your CV reaches the right place. Email is for questions.
+          </p>
         </div>
       </Reveal>
     </section>

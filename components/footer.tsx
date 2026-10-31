@@ -27,6 +27,10 @@ export default function Footer() {
             <a href="mailto:hello@oncallnetwork.com.au" className="mt-8 inline-block text-[17px] underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-light">
               hello@oncallnetwork.com.au
             </a>
+            <p className="mt-3 text-[14px] text-paper/60">
+              Looking for work?{" "}
+              <Link href="/#apply" className="underline underline-offset-4 hover:text-accent-light">Apply here</Link>, don&apos;t email your CV.
+            </p>
           </div>
 
           <div className="lg:col-span-3">

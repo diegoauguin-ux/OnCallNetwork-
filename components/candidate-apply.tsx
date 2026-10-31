@@ -168,7 +168,7 @@ export default function CandidateApply() {
     if (targetStep === 1) {
       if (!formData.fullName.trim()) nextErrors.fullName = "Please enter your full name";
       if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) nextErrors.email = "Please enter a valid email address";
-      if (!/^04\d{2}\s?\d{3}\s?\d{3}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid Australian mobile number";
+      if (!/^\+?[0-9][0-9\s()-]{7,17}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)";
       if (!formData.suburb.trim()) nextErrors.suburb = "Please enter your suburb";
       if (!formData.roleApplyingFor) nextErrors.roleApplyingFor = "Please select a role";
       if (!formData.yearsInAustralia) nextErrors.yearsInAustralia = "Please select your experience range";
@@ -384,7 +384,7 @@ export default function CandidateApply() {
 
                           <div ref={setFieldRef("phone")}>
                             <label htmlFor="apply-phone" className="block text-sm font-medium text-[#14342B] mb-1.5">Phone *</label>
-                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX" inputMode="tel" />
+                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX or +61 4XX XXX XXX" inputMode="tel" />
                             {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
                           </div>
                         </div>

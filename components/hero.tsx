@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SITE } from "@/lib/site-config";
+import { DJ, DJ_BASE_PATH } from "@/lib/dj";
 
 const PATHS = [
   { n: "01", t: "I need staff", s: "Vetted Sydney hospitality staff. From $99.", h: "#hire" },
   { n: "02", t: "I need work", s: "Free to join. Paid directly by venues.", h: "#apply" },
   { n: "03", t: "I need a better CV", s: `Australian CV rewrite, ${SITE.cvPrice}. Ready in 24 hours.`, h: "/cv" },
+  { n: "04", t: "I need a DJ", s: `Corporate and private events. From $${DJ.packages[0].from}.`, h: DJ_BASE_PATH },
 ];
 
 export default function Hero() {
