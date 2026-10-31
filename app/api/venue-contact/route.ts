@@ -14,7 +14,9 @@ import {
   sendVenueInternalNotice,
   sendCandidateConfirmation,
   sendCandidateInternalNotice,
+  sendCandidateFailureAlert,
 } from "@/lib/email";
+import { roleNeedsRsa } from "@/lib/candidate-roles";
 
 export const runtime = "nodejs";
 
@@ -61,15 +63,15 @@ const candidateSchema = z.object({
       /^\+?[0-9][0-9\s()-]{7,17}$/,
       "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)"
     ),
-  suburb: z.string().trim().min(1, "Suburb is required").max(120),
+  suburb: z.string().trim().max(120).optional().default(""),
   roleApplyingFor: z.string().trim().min(1, "Role applying for is required").max(120),
-  yearsInAustralia: z.string().trim().min(1, "Years of experience is required").max(60),
-  currentVenue: z.string().trim().min(1, "Current or most recent venue is required").max(200),
-  certifications: z.array(z.string().max(60)).min(1, "Select at least one certification"),
-  availability: z.string().trim().min(1, "Availability is required").max(60),
-  preferredZones: z.array(z.string().max(60)).min(1, "Select at least one preferred zone"),
-  employmentType: z.array(z.string().max(60)).min(1, "Select at least one employment type"),
-  briefIntro: z.string().trim().min(30, "Brief intro must be at least 30 characters").max(300),
+  yearsInAustralia: z.string().trim().max(60).optional().default(""),
+  currentVenue: z.string().trim().max(200).optional().default(""),
+  certifications: z.array(z.string().max(60)).optional().default([]),
+  availability: z.string().trim().max(60).optional().default(""),
+  preferredZones: z.array(z.string().max(60)).optional().default([]),
+  employmentType: z.array(z.string().max(60)).optional().default([]),
+  briefIntro: z.string().trim().max(300).optional().default(""),
   legalConfirmation: z.literal(true),
   termsAccepted: z.literal(true),
   turnstileToken: z.string().optional(),
@@ -160,9 +162,16 @@ export async function POST(request: NextRequest) {
 
       const cvFile = isMultipart ? payload.cvFile : null;
       const rsaFile = isMultipart ? payload.rsaCertificateFile : null;
-      if (!(cvFile instanceof File) || !(rsaFile instanceof File)) {
+      const hasRsaFile = rsaFile instanceof File && rsaFile.size > 0;
+      if (!(cvFile instanceof File) || cvFile.size === 0) {
         return NextResponse.json(
-          { success: false, message: "CV and RSA Certificate files are required." },
+          { success: false, message: "Please upload your CV (PDF or Word)." },
+          { status: 400 }
+        );
+      }
+      if (roleNeedsRsa(parsed.data.roleApplyingFor) && !hasRsaFile) {
+        return NextResponse.json(
+          { success: false, message: "Please upload your RSA certificate. In NSW it is required to serve alcohol." },
           { status: 400 }
         );
       }
@@ -172,36 +181,58 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: false, message: turnstile.message }, { status: 400 });
       }
 
-      const [cvUrl, rsaUrl] = await Promise.all([
-        uploadCandidateFile(cvFile, "cv"),
-        uploadCandidateFile(rsaFile, "rsa"),
-      ]);
       const certifications = parsed.data.certifications;
       const yearsNum = Number(parsed.data.yearsInAustralia.replace(/[^\d.]/g, ""));
 
-      const candidateRecord: CandidateApplicationRecord = {
-        fullName: parsed.data.fullName,
-        email: parsed.data.email,
-        phone: parsed.data.phone,
-        suburb: parsed.data.suburb,
-        roleApplyingFor: parsed.data.roleApplyingFor,
-        yearsInAustralia: Number.isFinite(yearsNum) ? yearsNum : 0,
-        currentVenue: parsed.data.currentVenue,
-        hasRSA: certifications.includes("RSA"),
-        hasRCG: certifications.includes("RCG"),
-        hasFoodSafety: certifications.includes("Food Safety"),
-        hasFirstAid: certifications.includes("First Aid"),
-        availability: parsed.data.availability,
-        preferredZones: parsed.data.preferredZones.join(", "),
-        employmentType: parsed.data.employmentType.join(", "),
-        briefIntro: parsed.data.briefIntro,
-        registrationDate: new Date().toISOString(),
-        status: "New Application",
-        cvAttachment: [{ url: cvUrl }],
-        rsaCertificateAttachment: [{ url: rsaUrl }],
-      };
+      let id: string;
+      try {
+        const [cvUrl, rsaUrl] = await Promise.all([
+          uploadCandidateFile(cvFile, "cv"),
+          hasRsaFile ? uploadCandidateFile(rsaFile as File, "rsa") : Promise.resolve(""),
+        ]);
 
-      const { id } = await createCandidateApplicationRecord(candidateRecord);
+        const candidateRecord: CandidateApplicationRecord = {
+          fullName: parsed.data.fullName,
+          email: parsed.data.email,
+          phone: parsed.data.phone,
+          suburb: parsed.data.suburb,
+          roleApplyingFor: parsed.data.roleApplyingFor,
+          yearsInAustralia: Number.isFinite(yearsNum) ? yearsNum : 0,
+          currentVenue: parsed.data.currentVenue,
+          hasRSA: certifications.includes("RSA") || hasRsaFile,
+          hasRCG: certifications.includes("RCG"),
+          hasFoodSafety: certifications.includes("Food Safety"),
+          hasFirstAid: certifications.includes("First Aid"),
+          availability: parsed.data.availability,
+          preferredZones: parsed.data.preferredZones.join(", "),
+          employmentType: parsed.data.employmentType.join(", "),
+          briefIntro: parsed.data.briefIntro,
+          registrationDate: new Date().toISOString(),
+          status: "New Application",
+          cvAttachment: [{ url: cvUrl }],
+          rsaCertificateAttachment: rsaUrl ? [{ url: rsaUrl }] : undefined,
+        };
+
+        ({ id } = await createCandidateApplicationRecord(candidateRecord));
+      } catch (error) {
+        // The applicant did the right thing; make sure Diego still hears about it.
+        console.error("Candidate application failed", error);
+        await sendCandidateFailureAlert({
+          fullName: parsed.data.fullName,
+          email: parsed.data.email,
+          phone: parsed.data.phone,
+          role: parsed.data.roleApplyingFor,
+          error: error instanceof Error ? error.message : "unknown error",
+        });
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "We couldn't save your application just now. We've been notified and will contact you, or please try again in a few minutes.",
+          },
+          { status: 500 }
+        );
+      }
 
       await Promise.allSettled([
         sendCandidateConfirmation(parsed.data.email, parsed.data.fullName, parsed.data.roleApplyingFor),

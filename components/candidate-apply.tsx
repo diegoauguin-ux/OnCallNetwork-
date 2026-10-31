@@ -1,11 +1,13 @@
 ﻿"use client";
 
 import { useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { roleNeedsRsa } from "@/lib/candidate-roles";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import {
   AlertCircle,
   Check,
+  ChevronDown,
   Loader2,
   Send,
 } from "lucide-react";
@@ -94,12 +96,10 @@ const initialFormData: CandidateApplyData = {
   termsAccepted: false,
 };
 
-const stepLabels = ["About you", "Fit & consent"];
-
 export default function CandidateApply() {
   const [formData, setFormData] = useState<CandidateApplyData>(initialFormData);
-  const [step, setStep] = useState(1);
-  const [direction, setDirection] = useState(1);
+  const [showMore, setShowMore] = useState(false);
+  const startedRef = useRef(false);
   const [errors, setErrors] = useState<ErrorMap>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -111,6 +111,12 @@ export default function CandidateApply() {
 
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+  const track = (type: string, meta?: Record<string, unknown>) => {
+    if (typeof window === "undefined") return;
+    window.dispatchEvent(new CustomEvent("ocn:conversion", { detail: { type, meta } }));
+  };
+
+  const rsaRequired = roleNeedsRsa(formData.roleApplyingFor);
   const introRemaining = useMemo(() => 300 - formData.briefIntro.length, [formData.briefIntro.length]);
 
   const setFieldRef = (name: string) => (el: HTMLDivElement | null) => {
@@ -162,61 +168,45 @@ export default function CandidateApply() {
     setValue(key, next as CandidateApplyData[typeof key]);
   };
 
-  const validateStep = (targetStep: number): boolean => {
+  const validate = (): boolean => {
     const nextErrors: ErrorMap = {};
-
-    if (targetStep === 1) {
-      if (!formData.fullName.trim()) nextErrors.fullName = "Please enter your full name";
-      if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) nextErrors.email = "Please enter a valid email address";
-      if (!/^\+?[0-9][0-9\s()-]{7,17}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)";
-      if (!formData.suburb.trim()) nextErrors.suburb = "Please enter your suburb";
-      if (!formData.roleApplyingFor) nextErrors.roleApplyingFor = "Please select a role";
-      if (!formData.yearsInAustralia) nextErrors.yearsInAustralia = "Please select your experience range";
-      if (!formData.currentVenue.trim()) nextErrors.currentVenue = "Please enter your most recent venue";
-      if (formData.certifications.length < 1) nextErrors.certifications = "Please tell us which certifications you hold (choose None if you don't have any)";
-    }
-
-    if (targetStep === 2) {
-      if (!formData.availability) nextErrors.availability = "Please select your availability";
-      if (formData.preferredZones.length < 1) nextErrors.preferredZones = "Please select at least one work zone";
-      if (formData.employmentType.length < 1) nextErrors.employmentType = "Please select at least one employment type";
-      if (formData.briefIntro.trim().length < 30) nextErrors.briefIntro = "Please write a brief intro (minimum 30 characters)";
-      if (!formData.legalConfirmation) nextErrors.legalConfirmation = "Please confirm legal work rights and accuracy";
-      if (!formData.termsAccepted) nextErrors.termsAccepted = "Please accept Terms & Conditions and Privacy Policy";
-    }
-
+    if (!formData.fullName.trim()) nextErrors.fullName = "Please enter your full name";
+    if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) nextErrors.email = "Please enter a valid email address";
+    if (!/^\+?[0-9][0-9\s()-]{7,17}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)";
+    if (!formData.roleApplyingFor) nextErrors.roleApplyingFor = "Please select a role";
+    if (!formData.legalConfirmation) nextErrors.legalConfirmation = "Please confirm legal work rights and accuracy";
+    if (!formData.termsAccepted) nextErrors.termsAccepted = "Please accept Terms & Conditions and Privacy Policy";
+    if (formData.briefIntro.trim().length > 0 && formData.briefIntro.trim().length < 30) nextErrors.briefIntro = "If you add an intro, please write at least 30 characters";
     setErrors(nextErrors);
 
     const firstInvalid = Object.keys(nextErrors)[0];
     if (firstInvalid) {
+      if (firstInvalid === "briefIntro") setShowMore(true);
+      track("apply_validation_error", { field: firstInvalid });
       scrollToField(firstInvalid);
       return false;
     }
     return true;
   };
 
-  const goNext = () => {
-    if (!validateStep(step)) return;
-    setDirection(1);
-    setStep((s) => Math.min(2, s + 1));
-  };
-
-  const goBack = () => {
-    setDirection(-1);
-    setStep((s) => Math.max(1, s - 1));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateStep(2)) return;
+    if (!validate()) return;
 
     setStatus("loading");
     setErrorMessage("");
 
     try {
-      if (!cvFile || !rsaCertificateFile) {
+      if (!cvFile) {
         setStatus("error");
-        setErrorMessage("Please upload both your CV and RSA Certificate.");
+        setErrorMessage("Please upload your CV (PDF or Word).");
+        track("apply_validation_error", { field: "cvFile" });
+        return;
+      }
+      if (roleNeedsRsa(formData.roleApplyingFor) && !rsaCertificateFile) {
+        setStatus("error");
+        setErrorMessage("Please upload your RSA certificate. In NSW it is required to serve alcohol.");
+        track("apply_validation_error", { field: "rsaCertificateFile" });
         return;
       }
 
@@ -239,7 +229,7 @@ export default function CandidateApply() {
       formPayload.append("turnstileToken", turnstileToken);
       formPayload.append("website", honeypot);
       formPayload.append("cvFile", cvFile);
-      formPayload.append("rsaCertificateFile", rsaCertificateFile);
+      if (rsaCertificateFile) formPayload.append("rsaCertificateFile", rsaCertificateFile);
 
       const response = await fetch("/api/venue-contact", {
         method: "POST",
@@ -268,15 +258,15 @@ export default function CandidateApply() {
         setStatus("error");
         setErrorMessage(result.message || "Something went wrong. Please try again or email hello@oncallnetwork.com.au directly.");
         setTurnstileKey((k) => k + 1);
+        track("apply_submit_error", { status: response.status, message: String(result.message ?? "").slice(0, 120) });
       }
     } catch {
+      track("apply_submit_error", { status: 0, message: "network error" });
       setStatus("error");
       setErrorMessage("Something went wrong. Please try again or email hello@oncallnetwork.com.au directly.");
       setTurnstileKey((k) => k + 1);
     }
   };
-
-  const progress = (step / 2) * 100;
 
   return (
     <section id="apply" className="py-12 md:py-24 bg-white scroll-mt-20">
@@ -295,9 +285,9 @@ export default function CandidateApply() {
               Apply to the OCN Network
             </h2>
             <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
-              Two short steps. Diego reads every application personally and
-              replies within 48 hours if there is a likely match for your
-              profile in Sydney.
+              Apply in about two minutes: name, contact, role and your CV.
+              Diego reads every application personally and replies within 48
+              hours if there is a likely match for your profile in Sydney.
             </p>
             <ul className="space-y-3 text-sm text-gray-700">
               <li className="flex items-start gap-2"><Check className="w-4 h-4 text-[#B9452D] mt-0.5 flex-shrink-0" /> Free to join, candidates never pay OCN.</li>
@@ -334,269 +324,235 @@ export default function CandidateApply() {
                 <a href="#venues" className="text-[#14342B] font-semibold hover:text-[#B9452D]">Back to home &uarr;</a>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="p-6 md:p-8 bg-[#F6F3EC] rounded-md  overflow-hidden" noValidate>
+              <form
+                onSubmit={handleSubmit}
+                onFocusCapture={() => {
+                  if (!startedRef.current) {
+                    startedRef.current = true;
+                    track("apply_started");
+                  }
+                }}
+                className="p-6 md:p-8 bg-[#F6F3EC] rounded-md overflow-hidden"
+                noValidate
+              >
                 <label className="hidden" aria-hidden="true">
                   Leave this field empty
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={honeypot}
-                    onChange={(e) => setHoneypot(e.target.value)}
-                  />
+                  <input type="text" name="website" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
                 </label>
 
-                <div className="mb-6">
-                  <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#14342B] transition-all duration-300" style={{ width: `${progress}%` }} />
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold text-[#14342B]">Apply now</h3>
+
+                  <div ref={setFieldRef("fullName")}>
+                    <label htmlFor="apply-fullname" className="block text-sm font-medium text-[#14342B] mb-1.5">Full name *</label>
+                    <input id="apply-fullname" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" autoComplete="name" />
+                    {errors.fullName && <p className="text-[13px] text-red-600 mt-1">{errors.fullName}</p>}
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">
-                    Step {step} of 2 &middot; {stepLabels[step - 1]}
-                  </p>
-                </div>
 
-                <AnimatePresence mode="wait" custom={direction}>
-                  <motion.div
-                    key={step}
-                    custom={direction}
-                    initial={{ x: direction > 0 ? 80 : -80, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: direction > 0 ? -80 : 80, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
-                  >
-                    {step === 1 && (
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#14342B]">About you</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div ref={setFieldRef("email")}>
+                      <label htmlFor="apply-email" className="block text-sm font-medium text-[#14342B] mb-1.5">Email *</label>
+                      <input id="apply-email" type="email" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" autoComplete="email" />
+                      {errors.email && <p className="text-[13px] text-red-600 mt-1">{errors.email}</p>}
+                    </div>
+                    <div ref={setFieldRef("phone")}>
+                      <label htmlFor="apply-phone" className="block text-sm font-medium text-[#14342B] mb-1.5">Mobile *</label>
+                      <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX or +61 4XX XXX XXX" inputMode="tel" autoComplete="tel" />
+                      {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
 
-                        <div ref={setFieldRef("fullName")}>
-                          <label htmlFor="apply-fullname" className="block text-sm font-medium text-[#14342B] mb-1.5">Full name *</label>
-                          <input id="apply-fullname" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.fullName} onChange={(e)=>setValue("fullName", e.target.value)} placeholder="Your full name" autoCapitalize="words" />
-                          {errors.fullName && <p className="text-[13px] text-red-600 mt-1">{errors.fullName}</p>}
-                        </div>
+                  <div ref={setFieldRef("roleApplyingFor")}>
+                    <label htmlFor="apply-role" className="block text-sm font-medium text-[#14342B] mb-1.5">Role you are applying for *</label>
+                    <select id="apply-role" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
+                      <option value="">Select role</option>
+                      {roleOptions.map((o)=><option key={o} value={o}>{o}</option>)}
+                    </select>
+                    {errors.roleApplyingFor && <p className="text-[13px] text-red-600 mt-1">{errors.roleApplyingFor}</p>}
+                  </div>
 
+                  <div>
+                    <label htmlFor="apply-cv" className="block text-sm font-medium text-[#14342B] mb-1.5">CV (PDF or Word) *</label>
+                    <input
+                      id="apply-cv"
+                      type="file"
+                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
+                      className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
+                    />
+                    <p className="text-[13px] text-gray-500 mt-1">No CV yet? <a href="/cv" className="underline">Get an Australian CV in 24 hours</a>.</p>
+                  </div>
+
+                  <div>
+                    <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#14342B] mb-1.5">
+                      RSA certificate (PDF or image) {rsaRequired ? "*" : "(optional)"}
+                    </label>
+                    <input
+                      id="apply-rsa-certificate"
+                      type="file"
+                      accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp"
+                      onChange={(e) => setRsaCertificateFile(e.target.files?.[0] ?? null)}
+                      className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
+                    />
+                    <p className="text-[13px] text-gray-500 mt-1">
+                      {rsaRequired
+                        ? "Required for this role: in NSW you need a valid RSA to serve alcohol."
+                        : "Not required for this role. Add it if you have one."}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-[#E2DDD1] pt-3">
+                    <button
+                      type="button"
+                      aria-expanded={showMore}
+                      onClick={() => {
+                        setShowMore((v) => !v);
+                        if (!showMore) track("apply_details_opened");
+                      }}
+                      className="flex w-full items-center justify-between py-2 text-left text-[15px] font-medium text-[#14342B]"
+                    >
+                      <span>Add more details <span className="font-normal text-gray-500">(optional, helps us match you faster)</span></span>
+                      <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${showMore ? "rotate-180" : ""}`} />
+                    </button>
+
+                    {showMore && (
+                      <div className="space-y-4 pt-3">
                         <div className="grid sm:grid-cols-2 gap-4">
-                          <div ref={setFieldRef("email")}>
-                            <label htmlFor="apply-email" className="block text-sm font-medium text-[#14342B] mb-1.5">Email *</label>
-                            <input id="apply-email" type="email" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.email} onChange={(e)=>setValue("email", e.target.value)} placeholder="your@email.com" inputMode="email" />
-                            {errors.email && <p className="text-[13px] text-red-600 mt-1">{errors.email}</p>}
+                          <div ref={setFieldRef("suburb")}>
+                            <label htmlFor="apply-suburb" className="block text-sm font-medium text-[#14342B] mb-1.5">Suburb</label>
+                            <input id="apply-suburb" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" />
                           </div>
-
-                          <div ref={setFieldRef("phone")}>
-                            <label htmlFor="apply-phone" className="block text-sm font-medium text-[#14342B] mb-1.5">Phone *</label>
-                            <input id="apply-phone" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.phone} onChange={(e)=>setValue("phone", e.target.value)} placeholder="04XX XXX XXX or +61 4XX XXX XXX" inputMode="tel" />
-                            {errors.phone && <p className="text-[13px] text-red-600 mt-1">{errors.phone}</p>}
-                          </div>
-                        </div>
-
-                        <div ref={setFieldRef("suburb")}>
-                          <label htmlFor="apply-suburb" className="block text-sm font-medium text-[#14342B] mb-1.5">Suburb *</label>
-                          <input id="apply-suburb" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.suburb} onChange={(e)=>setValue("suburb", e.target.value)} placeholder="e.g. Newtown, Surry Hills" />
-                          {errors.suburb && <p className="text-[13px] text-red-600 mt-1">{errors.suburb}</p>}
-                        </div>
-
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div ref={setFieldRef("roleApplyingFor")}>
-                            <label htmlFor="apply-role" className="block text-sm font-medium text-[#14342B] mb-1.5">Role *</label>
-                            <select id="apply-role" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.roleApplyingFor} onChange={(e)=>setValue("roleApplyingFor", e.target.value)}>
-                              <option value="">Select role</option>
-                              {roleOptions.map((o)=><option key={o} value={o}>{o}</option>)}
-                            </select>
-                            {errors.roleApplyingFor && <p className="text-[13px] text-red-600 mt-1">{errors.roleApplyingFor}</p>}
-                          </div>
-
                           <div ref={setFieldRef("yearsInAustralia")}>
-                            <label htmlFor="apply-years" className="block text-sm font-medium text-[#14342B] mb-1.5">Experience in Australia *</label>
+                            <label htmlFor="apply-years" className="block text-sm font-medium text-[#14342B] mb-1.5">Experience in Australia</label>
                             <select id="apply-years" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.yearsInAustralia} onChange={(e)=>setValue("yearsInAustralia", e.target.value)}>
                               <option value="">Select</option>
                               {yearsOptions.map((o)=><option key={o} value={o}>{o}</option>)}
                             </select>
-                            {errors.yearsInAustralia && <p className="text-[13px] text-red-600 mt-1">{errors.yearsInAustralia}</p>}
                           </div>
                         </div>
 
                         <div ref={setFieldRef("currentVenue")}>
-                          <label htmlFor="apply-venue" className="block text-sm font-medium text-[#14342B] mb-1.5">Current or most recent venue *</label>
+                          <label htmlFor="apply-venue" className="block text-sm font-medium text-[#14342B] mb-1.5">Current or most recent venue</label>
                           <input id="apply-venue" className="w-full h-[52px] text-base px-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0" value={formData.currentVenue} onChange={(e)=>setValue("currentVenue", e.target.value)} placeholder="e.g. The Grounds of Alexandria" />
-                          {errors.currentVenue && <p className="text-[13px] text-red-600 mt-1">{errors.currentVenue}</p>}
                         </div>
 
                         <div ref={setFieldRef("certifications")}>
-                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Certifications held *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Certifications held</label>
                           <div className="flex flex-wrap gap-2">
                             {certOptions.map((opt) => {
                               const active = formData.certifications.includes(opt);
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("certifications", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
-                                  {opt}
-                                </button>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("certifications", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>{opt}</button>
                               );
                             })}
                           </div>
-                          {errors.certifications && <p className="text-[13px] text-red-600 mt-1">{errors.certifications}</p>}
                         </div>
 
-                        <button type="button" onClick={goNext} className="w-full h-[52px] rounded-lg bg-[#14342B] text-white font-semibold">
-                          Next: fit &amp; consent &rarr;
-                        </button>
-                      </div>
-                    )}
-
-                    {step === 2 && (
-                      <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-[#14342B]">Fit &amp; consent</h3>
-
                         <div ref={setFieldRef("availability")}>
-                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Availability *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Availability</label>
                           <div className="flex flex-wrap gap-2">
                             {availabilityOptions.map((opt) => {
                               const active = formData.availability === opt;
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => setValue("availability", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
-                                  {opt}
-                                </button>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => setValue("availability", active ? "" : opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>{opt}</button>
                               );
                             })}
                           </div>
-                          {errors.availability && <p className="text-[13px] text-red-600 mt-1">{errors.availability}</p>}
                         </div>
 
                         <div ref={setFieldRef("preferredZones")}>
-                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Preferred work zones *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Preferred work zones</label>
                           <div className="flex flex-wrap gap-2">
                             {zoneOptions.map((opt) => {
                               const active = formData.preferredZones.includes(opt);
                               const disabled = formData.preferredZones.includes("Open to all Sydney") && opt !== "Open to all Sydney";
                               return (
-                                <button key={opt} type="button" aria-pressed={active} disabled={disabled} onClick={() => toggleMultiChip("preferredZones", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"} ${disabled ? "opacity-50" : ""}`}>
-                                  {opt}
-                                </button>
+                                <button key={opt} type="button" aria-pressed={active} disabled={disabled} onClick={() => toggleMultiChip("preferredZones", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"} ${disabled ? "opacity-50" : ""}`}>{opt}</button>
                               );
                             })}
                           </div>
-                          {errors.preferredZones && <p className="text-[13px] text-red-600 mt-1">{errors.preferredZones}</p>}
                         </div>
 
                         <div ref={setFieldRef("employmentType")}>
-                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Employment type *</label>
+                          <label className="block text-sm font-medium text-[#14342B] mb-1.5">Employment type</label>
                           <div className="flex flex-wrap gap-2">
                             {employmentOptions.map((opt) => {
                               const active = formData.employmentType.includes(opt);
                               return (
-                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("employmentType", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>
-                                  {opt}
-                                </button>
+                                <button key={opt} type="button" aria-pressed={active} onClick={() => toggleMultiChip("employmentType", opt)} className={`h-10 px-4 rounded-full border text-sm ${active ? "bg-[#14342B] text-white border-[#14342B]" : "bg-white text-[#14342B] border-gray-300"}`}>{opt}</button>
                               );
                             })}
                           </div>
-                          {errors.employmentType && <p className="text-[13px] text-red-600 mt-1">{errors.employmentType}</p>}
                         </div>
 
                         <div ref={setFieldRef("briefIntro")}>
-                          <label htmlFor="apply-intro" className="block text-sm font-medium text-[#14342B] mb-1.5">Short intro *</label>
-                          <textarea id="apply-intro" className="w-full min-h-[120px] text-base p-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
+                          <label htmlFor="apply-intro" className="block text-sm font-medium text-[#14342B] mb-1.5">Short intro</label>
+                          <textarea id="apply-intro" className="w-full min-h-[110px] text-base p-4 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 resize-none" value={formData.briefIntro} onChange={(e)=>setValue("briefIntro", e.target.value.slice(0,300))} placeholder="Your best venue, your specialty, and what makes you reliable." />
                           <p className={`text-[13px] mt-1 ${introRemaining < 20 ? "text-red-600" : "text-gray-500"}`}>{introRemaining} characters remaining</p>
                           {errors.briefIntro && <p className="text-[13px] text-red-600 mt-1">{errors.briefIntro}</p>}
                         </div>
-
-                        <div>
-                          <label htmlFor="apply-cv" className="block text-sm font-medium text-[#14342B] mb-1.5">
-                            CV (PDF or Word) *
-                          </label>
-                          <input
-                            id="apply-cv"
-                            type="file"
-                            accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                            onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
-                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
-                            required
-                          />
-                        </div>
-
-                        <div>
-                          <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#14342B] mb-1.5">
-                            RSA Certificate (PDF or image) *
-                          </label>
-                          <input
-                            id="apply-rsa-certificate"
-                            type="file"
-                            accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp"
-                            onChange={(e) => setRsaCertificateFile(e.target.files?.[0] ?? null)}
-                            className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
-                            required
-                          />
-                        </div>
-
-                        <div ref={setFieldRef("legalConfirmation")} className="pt-2">
-                          <button type="button" onClick={() => setValue("legalConfirmation", !formData.legalConfirmation)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
-                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                            <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and that all information provided is accurate.</span>
-                          </button>
-                          {errors.legalConfirmation && <p className="text-[13px] text-red-600 mt-1">{errors.legalConfirmation}</p>}
-                        </div>
-
-                        <div ref={setFieldRef("termsAccepted")}>
-                          <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
-                            <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                            <span className="text-[15px] text-gray-700">
-                              I have read and agree to the {" "}
-                              <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a>
-                              {" "}and{" "}
-                              <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.
-                            </span>
-                          </button>
-                          {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
-                        </div>
-
-                        {TURNSTILE_SITE_KEY ? (
-                          <div className="pt-1 flex justify-center">
-                            <Turnstile
-                              key={turnstileKey}
-                              siteKey={TURNSTILE_SITE_KEY}
-                              onSuccess={(token: string) => setTurnstileToken(token)}
-                              onExpire={() => setTurnstileToken("")}
-                              onError={() => setTurnstileToken("")}
-                              options={{ theme: "light", size: "flexible" }}
-                            />
-                          </div>
-                        ) : null}
-
-                        <div className="flex items-center gap-3 pt-2">
-                          <button type="button" onClick={goBack} className="h-[52px] px-5 rounded-lg border border-[#14342B]/30 text-[#14342B] font-medium">
-                            &larr; Back
-                          </button>
-                          <button
-                            type="submit"
-                            disabled={
-                              status === "loading" ||
-                              (!!TURNSTILE_SITE_KEY && !turnstileToken)
-                            }
-                            className="flex-1 h-[52px] rounded-lg bg-[#14342B] text-white font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
-                          >
-                            {status === "loading" ? (
-                              <>
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                                Submitting...
-                              </>
-                            ) : (
-                              <>
-                                <Send className="w-5 h-5" />
-                                Apply to the Network
-                              </>
-                            )}
-                          </button>
-                        </div>
-
-                        {status === "error" && (
-                          <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
-                            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-                            <span className="text-red-700 text-sm">{errorMessage}</span>
-                          </div>
-                        )}
                       </div>
                     )}
-                  </motion.div>
-                </AnimatePresence>
+                  </div>
+
+                  <div ref={setFieldRef("legalConfirmation")} className="pt-2">
+                    <button type="button" onClick={() => setValue("legalConfirmation", !formData.legalConfirmation)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
+                      <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
+                      <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and that all information provided is accurate.</span>
+                    </button>
+                    {errors.legalConfirmation && <p className="text-[13px] text-red-600 mt-1">{errors.legalConfirmation}</p>}
+                  </div>
+
+                  <div ref={setFieldRef("termsAccepted")}>
+                    <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
+                      <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
+                      <span className="text-[15px] text-gray-700">
+                        I have read and agree to the{" "}
+                        <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a>{" "}and{" "}
+                        <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.
+                      </span>
+                    </button>
+                    {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
+                  </div>
+
+                  {TURNSTILE_SITE_KEY ? (
+                    <div className="pt-1 flex justify-center">
+                      <Turnstile
+                        key={turnstileKey}
+                        siteKey={TURNSTILE_SITE_KEY}
+                        onSuccess={(token: string) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken("")}
+                        onError={() => setTurnstileToken("")}
+                        options={{ theme: "light", size: "flexible" }}
+                      />
+                    </div>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={status === "loading" || (!!TURNSTILE_SITE_KEY && !turnstileToken)}
+                    className="w-full h-[56px] rounded-lg bg-[#B9452D] text-white font-semibold text-[17px] disabled:bg-gray-400 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 hover:bg-[#9A3822] transition-colors"
+                  >
+                    {status === "loading" ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Apply now
+                      </>
+                    )}
+                  </button>
+
+                  {status === "error" && (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2" role="alert">
+                      <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                      <span className="text-red-700 text-sm">{errorMessage}</span>
+                    </div>
+                  )}
+                </div>
               </form>
             )}
           </motion.div>

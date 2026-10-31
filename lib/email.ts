@@ -160,6 +160,27 @@ export async function sendCandidateInternalNotice(record: {
   await safeSend(NOTIFY_TO, `New candidate: ${record.fullName} (${record.roleApplyingFor})`, html, record.email);
 }
 
+export async function sendCandidateFailureAlert(info: {
+  fullName: string;
+  email: string;
+  phone: string;
+  role: string;
+  error: string;
+}): Promise<void> {
+  const html = brand(
+    "Candidate application FAILED to save",
+    `<p>This person tried to apply but the system could not save it. Please contact them directly.</p>
+     <table role="presentation" cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;background:#faf9f6;border-radius:10px;overflow:hidden">
+       <tr><td style="padding:6px 10px;color:#6b7280;font-size:13px">Name</td><td style="padding:6px 10px">${escapeHtml(info.fullName)}</td></tr>
+       <tr><td style="padding:6px 10px;color:#6b7280;font-size:13px">Email</td><td style="padding:6px 10px">${escapeHtml(info.email)}</td></tr>
+       <tr><td style="padding:6px 10px;color:#6b7280;font-size:13px">Phone</td><td style="padding:6px 10px">${escapeHtml(info.phone)}</td></tr>
+       <tr><td style="padding:6px 10px;color:#6b7280;font-size:13px">Role</td><td style="padding:6px 10px">${escapeHtml(info.role)}</td></tr>
+       <tr><td style="padding:6px 10px;color:#6b7280;font-size:13px">Error</td><td style="padding:6px 10px">${escapeHtml(info.error.slice(0, 300))}</td></tr>
+     </table>`
+  );
+  await safeSend(NOTIFY_TO, `ALERT: candidate application failed (${info.fullName})`, html, info.email);
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
