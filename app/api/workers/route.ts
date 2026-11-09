@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createWorkerRecord, type WorkerRecord } from "@/lib/airtable";
 import { z } from "zod";
+import { limit, getClientIp } from "@/lib/rate-limit";
 
 const workerSchema = z.object({
   fullName: z.string().min(1, "Full name is required"),
@@ -23,6 +24,10 @@ const workerSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    const rl = limit(`workers:${getClientIp(request.headers)}`, { max: 5, windowSeconds: 60 });
+    if (!rl.ok) {
+      return NextResponse.json({ success: false, message: "Too many requests. Please try again shortly." }, { status: 429 });
+    }
     const body = await request.json();
 
     const parsed = workerSchema.safeParse(body);
