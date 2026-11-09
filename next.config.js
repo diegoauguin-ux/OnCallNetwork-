@@ -3,7 +3,7 @@
 const ContentSecurityPolicy = [
   "default-src 'self'",
   // Next.js inlines runtime scripts; allow Turnstile, Clarity, Vercel analytics
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://www.clarity.ms https://*.clarity.ms https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://us-assets.i.posthog.com",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.clarity.ms https://*.clarity.ms https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://us-assets.i.posthog.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
