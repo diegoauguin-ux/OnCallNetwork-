@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   createVenueRecord,
   createCandidateApplicationRecord,
@@ -163,18 +163,7 @@ export async function POST(request: NextRequest) {
       const cvFile = isMultipart ? payload.cvFile : null;
       const rsaFile = isMultipart ? payload.rsaCertificateFile : null;
       const hasRsaFile = rsaFile instanceof File && rsaFile.size > 0;
-      if (!(cvFile instanceof File) || cvFile.size === 0) {
-        return NextResponse.json(
-          { success: false, message: "Please upload your CV (PDF or Word)." },
-          { status: 400 }
-        );
-      }
-      if (roleNeedsRsa(parsed.data.roleApplyingFor) && !hasRsaFile) {
-        return NextResponse.json(
-          { success: false, message: "Please upload your RSA certificate. In NSW it is required to serve alcohol." },
-          { status: 400 }
-        );
-      }
+      const hasCvFile = cvFile instanceof File && cvFile.size > 0;
 
       const turnstile = await verifyTurnstile(parsed.data.turnstileToken, ip);
       if (!turnstile.ok) {
@@ -187,7 +176,7 @@ export async function POST(request: NextRequest) {
       let id: string;
       try {
         const [cvUrl, rsaUrl] = await Promise.all([
-          uploadCandidateFile(cvFile, "cv"),
+          hasCvFile ? uploadCandidateFile(cvFile as File, "cv") : Promise.resolve(""),
           hasRsaFile ? uploadCandidateFile(rsaFile as File, "rsa") : Promise.resolve(""),
         ]);
 
@@ -209,7 +198,7 @@ export async function POST(request: NextRequest) {
           briefIntro: parsed.data.briefIntro,
           registrationDate: new Date().toISOString(),
           status: "New Application",
-          cvAttachment: [{ url: cvUrl }],
+          cvAttachment: cvUrl ? [{ url: cvUrl }] : undefined,
           rsaCertificateAttachment: rsaUrl ? [{ url: rsaUrl }] : undefined,
         };
 

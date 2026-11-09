@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useMemo, useRef, useState } from "react";
 import { roleNeedsRsa } from "@/lib/candidate-roles";
@@ -174,7 +174,7 @@ export default function CandidateApply() {
     if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) nextErrors.email = "Please enter a valid email address";
     if (!/^\+?[0-9][0-9\s()-]{7,17}$/.test(formData.phone.trim())) nextErrors.phone = "Please enter a valid mobile number (for example 04XX XXX XXX or +61 4XX XXX XXX)";
     if (!formData.roleApplyingFor) nextErrors.roleApplyingFor = "Please select a role";
-    if (!formData.legalConfirmation) nextErrors.legalConfirmation = "Please confirm legal work rights and accuracy";
+    if (!formData.legalConfirmation) nextErrors.legalConfirmation = "Please tick the box to confirm your work rights and agree to the Terms";
     if (!formData.termsAccepted) nextErrors.termsAccepted = "Please accept Terms & Conditions and Privacy Policy";
     if (formData.briefIntro.trim().length > 0 && formData.briefIntro.trim().length < 30) nextErrors.briefIntro = "If you add an intro, please write at least 30 characters";
     setErrors(nextErrors);
@@ -197,19 +197,6 @@ export default function CandidateApply() {
     setErrorMessage("");
 
     try {
-      if (!cvFile) {
-        setStatus("error");
-        setErrorMessage("Please upload your CV (PDF or Word).");
-        track("apply_validation_error", { field: "cvFile" });
-        return;
-      }
-      if (roleNeedsRsa(formData.roleApplyingFor) && !rsaCertificateFile) {
-        setStatus("error");
-        setErrorMessage("Please upload your RSA certificate. In NSW it is required to serve alcohol.");
-        track("apply_validation_error", { field: "rsaCertificateFile" });
-        return;
-      }
-
       const formPayload = new FormData();
       formPayload.append("formType", formData.formType);
       formPayload.append("fullName", formData.fullName);
@@ -228,7 +215,7 @@ export default function CandidateApply() {
       formPayload.append("termsAccepted", String(formData.termsAccepted));
       formPayload.append("turnstileToken", turnstileToken);
       formPayload.append("website", honeypot);
-      formPayload.append("cvFile", cvFile);
+      if (cvFile) formPayload.append("cvFile", cvFile);
       if (rsaCertificateFile) formPayload.append("rsaCertificateFile", rsaCertificateFile);
 
       const response = await fetch("/api/venue-contact", {
@@ -285,7 +272,7 @@ export default function CandidateApply() {
               Apply to the OCN Network
             </h2>
             <p className="text-base md:text-lg text-gray-600 mb-6 md:mb-8">
-              Apply in about two minutes: name, contact, role and your CV.
+              Apply in about 60 seconds: name, contact and role. Your CV is optional.
               Diego reads every application personally and replies within 48
               hours if there is a likely match for your profile in Sydney.
             </p>
@@ -372,7 +359,7 @@ export default function CandidateApply() {
                   </div>
 
                   <div>
-                    <label htmlFor="apply-cv" className="block text-sm font-medium text-[#14342B] mb-1.5">CV (PDF or Word) *</label>
+                    <label htmlFor="apply-cv" className="block text-sm font-medium text-[#14342B] mb-1.5">CV (PDF or Word) <span className="font-normal text-gray-500">(optional, you can send it later)</span></label>
                     <input
                       id="apply-cv"
                       type="file"
@@ -380,12 +367,12 @@ export default function CandidateApply() {
                       onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
                       className="w-full h-[52px] text-base px-3 py-2 rounded-lg border border-[#E2DDD1] focus:border-[#0E1512] focus:ring-0 bg-white"
                     />
-                    <p className="text-[13px] text-gray-500 mt-1">No CV yet? <a href="/cv" className="underline">Get an Australian CV in 24 hours</a>.</p>
+                    <p className="text-[13px] text-gray-500 mt-1">No CV on your phone? Skip it, we will follow up. Or <a href="/cv" className="underline">get an Australian CV in 24 hours</a>.</p>
                   </div>
 
                   <div>
                     <label htmlFor="apply-rsa-certificate" className="block text-sm font-medium text-[#14342B] mb-1.5">
-                      RSA certificate (PDF or image) {rsaRequired ? "*" : "(optional)"}
+                      RSA certificate (PDF or image) <span className="font-normal text-gray-500">(optional, a photo is fine)</span>
                     </label>
                     <input
                       id="apply-rsa-certificate"
@@ -396,7 +383,7 @@ export default function CandidateApply() {
                     />
                     <p className="text-[13px] text-gray-500 mt-1">
                       {rsaRequired
-                        ? "Required for this role: in NSW you need a valid RSA to serve alcohol."
+                        ? "In NSW you need a valid RSA to serve alcohol. Add a photo now or we will ask you for it later."
                         : "Not required for this role. Add it if you have one."}
                     </p>
                   </div>
@@ -496,23 +483,13 @@ export default function CandidateApply() {
                   </div>
 
                   <div ref={setFieldRef("legalConfirmation")} className="pt-2">
-                    <button type="button" onClick={() => setValue("legalConfirmation", !formData.legalConfirmation)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
+                    <button type="button" onClick={() => { const v = !formData.legalConfirmation; setValue("legalConfirmation", v); setValue("termsAccepted", v); }} className="w-full min-h-[48px] flex items-start gap-3 text-left">
                       <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.legalConfirmation ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                      <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia and that all information provided is accurate.</span>
+                      <span className="text-[15px] text-gray-700">I confirm I have the legal right to work in Australia, my information is accurate, and I agree to the{" "}
+                        <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms</a>{" "}and{" "}
+                        <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.</span>
                     </button>
                     {errors.legalConfirmation && <p className="text-[13px] text-red-600 mt-1">{errors.legalConfirmation}</p>}
-                  </div>
-
-                  <div ref={setFieldRef("termsAccepted")}>
-                    <button type="button" onClick={() => setValue("termsAccepted", !formData.termsAccepted)} className="w-full min-h-[48px] flex items-start gap-3 text-left">
-                      <span className={`w-6 h-6 mt-0.5 rounded border-2 flex items-center justify-center ${formData.termsAccepted ? "bg-[#14342B] border-[#14342B]" : "border-gray-400"}`}><Check className="w-4 h-4 text-white" /></span>
-                      <span className="text-[15px] text-gray-700">
-                        I have read and agree to the{" "}
-                        <a href="/terms-and-conditions" target="_blank" className="underline" rel="noopener noreferrer">Terms and Conditions</a>{" "}and{" "}
-                        <a href="/privacy" target="_blank" className="underline" rel="noopener noreferrer">Privacy Policy</a>.
-                      </span>
-                    </button>
-                    {errors.termsAccepted && <p className="text-[13px] text-red-600 mt-1">{errors.termsAccepted}</p>}
                   </div>
 
                   {TURNSTILE_SITE_KEY ? (
