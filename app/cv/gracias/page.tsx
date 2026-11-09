@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "CV order details",
   robots: { index: false, follow: false },
+  alternates: { canonical: "/cv/gracias" },
 };
 
 const TALLY_FORM_ID = process.env.TALLY_CV_FORM_ID || "6DDe4O";
