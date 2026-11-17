@@ -4,8 +4,8 @@ import { z } from "zod";
 import { limit, getClientIp } from "@/lib/rate-limit";
 
 const workerSchema = z.object({
-  fullName: z.string().min(1, "Full name is required"),
-  email: z.string().email("Please enter a valid email address"),
+  fullName: z.string().trim().min(1, "Full name is required").max(120),
+  email: z.string().trim().email("Please enter a valid email address").max(200),
   phone: z
     .string()
     .regex(
@@ -14,12 +14,13 @@ const workerSchema = z.object({
     ),
   workExperience: z
     .number({ invalid_type_error: "Experience must be a number" })
-    .min(1, "Minimum 1 year experience required"),
-  role: z.string().min(1, "Role is required"),
-  hasRSA: z.string().min(1, "RSA status is required"),
-  suburb: z.string().min(1, "Suburb is required"),
-  availability: z.string().min(1, "Availability is required"),
-  additionalNotes: z.string().optional(),
+    .min(1, "Minimum 1 year experience required")
+    .max(60),
+  role: z.string().trim().min(1, "Role is required").max(120),
+  hasRSA: z.string().trim().min(1, "RSA status is required").max(60),
+  suburb: z.string().trim().min(1, "Suburb is required").max(120),
+  availability: z.string().trim().min(1, "Availability is required").max(300),
+  additionalNotes: z.string().trim().max(2000).optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -28,7 +29,14 @@ export async function POST(request: NextRequest) {
     if (!rl.ok) {
       return NextResponse.json({ success: false, message: "Too many requests. Please try again shortly." }, { status: 429 });
     }
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
+    if (!body || typeof body !== "object") {
+      return NextResponse.json({ success: false, message: "Invalid request" }, { status: 400 });
+    }
+    // Honeypot: bots fill hidden fields. Pretend success, store nothing.
+    if (typeof (body as Record<string, unknown>).website === "string" && (body as Record<string, string>).website.trim()) {
+      return NextResponse.json({ success: true, message: "Registration successful" });
+    }
 
     const parsed = workerSchema.safeParse(body);
 
@@ -61,12 +69,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Worker registration error:", error);
-
-    const message =
-      error instanceof Error ? error.message : "Failed to register worker";
-
     return NextResponse.json(
-      { success: false, message },
+      { success: false, message: "We couldn't save your registration just now. Please try again or email hello@oncallnetwork.com.au." },
       { status: 500 }
     );
   }

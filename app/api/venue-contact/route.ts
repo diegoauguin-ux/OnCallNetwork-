@@ -94,11 +94,29 @@ function parseListField(value: unknown): string[] {
   return trimmed.split(",").map((v) => v.trim()).filter(Boolean);
 }
 
+// Candidate documents contain personal data: only accept real document/image types,
+// cap the size, never trust the client file name, and use unguessable URLs.
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
+const ALLOWED_UPLOADS: Record<string, string> = {
+  "application/pdf": "pdf",
+  "application/msword": "doc",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+  "image/jpeg": "jpg",
+  "image/png": "png",
+};
+
+function validateUpload(file: File): string | null {
+  if (file.size > MAX_UPLOAD_BYTES) return "Files must be 4 MB or smaller.";
+  if (!ALLOWED_UPLOADS[file.type]) return "Please upload a PDF, Word document, JPG or PNG file.";
+  return null;
+}
+
 async function uploadCandidateFile(file: File, prefix: "cv" | "rsa"): Promise<string> {
-  const ext = file.name.includes(".") ? file.name.split(".").pop() : "bin";
-  const safeName = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const uploaded = await put(safeName, file, {
+  const ext = ALLOWED_UPLOADS[file.type] ?? "bin";
+  const uploaded = await put(`${prefix}/${crypto.randomUUID()}.${ext}`, file, {
     access: "public",
+    addRandomSuffix: true,
+    contentType: file.type,
     token: process.env.BLOB_READ_WRITE_TOKEN,
   });
   return uploaded.url;
@@ -122,7 +140,10 @@ export async function POST(request: NextRequest) {
 
     const contentType = request.headers.get("content-type") ?? "";
     const isMultipart = contentType.includes("multipart/form-data");
-    const body = isMultipart ? null : await request.json();
+    const body = isMultipart ? null : await request.json().catch(() => null);
+    if (!isMultipart && (!body || typeof body !== "object")) {
+      return NextResponse.json({ success: false, message: "Invalid request" }, { status: 400 });
+    }
     const formData = isMultipart ? await request.formData() : null;
     const payload = isMultipart
       ? {
@@ -164,6 +185,11 @@ export async function POST(request: NextRequest) {
       const rsaFile = isMultipart ? payload.rsaCertificateFile : null;
       const hasRsaFile = rsaFile instanceof File && rsaFile.size > 0;
       const hasCvFile = cvFile instanceof File && cvFile.size > 0;
+
+      for (const f of [hasCvFile ? cvFile : null, hasRsaFile ? rsaFile : null]) {
+        const problem = f ? validateUpload(f as File) : null;
+        if (problem) return NextResponse.json({ success: false, message: problem }, { status: 400 });
+      }
 
       const turnstile = await verifyTurnstile(parsed.data.turnstileToken, ip);
       if (!turnstile.ok) {
@@ -316,9 +342,11 @@ export async function POST(request: NextRequest) {
       recordId: id,
     });
   } catch (error) {
+    // Never echo internal errors (they can contain Airtable table/field names).
     console.error("Venue contact error:", error);
-    const message =
-      error instanceof Error ? error.message : "Failed to submit request";
-    return NextResponse.json({ success: false, message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: "We couldn't send your request just now. Please try again or email hello@oncallnetwork.com.au." },
+      { status: 500 }
+    );
   }
 }
