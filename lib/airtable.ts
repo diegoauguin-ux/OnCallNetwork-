@@ -12,6 +12,16 @@ type AirtableFieldValue =
   | null;
 type AirtableFields = Record<string, AirtableFieldValue>;
 
+// Neutralise spreadsheet formula injection: Airtable data gets exported to CSV/Excel,
+// where a value starting with = + - @ can execute as a formula.
+function sanitizeFields(fields: AirtableFields): AirtableFields {
+  const out: AirtableFields = {};
+  for (const [k, v] of Object.entries(fields)) {
+    out[k] = typeof v === "string" && /^[=+\-@\t\r]/.test(v) ? `'${v}` : v;
+  }
+  return out;
+}
+
 async function writeAirtableRecord(params: {
   tableName: string;
   fields: AirtableFields;
@@ -38,7 +48,7 @@ async function writeAirtableRecord(params: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ records: [{ fields }], typecast: true }),
+      body: JSON.stringify({ records: [{ fields: sanitizeFields(fields) }], typecast: true }),
     });
   }
 

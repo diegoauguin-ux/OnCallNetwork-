@@ -7,7 +7,7 @@ const ContentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://api.airtable.com https://*.clarity.ms https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://challenges.cloudflare.com https://us.i.posthog.com https://us-assets.i.posthog.com",
+  "connect-src 'self' https://*.clarity.ms https://*.vercel-insights.com https://*.vercel-analytics.com https://va.vercel-scripts.com https://challenges.cloudflare.com https://us.i.posthog.com https://us-assets.i.posthog.com",
   "worker-src 'self' blob:",
   "frame-src 'self' https://challenges.cloudflare.com",
   "base-uri 'self'",
