@@ -10,5 +10,5 @@ export const SITE = {
     process.env.NEXT_PUBLIC_CV_PAYMENT_URL ||
     "https://buy.stripe.com/aFa14o7Tz7Eb40L6fN6Zy00",
   cvPrice: "$39",
-  builder: { name: "RapidoWeb", url: "https://rapidoweb.com.au" },
+  builder: { name: "RapidoWeb", url: "https://www.rapidoweb.com.au" },
 } as const;
