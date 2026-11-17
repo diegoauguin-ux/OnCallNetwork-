@@ -6,8 +6,11 @@ export async function verifyTurnstile(
 ): Promise<{ ok: boolean; message?: string }> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
-    // Feature flag: if no secret is configured we skip verification. The
-    // client-side widget will also be absent, so form still works.
+    // Fail closed in production: a missing secret must never silently disable bot protection.
+    if (process.env.NODE_ENV === "production") {
+      console.error("[turnstile] TURNSTILE_SECRET_KEY is not set; rejecting submission");
+      return { ok: false, message: "Form temporarily unavailable. Please email hello@oncallnetwork.com.au." };
+    }
     return { ok: true };
   }
   if (!token) {

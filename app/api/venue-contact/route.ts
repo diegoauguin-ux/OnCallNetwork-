@@ -5,7 +5,7 @@ import {
   type VenueRecord,
   type CandidateApplicationRecord,
 } from "@/lib/airtable";
-import { put } from "@vercel/blob";
+import { put, del } from "@vercel/blob";
 import { z } from "zod";
 import { limit, getClientIp } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
@@ -229,7 +229,22 @@ export async function POST(request: NextRequest) {
           rsaCertificateAttachment: rsaUrl ? [{ url: rsaUrl }] : undefined,
         };
 
-        ({ id } = await createCandidateApplicationRecord(candidateRecord));
+        const created = await createCandidateApplicationRecord(candidateRecord);
+        id = created.id;
+
+        // Airtable re-hosts attachments on its own storage when the record is created.
+        // Once that is confirmed, remove the public copy so CVs/RSA certificates are not
+        // left on a public URL. If the re-hosting can't be confirmed, keep the blob.
+        const rehosted = (v: unknown) =>
+          Array.isArray(v) && v.length > 0 && /airtableusercontent\.com/.test(String((v[0] as { url?: string }).url ?? ""));
+        const toDelete: string[] = [];
+        if (cvUrl && rehosted(created.fields["CV"])) toDelete.push(cvUrl);
+        if (rsaUrl && rehosted(created.fields["RSA Certificate file"])) toDelete.push(rsaUrl);
+        if (toDelete.length) {
+          await del(toDelete, { token: process.env.BLOB_READ_WRITE_TOKEN }).catch((e) =>
+            console.error("[blob] cleanup failed", e)
+          );
+        }
       } catch (error) {
         // The applicant did the right thing; make sure Diego still hears about it.
         console.error("Candidate application failed", error);

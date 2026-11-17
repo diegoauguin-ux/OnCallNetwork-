@@ -26,7 +26,7 @@ async function writeAirtableRecord(params: {
   tableName: string;
   fields: AirtableFields;
   optionalFields?: string[];
-}): Promise<{ id: string }> {
+}): Promise<{ id: string; fields: Record<string, unknown> }> {
   const apiKey =
     process.env.AIRTABLE_ACCESS_TOKEN ?? process.env.AIRTABLE_API_KEY;
   const baseId = process.env.AIRTABLE_BASE_ID;
@@ -79,14 +79,14 @@ async function writeAirtableRecord(params: {
   }
 
   const result = (await response.json()) as {
-    records: Array<{ id: string }>;
+    records: Array<{ id: string; fields?: Record<string, unknown> }>;
   };
 
   if (!result.records?.[0]?.id) {
     throw new Error("Unexpected Airtable response: no record ID returned");
   }
 
-  return { id: result.records[0].id };
+  return { id: result.records[0].id, fields: result.records[0].fields ?? {} };
 }
 
 export interface VenueRecord {
@@ -189,7 +189,7 @@ export interface CandidateApplicationRecord {
 
 export async function createCandidateApplicationRecord(
   record: CandidateApplicationRecord
-): Promise<{ id: string }> {
+): Promise<{ id: string; fields: Record<string, unknown> }> {
   const tableName =
     process.env.AIRTABLE_CANDIDATE_APPLICATIONS_TABLE_NAME ??
     "Candidate Applications";
