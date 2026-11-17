@@ -103,11 +103,12 @@ const ALLOWED_UPLOADS: Record<string, string> = {
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
   "image/jpeg": "jpg",
   "image/png": "png",
+  "image/webp": "webp",
 };
 
 function validateUpload(file: File): string | null {
   if (file.size > MAX_UPLOAD_BYTES) return "Files must be 4 MB or smaller.";
-  if (!ALLOWED_UPLOADS[file.type]) return "Please upload a PDF, Word document, JPG or PNG file.";
+  if (!ALLOWED_UPLOADS[file.type]) return "Please upload a PDF, Word document, JPG, PNG or WebP file.";
   return null;
 }
 
