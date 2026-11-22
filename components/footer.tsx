@@ -7,7 +7,7 @@ const LINKS = [
   { n: "Find work", h: "/#apply" },
   { n: "CV rewrite", h: "/cv" },
   { n: "Corporate DJ hire", h: "/dj-hire-sydney" },
-  { n: "Job guides", h: "/guides" },
+  { n: "Hiring and job guides", h: "/guides" },
   { n: "Contact", h: "/#contact" },
 ];
 

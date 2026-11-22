@@ -3,27 +3,19 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { GUIDES } from "@/lib/guides";
+import { GUIDES, type Guide } from "@/lib/guides";
 
 export const metadata: Metadata = {
   title: "Hospitality Job Guides for Sydney",
   description:
-    "Practical guides for hospitality workers in Australia: CV, cover letter, interview questions, RSA and RCG, and how to get a job in Sydney.",
+    "Practical hospitality guides for Sydney: CVs, interviews, RSA and RCG for job seekers, plus how to hire staff, agency fees and job ad templates for venues.",
   alternates: { canonical: "/guides" },
 };
 
-export default function GuidesPage() {
+function GuideList({ items }: { items: Guide[] }) {
   return (
-    <>
-      <Header />
-      <main className="pt-32 md:pt-44">
-        <div className="wrap">
-          <p className="eyebrow mb-7">Guides</p>
-          <h1 className="h-display h-hero max-w-[14ch]">Get the hospitality job you want.</h1>
-          <p className="mt-7 max-w-[48ch] text-[19px] text-ink/75">Short, practical guides from a recruiter. CVs, interviews, licences and finding work in Sydney.</p>
-
-          <ul className="mt-16 border-t border-ink">
-            {GUIDES.map((g) => (
+    <ul className="mt-6 border-t border-ink">
+            {items.map((g) => (
               <li key={g.slug}>
                 <Link href={`/guides/${g.slug}`} className="group flex items-center justify-between gap-6 border-b border-line py-8 hover:bg-white md:px-3">
                   <span>
@@ -38,6 +30,24 @@ export default function GuidesPage() {
               </li>
             ))}
           </ul>
+  );
+}
+
+export default function GuidesPage() {
+  return (
+    <>
+      <Header />
+      <main className="pt-32 md:pt-44">
+        <div className="wrap">
+          <p className="eyebrow mb-7">Guides</p>
+          <h1 className="h-display h-hero max-w-[14ch]">Get the hospitality job you want.</h1>
+          <p className="mt-7 max-w-[48ch] text-[19px] text-ink/75">Short, practical guides from a recruiter. CVs, interviews, licences and finding work in Sydney, plus how to hire staff for your venue.</p>
+
+          <h2 className="mt-16 font-display text-[28px] tracking-tight">For job seekers</h2>
+          <GuideList items={GUIDES.filter((g) => g.cta !== "hire")} />
+
+          <h2 className="mt-20 font-display text-[28px] tracking-tight">For venues hiring</h2>
+          <GuideList items={GUIDES.filter((g) => g.cta === "hire")} />
         </div>
         <div className="h-24 md:h-32" />
       </main>
