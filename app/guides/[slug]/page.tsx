@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { GUIDES, GUIDES_UPDATED, getGuide } from "@/lib/guides";
+import { GUIDES, getGuide, guideUpdated } from "@/lib/guides";
 import { SITE } from "@/lib/site-config";
 
 const BASE = "https://www.oncallnetwork.com.au";
@@ -34,8 +34,8 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
       "@type": "Article",
       headline: g.title,
       description: g.description,
-      datePublished: GUIDES_UPDATED,
-      dateModified: GUIDES_UPDATED,
+      datePublished: guideUpdated(g),
+      dateModified: guideUpdated(g),
       inLanguage: "en-AU",
       mainEntityOfPage: `${BASE}/guides/${g.slug}`,
       author: { "@type": "Person", name: "Diego Pascal", jobTitle: "Founder, On Call Network" },
@@ -57,7 +57,10 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
     },
   ];
 
-  const others = GUIDES.filter((x) => x.slug !== g.slug).slice(0, 3);
+  const sameAudience = GUIDES.filter((x) => x.slug !== g.slug && (x.cta === "hire") === (g.cta === "hire"));
+  const rest = GUIDES.filter((x) => x.slug !== g.slug && (x.cta === "hire") !== (g.cta === "hire"));
+  const others = [...sameAudience, ...rest].slice(0, 3);
+  const updatedLabel = new Date(guideUpdated(g)).toLocaleDateString("en-AU", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 
   return (
     <>
@@ -71,7 +74,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           <h1 className="h-display mt-6 max-w-[20ch] text-[clamp(2.6rem,6vw,5rem)] leading-[0.98]">{g.title}</h1>
           <p className="mt-6 max-w-[56ch] text-[20px] leading-[1.5] text-ink/75">{g.intro}</p>
           <p className="mt-6 text-[13px] text-muted">
-            By Diego Pascal, recruiter &nbsp;/&nbsp; {g.readMins} min read &nbsp;/&nbsp; Updated 26 October 2026
+            By Diego Pascal, recruiter &nbsp;/&nbsp; {g.readMins} min read &nbsp;/&nbsp; Updated {updatedLabel}
           </p>
 
           <div className="mt-14 max-w-[68ch]">
@@ -108,7 +111,15 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           </div>
 
           <aside className="mb-20 bg-forest p-8 text-paper md:p-12">
-            {g.cta === "cv" ? (
+            {g.cta === "hire" ? (
+              <>
+                <h2 className="h-display h-section !text-paper">Need staff for your venue?</h2>
+                <p className="mt-4 max-w-[48ch] text-[17px] text-paper/75">
+                  Send a role brief. Every candidate is interviewed by the founder. Casual introductions are $99 and permanent placements are 18% of annual salary, with a 60-day replacement guarantee. Prices ex GST.
+                </p>
+                <Link href="/#contact" className="btn btn-accent mt-8 h-[52px] px-7">Submit a role brief</Link>
+              </>
+            ) : g.cta === "cv" ? (
               <>
                 <h2 className="h-display h-section !text-paper">Want it done for you?</h2>
                 <p className="mt-4 max-w-[48ch] text-[17px] text-paper/75">

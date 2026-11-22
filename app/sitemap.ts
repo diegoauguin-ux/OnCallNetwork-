@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { GUIDES, GUIDES_UPDATED } from "@/lib/guides";
+import { GUIDES, GUIDES_UPDATED, guideUpdated } from "@/lib/guides";
 import { DJ_BASE_PATH, DJ_UPDATED } from "@/lib/dj";
 import { DJ_SUBPAGES } from "@/lib/dj-pages";
 
@@ -41,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...GUIDES.map((g) => ({
       url: `${BASE_URL}/guides/${g.slug}`,
-      lastModified: new Date(GUIDES_UPDATED),
+      lastModified: new Date(guideUpdated(g)),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
